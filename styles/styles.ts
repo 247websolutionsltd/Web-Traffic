@@ -1,0 +1,244 @@
+import { Colors, Radius, Spacing } from "@/constants/theme";
+import { StyleSheet, useColorScheme } from "react-native";
+
+// export type ThemeType = typeof Colors.light;
+export function useStyles() {
+  const colorScheme = useColorScheme() ?? 'light';
+  const theme = colorScheme === "light" ? Colors.light : Colors.dark;
+
+  // Pass the active theme colors into the factory function below
+  return createStyles(theme);
+}
+
+
+const createStyles = (theme:any)=>StyleSheet.create({
+    button: {
+    height:60,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent:'center',
+    backgroundColor:Colors.primary 
+  },
+    button2:{
+      borderWidth:1,
+      borderColor:theme.text,
+      alignItems:'center',
+      justifyContent:'center',
+      height:60,
+      borderRadius:16
+    },
+    row:{
+      flexDirection:'row',
+      alignItems:'center',
+    },
+    backButton:{
+      borderWidth:1,
+      borderColor:theme.text,
+      alignItems:'center',
+      justifyContent:'center',
+      width:'25%',
+      marginRight:10,
+      height:50,
+      borderRadius:16
+    },
+    skip: {
+      position: "absolute",
+      top: 50,
+      right: 20,
+      zIndex: 10,
+    },
+    splash:{
+      flex:1,
+      alignItems:'center',
+      justifyContent:'center',
+      backgroundColor:'#16213E'
+    },
+    splashLogo:{
+      width:150,
+      height:150
+    },
+    topView:{
+      flexDirection:'row',
+      alignItems:'center',
+      justifyContent:'space-between',
+    },
+    input:{
+      flex:1,
+    },
+    inputView:{
+        flexDirection:'row',
+        padding: Spacing.two,
+        backgroundColor: Colors.card,
+        borderRadius: Radius.sm,
+        alignItems:'center',
+        borderWidth:1,
+        borderColor:Colors.line
+    },
+    inputError:{
+      borderColor: Colors.coral,
+      shadowColor: Colors.coral,
+      shadowOpacity: 0.15,
+      shadowRadius: 6,
+      shadowOffset: { width: 0, height: 0 },
+    },
+    prefixWrap: {
+      borderRightWidth: 1,
+      borderRightColor: Colors.line,
+      paddingRight: Spacing.two,
+      marginRight: Spacing.one,
+    },
+    errorText: { color: "#DC2626", fontSize: 12, marginTop: 4 },
+    dividerRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: Spacing.two,
+      marginVertical: Spacing.four,
+    },
+    line: {
+      flex: 1,
+      height: 1,
+      backgroundColor: Colors.line,
+    },
+    dividerText: {
+      // fontFamily: fonts.bodyRegular,
+      fontSize: 11,
+      color: Colors.inkFaint,
+    },
+    socialRow: {
+      flexDirection: "row",
+      gap: Spacing.three,
+    },
+    socialBtn: {
+      flex: 1,
+      height: 46,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: Colors.line,
+      backgroundColor: Colors.card,
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection:'row'
+    },
+    socialLabel: {
+      // fontFamily: fonts.bodySemibold,
+      fontSize: 12,
+      color: Colors.ink,
+    },
+    upload1:{
+      width: 150,
+      height: 150,
+      borderRadius: 600,
+      backgroundColor: Colors.coralTint,
+      borderWidth: 1.5,
+      borderColor: "#D8B6BC",
+      borderStyle: "dashed",
+      alignItems: "center",
+      justifyContent: "center",
+      alignSelf:'center',
+      marginVertical: Spacing.four
+    },
+    editBadge: {
+      position: "absolute",
+      bottom: 7,
+      right: 7,
+      width: 28,
+      height: 28,
+      borderRadius: 14,
+      backgroundColor: Colors.coral,
+      borderWidth: 2,
+      borderColor: Colors.paper,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    checkView:{
+      width: 150,
+      height: 150,
+      borderRadius: 600,
+      backgroundColor: Colors.greenTint,
+      alignItems: "center",
+      justifyContent: "center",
+      marginBottom: Spacing.three,
+      alignSelf:'center'
+    },
+    topBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingTop: Spacing.two,
+    paddingBottom: Spacing.three,
+  },
+  topBarLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.three,
+  },
+  avatar: {
+    width: 52,
+    height: 52,
+    borderRadius: 100,
+    backgroundColor: Colors.navy,
+  },
+  deliverTo: {
+    // fontFamily: fonts.bodyRegular,
+    fontSize: 10.5,
+    color: Colors.inkFaint,
+  },
+  locationRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+  },
+  locationText: {
+    // fontFamily: fonts.displaySemibold,
+    fontSize: 14.5,
+    color: Colors.ink,
+  },
+  bell: {
+    width: 44,
+    height: 44,
+    borderRadius: 60,
+    backgroundColor: Colors.card,
+    borderWidth: 1,
+    borderColor: Colors.line,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  bellDot: {
+    position: "absolute",
+    top: 10,
+    right: 11,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: Colors.coral,
+  },
+  searchPlaceholder: {
+    // fontFamily: fonts.bodyRegular,
+    fontSize: 13,
+    color: Colors.inkFaint,
+  },
+  chipRow: {
+    paddingHorizontal: Spacing.four,
+    paddingVertical: Spacing.three,
+  },
+  sectionTitle: {
+    // fontFamily: fonts.displaySemibold,
+    fontSize: 15,
+    color: Colors.ink,
+  },
+  seeAll: {
+    // fontFamily: fonts.bodySemibold,
+    fontSize: 13,
+    color: Colors.coralDark,
+  },
+  categoryGrid: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: Spacing.two,
+    paddingHorizontal:Spacing.three
+  },
+  horizontalList: {
+    marginVertical: Spacing.two,
+    marginLeft: Spacing.three,
+  },
+});

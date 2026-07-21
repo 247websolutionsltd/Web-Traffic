@@ -1,98 +1,72 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import Button from "@/components/button";
+import { ThemedText } from "@/components/themed-text";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Image } from "expo-image";
+import { router } from "expo-router";
+import { useEffect, useMemo, useRef } from "react";
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useStyles } from "../../styles/styles";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+export default function SplashScreen(){
+  const styles = useStyles();
+  const bottomSheetRef = useRef<BottomSheet>(null);
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
+  const snapPoints = useMemo(() => ["55%"],['75%']);
+  useEffect(() => {
+      const loadTasks = async () => {
+          const onboarded = await AsyncStorage.getItem('onboarded');
+          if (onboarded === 'true'){
+              router.replace('/');
+          }else{
+            
+              // router.replace('/onboard');
+          }
+      };
+      loadTasks();
+  
+  }, []);
+  return(
+    <SafeAreaView style={styles.splash}>
+      <View style={{bottom:20}}>
+        <Image source={require('../../assets/images/logo.png')} style={[styles.splashLogo, {marginBottom:10}]}/>
+        <ThemedText type="title" themeColor="background" style={{textAlign:'center'}}>WebTraffic</ThemedText>
+        <ThemedText themeColor="backgroundElement" style={{textAlign:'center'}}>Buy and sell near you</ThemedText>
+      </View>
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={0}
+        snapPoints={snapPoints}
+        enableDynamicSizing={false}
+        handleComponent={null}
+        enablePanDownToClose={false}
+      >
+        <BottomSheetView style={{ flex: 1, padding: 24 }}>
+          <ThemedText style={{textAlign:'center', lineHeight:30}} type="title">Buy, sell, and trade near you</ThemedText>
+          <ThemedText style={{textAlign:'center', marginTop:10}}>Join thousands of buyers and sellers across Nigeria</ThemedText>
+          <View style={{marginVertical:30}}>
+            <Button
+              onPress={()=>router.navigate('/auth/register')} 
+              isLoading={false} 
+              title="Create Account"
+              style={{marginBottom:10}}
+            />
+            <Button
+              onPress={()=>router.navigate('/auth/logIn')} 
+              isLoading={false} 
+              title="Log in"
+              type="secondary"
+            />
+          </View>
+          <View style={{alignItems:'center'}}>
+            <ThemedText style={{textAlign:'center', fontWeight:400, maxWidth:'80%'}} type="small">By continuing you agree to our 
+              <ThemedText type="small"> Terms </ThemedText> and 
+              <ThemedText type="small"> Privacy policy</ThemedText>
+            </ThemedText>
+          </View>
+        </BottomSheetView>
+      </BottomSheet>
+    </SafeAreaView>
   );
 }
-
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
-});
