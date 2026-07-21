@@ -10,7 +10,7 @@ export function CategoryTile({ category, onPress }: { category: Category; onPres
       <View style={[styles.iconWrap, { backgroundColor: category.tint }]}>
         <Ionicons name={category.icon} size={22} color={Colors.coralDark} />
       </View>
-      <ThemedText type="small" numberOfLines={2}>
+      <ThemedText type="small" numberOfLines={2} style={{textAlign:'center'}}>
         {category.name}
       </ThemedText>
     </Pressable>

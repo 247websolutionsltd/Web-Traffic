@@ -1,5 +1,6 @@
 import { Colors, Radius, Spacing } from "@/constants/theme";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
+import { ThemedText } from "./themed-text";
 
 interface ChipProps {
   label: string;
@@ -15,7 +16,7 @@ export function Chip({ label, active, onPress }: ChipProps) {
       accessibilityRole="button"
       accessibilityState={{ selected: !!active }}
     >
-      <Text style={[styles.label, active && styles.activeLabel]}>{label}</Text>
+      <ThemedText type="small" style={[styles.label, active && styles.activeLabel]}>{label}</ThemedText>
     </Pressable>
   );
 }
@@ -37,7 +38,6 @@ const styles = StyleSheet.create({
   },
   label: {
     // fontFamily: fonts.bodySemibold,
-    fontSize: 12.5,
     color: Colors.inkSoft,
   },
   activeLabel: {

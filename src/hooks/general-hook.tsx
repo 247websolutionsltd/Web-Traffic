@@ -11,11 +11,23 @@ export default function useHook() {
     const newNum = Number(newPrice);
     return Math.round(((newNum - oldNum) / newNum) * 100)
   }
+  const priceFormat = (price:number)=>{
+    const stringPrice = price.toString().split('');
+    const length = stringPrice.length
+    for(let x=length; x>0; x--){
+      if (x !== length && (length - x) % 3 === 0){
+       stringPrice.splice(x, 0, ',');
+      }
+    }
+    return stringPrice.join('');
+
+  }
   
   return {
     isLoading,
     setIsLoading,
     showTitle,
-    savings
+    savings,
+    priceFormat
   };
 }

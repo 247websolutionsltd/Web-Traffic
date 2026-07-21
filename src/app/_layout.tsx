@@ -13,6 +13,8 @@ export default function RootLayout() {
         <Stack.Screen name="index" />
         <Stack.Screen name="onboard" />
         <Stack.Screen name="setup" />
+        <Stack.Screen name="category" />
+        {/* <Stack.Screen name="(tabs)" /> */}
       </Stack>
     </ThemeProvider>
     </GestureHandlerRootView>

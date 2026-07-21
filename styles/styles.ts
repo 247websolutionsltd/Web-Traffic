@@ -241,4 +241,25 @@ const createStyles = (theme:any)=>StyleSheet.create({
     marginVertical: Spacing.two,
     marginLeft: Spacing.three,
   },
+  topIcon:{position:'absolute', paddingVertical:Spacing.two},
+  category:{
+    backgroundColor:Colors.white,
+    flexDirection:'row', 
+    marginVertical:Spacing.two,
+    padding:12,
+    maxWidth:'100%',
+    borderRadius:Radius.lg
+  },
+  categoryImage:{
+    width:100,
+    height:100,
+    backgroundColor:Colors.inkSoft,
+    borderRadius:Radius.lg
+  },
+  categoryRight:{
+    padding:Spacing.two,
+    paddingVertical:Spacing.one,
+    justifyContent:'space-between',
+    maxWidth:'70%'
+  }
 });
