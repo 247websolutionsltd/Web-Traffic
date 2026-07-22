@@ -1,6 +1,6 @@
 import { Colors } from "@/constants/theme";
 import useHook from "@/hooks/general-hook";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 import { ThemedText } from "./themed-text";
 
@@ -15,7 +15,7 @@ export default function Category({listing, onPress}:{listing:CategoryProps, onPr
     const styles = useStyles();
     const { priceFormat } = useHook();
     return(
-        <View style={styles.category}>
+        <Pressable style={styles.category} onPress={onPress}>
             <View style={styles.categoryImage}/>
             <View style={styles.categoryRight}>
                 <ThemedText style={{ fontSize:17, lineHeight:20}} type="subtitle">{title}</ThemedText>
@@ -24,6 +24,6 @@ export default function Category({listing, onPress}:{listing:CategoryProps, onPr
                     ₦{priceFormat(price)}
                 </ThemedText>
             </View>
-        </View>
+        </Pressable>
     )
 }

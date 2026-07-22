@@ -27,7 +27,7 @@ export default function SignUp({style}:ViewProps) {
 
   const onSubmit = async (data: SignInFormValues) => {
     // await api.signUp(data);
-    console.log(data)
+    router.navigate('/(tabs)')
   };
 
   const phoneRef = useRef<TextInput>(null);

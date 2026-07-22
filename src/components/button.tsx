@@ -1,3 +1,4 @@
+import { Spacing } from '@/constants/theme';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import { useTheme } from "expo-router";
 import {
@@ -20,6 +21,7 @@ interface props extends ViewProps {
   title: string;
   textSize?: number;
   icon?: MaterialIconName | null;
+  iconLeft?: MaterialIconName | null;
   disabled?: boolean
 }
 
@@ -34,6 +36,7 @@ export default function Button({
   title,
   disabled=false,
   style,
+  iconLeft,
 }: props) {
  const theme = useTheme();
  const styles = useStyles();
@@ -54,7 +57,11 @@ export default function Button({
         <ActivityIndicator size={23} />
       ) : (
         <View style={styles.row}>
-          <ThemedText style={{color:type === "secondary" ? "#000" : '#FFF', fontSize:18}}>{title}</ThemedText>
+          {
+            iconLeft &&
+            <MaterialIcons name={iconLeft} size={22} color={"#FFF"} style={{marginRight:Spacing.one}}/>
+          }
+          <ThemedText style={{color:type === "secondary" ? "#000" : '#FFF', }} type='bold'>{title}</ThemedText>
           {
             icon &&
             <MaterialIcons name={icon} size={22} color={"#FFF"}/>

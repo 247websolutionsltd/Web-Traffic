@@ -78,7 +78,7 @@ export default function Home(){
                     keyExtractor={(item) => item.id}
                     contentContainerStyle={[styles.horizontalList]}
                     renderItem={({ item }) => (
-                        <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/", params: { id: item.id } })} />
+                        <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} />
                     )}
                 />
             </View>
@@ -96,7 +96,7 @@ export default function Home(){
                     keyExtractor={(item) => item.id}
                     contentContainerStyle={styles.horizontalList}
                     renderItem={({ item }) => (
-                        <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/", params: { id: item.id } })} />
+                        <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} />
                     )}
                 />
             </View>

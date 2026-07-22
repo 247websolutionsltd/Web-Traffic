@@ -241,7 +241,20 @@ const createStyles = (theme:any)=>StyleSheet.create({
     marginVertical: Spacing.two,
     marginLeft: Spacing.three,
   },
-  topIcon:{position:'absolute', paddingVertical:Spacing.two},
+  topIcon:{
+    position:'absolute', 
+    paddingVertical:Spacing.two,
+  },
+  top2:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+  },
+  top2Icon:{
+    padding:Spacing.two,
+    borderRadius:80,
+    backgroundColor:"#FFF"
+  },
   category:{
     backgroundColor:Colors.white,
     flexDirection:'row', 
@@ -464,7 +477,8 @@ const createStyles = (theme:any)=>StyleSheet.create({
     paddingHorizontal:Spacing.two
   },
   profileContainer:{
-    flexGrow:1
+    flexGrow:1,
+    backgroundColor:Colors.paper
   },
   profileTop:{
     backgroundColor:Colors.navy,
@@ -517,5 +531,39 @@ const createStyles = (theme:any)=>StyleSheet.create({
     backgroundColor:Colors.coralTint,
     borderRadius:10,
     marginRight:Spacing.two
+  },
+  detailImage:{
+    height:350,
+    width:'100%',
+    backgroundColor:"#C7C2B6",
+    paddingHorizontal:Spacing.three
+  },
+  detailView:{
+    borderTopLeftRadius:24,
+    borderTopRightRadius:24,
+    backgroundColor:Colors.paper,
+    bottom:24,
+    padding:Spacing.three
+  },
+  badgeSlot: {
+    position: "absolute",
+    top: 8,
+    left: 8,
+  },
+  detailVerified:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    backgroundColor:"#FFF",
+    padding:Spacing.two,
+    borderRadius:Radius.md,
+    marginVertical:Spacing.three
+  },
+  verifiedView:{
+    alignItems:'center',
+    backgroundColor:Colors.greenTint,
+    padding:Spacing.one,
+    paddingHorizontal:Spacing.three,
+    borderRadius:Radius.md,
   }
 });

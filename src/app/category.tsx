@@ -35,7 +35,7 @@ export default function CategoryScreen(){
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <Category listing={item} onPress={() => router.push({ pathname: "/", params: { id: item.id } })} />
+                        <Category listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} />
                     )}
                 />
             </View>
