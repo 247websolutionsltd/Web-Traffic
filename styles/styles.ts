@@ -463,4 +463,59 @@ const createStyles = (theme:any)=>StyleSheet.create({
     padding:Spacing.one,
     paddingHorizontal:Spacing.two
   },
+  profileContainer:{
+    flexGrow:1
+  },
+  profileTop:{
+    backgroundColor:Colors.navy,
+    paddingBottom:Spacing.three,
+    paddingHorizontal: Spacing.three
+  },
+  profileInit:{
+    borderWidth:3,
+    borderColor:"rgba(255,255,255,0.2)",
+    padding:Spacing.four,
+    borderRadius:500,
+    backgroundColor:Colors.coral,
+    alignSelf:'flex-start'
+  },
+  stats:{
+    flexDirection:'row',
+    backgroundColor: theme.background,
+    justifyContent:'space-between',
+    borderRadius:Radius.lg,
+    marginHorizontal:Spacing.five,
+    height:90,
+    bottom:45,
+  },
+  stat:{
+    alignItems:'center', 
+    justifyContent:'center',
+    width:'33%'
+  },
+  statCenter:{
+    borderLeftWidth:1,
+    borderRightWidth:1,
+    borderColor:Colors.line
+  },
+  statShadow:{
+    backgroundColor:Colors.black,
+    opacity:0.04,
+    bottom:131,
+    zIndex:-1,
+  },
+  profileCard:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    borderBottomWidth:1,
+    borderColor:Colors.line,
+    padding:Spacing.three
+  },
+  menuIconView:{
+    padding:Spacing.three,
+    backgroundColor:Colors.coralTint,
+    borderRadius:10,
+    marginRight:Spacing.two
+  }
 });
