@@ -16,7 +16,7 @@ export function Chip({ label, active, onPress }: ChipProps) {
       accessibilityRole="button"
       accessibilityState={{ selected: !!active }}
     >
-      <ThemedText type="small" style={[styles.label, active && styles.activeLabel]}>{label}</ThemedText>
+      <ThemedText style={[styles.label, active && styles.activeLabel, {fontWeight:500}]}>{label}</ThemedText>
     </Pressable>
   );
 }

@@ -3,6 +3,7 @@ import Stats from "@/components/stats";
 import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../../styles/styles";
@@ -10,8 +11,8 @@ import { useStyles } from "../../../styles/styles";
 type IconName = keyof typeof Ionicons.glyphMap;
 
 const MENU: { icon: IconName; label: string; onPress: () => void }[] = [
-  { icon: "pricetags-outline", label: "My ads", onPress: () => {} },
-  { icon: "heart-outline", label: "Saved", onPress: () => {} },
+  { icon: "pricetags-outline", label: "My ads", onPress: () => {router.navigate('/myAds')} },
+  { icon: "heart-outline", label: "Saved", onPress: () => {router.navigate('/saved')} },
   { icon: "card-outline", label: "Plans & billing", onPress: () => {} },
   { icon: "settings-outline", label: "Settings", onPress: () => {} },
   { icon: "help-buoy-outline", label: "Help & support", onPress: () => {} },

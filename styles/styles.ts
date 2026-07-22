@@ -263,9 +263,25 @@ const createStyles = (theme:any)=>StyleSheet.create({
     maxWidth:'100%',
     borderRadius:Radius.lg
   },
+  ad:{
+    backgroundColor:Colors.white,
+    flexDirection:'row', 
+    marginVertical:Spacing.two,
+    padding:12,
+    borderRadius:Radius.lg,
+    height:170,
+    justifyContent:'space-between',
+    alignItems:'center'
+  },
   categoryImage:{
     width:100,
     height:100,
+    backgroundColor:Colors.inkSoft,
+    borderRadius:Radius.lg
+  },
+  adImage:{
+    width:95,
+    height:95,
     backgroundColor:Colors.inkSoft,
     borderRadius:Radius.lg
   },

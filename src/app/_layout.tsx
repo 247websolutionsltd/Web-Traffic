@@ -15,6 +15,8 @@ export default function RootLayout() {
         <Stack.Screen name="category" />
         <Stack.Screen name="detail" />
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="myAds" />
+        <Stack.Screen name="saved" />
       </Stack>
     </ThemeProvider>
     </GestureHandlerRootView>
