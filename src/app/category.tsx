@@ -10,9 +10,9 @@ import { useState } from "react";
 import { FlatList, ScrollView, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 
-const FILTERS = ["Price ▾", "Condition ▾", "Location ▾"];
+const FILTERS = ["Price", "Condition", "Location"];
 export default function CategoryScreen(){
-    const [activeFilter, setActiveFilter] = useState("All");
+    const [activeFilter, setActiveFilter] = useState("Price");
     const styles = useStyles();
     return(
         <Container edges={['top', 'bottom']}>
@@ -24,7 +24,7 @@ export default function CategoryScreen(){
                 style={{flexGrow:0}}
                 >
                 {FILTERS.map((f) => (
-                    <Chip key={f} label={f} active={f === activeFilter} onPress={() => setActiveFilter(f)} />
+                    <Chip key={f} label={f+" ▾"} active={f === activeFilter} onPress={() => setActiveFilter(f)} />
                 ))}
             </ScrollView>
             <View style={{padding:Spacing.three}}>
