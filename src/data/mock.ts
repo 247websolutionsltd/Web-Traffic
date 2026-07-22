@@ -183,6 +183,7 @@ export const chatThreads: ChatThread[] = [
     type: "selling",
     messages: [{ id: "m1", fromMe: false, text: "Deal closed, thank you!", time: "Mon" }],
   },
+  
 ];
 
 export const currentUser: CurrentUser = {

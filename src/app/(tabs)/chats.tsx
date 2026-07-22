@@ -1,9 +1,11 @@
+import Chat from "@/components/chat";
 import { Chip } from "@/components/Chip";
 import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
-import { Colors } from "@/constants/theme";
+import { Colors, Spacing } from "@/constants/theme";
 import { chatThreads } from "@/data/mock";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useMemo, useState } from "react";
 import { FlatList, ScrollView, View } from "react-native";
 import { useStyles } from "../../../styles/styles";
@@ -23,9 +25,10 @@ export default function Chats() {
     () => (filter === "all" ? chatThreads : chatThreads.filter((c) => c.type === filter)),
     [filter]
   );
+
     return(
         <Container>
-            <ThemedText style={styles.title}>Chats</ThemedText>
+            <ThemedText style={{paddingHorizontal:Spacing.three}} type="subtitle">Chats</ThemedText>
             <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -37,9 +40,12 @@ export default function Chats() {
                 ))}
             </ScrollView>
             <FlatList
-                data={data}
-                keyExtractor={(item) => item.id}
-                renderItem={renderItem}
+                data={chatThreads}
+                scrollEnabled={false}
+                keyExtractor={(i, index) => index.toString()}
+                renderItem={({item})=>(
+                    <Chat item={item} onPress={()=>router.navigate('/')}/>
+                )}
                 ItemSeparatorComponent={() => <View style={styles.separator} />}
                 contentContainerStyle={{ paddingBottom: 100 }}
                 ListEmptyComponent={

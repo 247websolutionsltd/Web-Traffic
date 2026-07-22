@@ -431,7 +431,6 @@ const createStyles = (theme:any)=>StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: Colors.line,
-    marginLeft: Spacing.five + 46 + Spacing.three,
   },
   empty: {
     alignItems: "center",
@@ -443,5 +442,25 @@ const createStyles = (theme:any)=>StyleSheet.create({
     // fontFamily: fonts.bodyMedium,
     fontSize: 12.5,
     color: Colors.inkFaint,
+  },
+  chat:{
+    flexDirection:'row',
+    alignItems:'center',
+    minHeight:80,
+    paddingHorizontal:Spacing.three
+  },
+  messageNumber:{
+    backgroundColor:Colors.coral, 
+    width:15,
+    height:15,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:20
+  },
+  chatCenter:{
+    justifyContent:'space-between', 
+    flex:1, 
+    padding:Spacing.one,
+    paddingHorizontal:Spacing.two
   },
 });

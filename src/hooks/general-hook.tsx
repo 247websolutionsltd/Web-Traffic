@@ -20,7 +20,13 @@ export default function useHook() {
       }
     }
     return stringPrice.join('');
-
+  }
+  const linter = (sentence:string, max=22)=> {
+    let result = sentence
+    if (sentence.length >= max){
+      result = result.split("").splice(0,max).join("") + "...";
+    }
+    return result;
   }
   
   return {
@@ -28,6 +34,7 @@ export default function useHook() {
     setIsLoading,
     showTitle,
     savings,
-    priceFormat
+    priceFormat,
+    linter
   };
 }
