@@ -1,16 +1,21 @@
+import { Radius, Spacing } from "@/constants/theme";
+import { useTheme } from "@/hooks/use-theme";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
 import { ThemedText } from "./themed-text";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const OnboardingItem = ({ item }: any) => {
+  const theme = useTheme();
   return (
     <View style={[styles.container, { width }]}>
       <View style={styles.textContainer}>
-        <View />
-        <Image style={styles.image} source={item.image} resizeMode="contain"/>
-        <View style={{paddingBottom:25}}>
-          <ThemedText type='title' style={{fontSize:32, lineHeight:42, textAlign:'center'}}>{item.title}</ThemedText>
+        <View style={styles.image}>
+          <Image style={{width:'100%', height:'100%'}} source={item.image} />
+          <View style={styles.darken}/>
+        </View>
+        <View style={[styles.bottom, {backgroundColor:theme.paper}]}>
+          <ThemedText type='title' style={{textAlign:'center'}}>{item.title}</ThemedText>
           <ThemedText style={styles.desc}>
             {item.description}
           </ThemedText>
@@ -27,16 +32,28 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: "60%",
+    height: "80%",
+  },
+  darken:{
+    width:'100%', 
+    height:'100%', 
+    backgroundColor:"#56566020", 
+    position:'absolute'
   },
   textContainer: {
     flex: 1,
     justifyContent:'space-between',
-    padding:20,
   },
   desc: {
     marginTop: 10,
     opacity: 0.8,
     textAlign:'center'
   },
+  bottom:{
+    padding:Spacing.three,
+    bottom:Spacing.five,
+    borderRadius:Radius.lg,
+    justifyContent:'space-between',
+    flex:1
+  }
 });

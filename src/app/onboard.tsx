@@ -51,9 +51,9 @@ const OnboardingScreen = () => {
   const theme = useTheme();
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor:theme.paper}}>
+    <SafeAreaView style={{flex: 1, backgroundColor:theme.paper}} edges={['bottom']}>
       <TouchableOpacity style={styles.skip} onPress={finishOnboarding}>
-        <ThemedText themeColor="textSecondary">Skip</ThemedText>
+        <ThemedText style={{color:"#FFF"}}>Skip</ThemedText>
       </TouchableOpacity>
 
       <FlatList

@@ -25,7 +25,6 @@ export default Paginator;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    height: 20,
     justifyContent: "center",
   },
   dot: {

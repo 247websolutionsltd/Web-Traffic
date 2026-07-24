@@ -46,6 +46,9 @@ const createStyles = (theme:any)=>StyleSheet.create({
       top: 50,
       right: 20,
       zIndex: 10,
+      padding:Spacing.two,
+      backgroundColor:"#FAF9F722",
+      borderRadius:Radius.md
     },
     splash:{
       flex:1,

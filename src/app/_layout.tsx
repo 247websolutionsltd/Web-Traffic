@@ -9,8 +9,9 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{headerShown: false}}>
-        <Stack.Screen name="index" />
         <Stack.Screen name="onboard" />
+        <Stack.Screen name="index" />
+        {/* <Stack.Screen name="onboard" /> */}
         <Stack.Screen name="setup" />
         <Stack.Screen name="category" />
         <Stack.Screen name="detail" />
