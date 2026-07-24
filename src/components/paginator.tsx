@@ -1,7 +1,9 @@
 import { Colors } from "@/constants/theme";
+import { useTheme } from "@/hooks/use-theme";
 import { StyleSheet, View } from "react-native";
 
 const Paginator = ({ data, currentIndex }: any) => {
+  const theme = useTheme();
   return (
     <View style={styles.container}>
       {data.map((_: any, index: number) => (
@@ -9,6 +11,7 @@ const Paginator = ({ data, currentIndex }: any) => {
           key={index}
           style={[
             styles.dot,
+            {backgroundColor: theme.inkSoft},
             currentIndex === index && styles.activeDot,
           ]}
         />
@@ -29,7 +32,6 @@ const styles = StyleSheet.create({
     height: 8,
     width: 8,
     borderRadius: 4,
-    backgroundColor: "#555",
     margin: 5,
   },
   activeDot: {

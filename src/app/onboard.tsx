@@ -4,6 +4,7 @@ import OnboardingItem from "@/components/onboard";
 import Paginator from "@/components/paginator";
 import { ThemedText } from "@/components/themed-text";
 import useHook from "@/hooks/general-hook";
+import { useTheme } from "@/hooks/use-theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useRef, useState } from "react";
@@ -40,16 +41,17 @@ const OnboardingScreen = () => {
     try {
       setIsLoading(false);
       await AsyncStorage.setItem('onboarded', 'true');
-      router.navigate("/index");
+      router.replace("/");
     } catch (e) {
       setIsLoading(false);
       console.error(e);
     }
   };
   const styles = useStyles();
+  const theme = useTheme();
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor:"#FAF9F7"}}>
+    <SafeAreaView style={{flex: 1, backgroundColor:theme.paper}}>
       <TouchableOpacity style={styles.skip} onPress={finishOnboarding}>
         <ThemedText themeColor="textSecondary">Skip</ThemedText>
       </TouchableOpacity>

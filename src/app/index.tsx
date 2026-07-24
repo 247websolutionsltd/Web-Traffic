@@ -1,5 +1,6 @@
 import Button from "@/components/button";
 import { ThemedText } from "@/components/themed-text";
+import { Radius } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -47,7 +48,7 @@ export default function SplashScreen(){
           handleComponent={null}
           enablePanDownToClose={false}
         >
-          <BottomSheetView style={{ flex: 1, padding: 24, backgroundColor: theme.background}}>
+          <BottomSheetView style={{ flex: 1, padding: 24, backgroundColor: theme.background, borderRadius:Radius.lg}}>
             <ThemedText style={{textAlign:'center', lineHeight:30}} type="title">Buy, sell, and trade near you</ThemedText>
             <ThemedText style={{textAlign:'center', marginTop:10}}>Join thousands of buyers and sellers across Nigeria</ThemedText>
             <View style={{marginVertical:30}}>
