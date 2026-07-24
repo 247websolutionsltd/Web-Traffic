@@ -26,7 +26,6 @@ export default function SignUp({style}:ViewProps) {
 
   const onSubmit = async (data: SignUpFormValues) => {
     // await api.signUp(data);
-    console.log(data);
     router.navigate('/setup')
   };
 

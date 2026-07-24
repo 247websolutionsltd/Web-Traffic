@@ -1,4 +1,5 @@
 import { Colors } from "@/constants/theme";
+import { useTheme } from "@/hooks/use-theme";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Tabs } from "expo-router";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
@@ -24,6 +25,7 @@ interface TabBarProps {
 }
 
 function CustomTabBar({ state, navigation }: TabBarProps) {
+  const theme = useTheme();
   const insets = useSafeAreaInsets();
   const routes = state.routes;
   const leftRoutes = routes.slice(0, 2);
@@ -50,7 +52,7 @@ function CustomTabBar({ state, navigation }: TabBarProps) {
   }
 
   return (
-    <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 10) }]}>
+    <View style={[{backgroundColor: theme.card, borderTopColor: theme.line,}, styles.bar, { paddingBottom: Math.max(insets.bottom, 10) }]}>
       {leftRoutes.map(renderTab)}
       <Pressable
         onPress={() => router.push("/")}
@@ -81,9 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    backgroundColor: Colors.card,
     borderTopWidth: 1,
-    borderTopColor: Colors.line,
     paddingTop: 10,
     ...(Platform.OS === "android" ? { elevation: 8 } : {}),
   },

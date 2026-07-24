@@ -1,5 +1,6 @@
-import { Colors, Spacing } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 import useHook from "@/hooks/general-hook";
+import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Pressable, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../styles/styles";
@@ -14,6 +15,7 @@ interface CategoryProps{
 export default function Ad({listing, onPress}:{listing:CategoryProps, onPress:() => void}){
     const {title, location, postedAt, price} = listing
     const styles = useStyles();
+    const theme = useTheme();
     const { priceFormat } = useHook();
     return(
         <Pressable style={styles.ad} onPress={onPress}>
@@ -21,13 +23,13 @@ export default function Ad({listing, onPress}:{listing:CategoryProps, onPress:()
                 <View style={styles.adImage}/>
                 <View style={[styles.categoryRight, {maxWidth:'60%'}]}>
                     <ThemedText style={{ fontSize:17, lineHeight:20, }} type="subtitle">{title}</ThemedText>
-                    <ThemedText style={{flexShrink:1,color:Colors.coralDark, marginVertical:Spacing.two}} type="bold">
+                    <ThemedText style={{flexShrink:1,color:theme.coralDark, marginVertical:Spacing.two}} type="bold">
                         ₦{priceFormat(price)}
                     </ThemedText>
                     <ThemedText type="small">📍 {location} · {postedAt}</ThemedText>
                 </View>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity style={{padding:Spacing.three, paddingLeft:0}}>
                 <MaterialIcons name="favorite-outline" size={22}/>
             </TouchableOpacity>
         </Pressable>

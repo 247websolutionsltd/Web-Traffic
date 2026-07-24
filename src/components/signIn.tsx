@@ -1,7 +1,7 @@
 // screens/SignUpScreen.tsx
 import { FormScreenLayout } from "@/components/form-screen-layout";
 import { FormTextInput } from "@/components/form-text-input";
-import { Colors } from "@/constants/theme";
+import { useTheme } from "@/hooks/use-theme";
 import { SignInFormValues, signInSchema } from "@/schema/signInSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
@@ -33,6 +33,7 @@ export default function SignUp({style}:ViewProps) {
   const phoneRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
   const styles = useStyles();
+  const theme = useTheme();
 
   return (
     <FormScreenLayout 
@@ -63,7 +64,7 @@ export default function SignUp({style}:ViewProps) {
         password
       />
       <TouchableOpacity style={{alignSelf:'flex-end'}} onPress={()=>router.navigate('/setup/reset')}>
-        <ThemedText style={{color:Colors.coralDark}}>Forgot password?</ThemedText>
+        <ThemedText style={{color:theme.coralDark}}>Forgot password?</ThemedText>
       </TouchableOpacity>
     </FormScreenLayout>
   );

@@ -1,5 +1,6 @@
-import { Colors, Spacing } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 import useHook from "@/hooks/general-hook";
+import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Pressable, TouchableOpacity, View } from "react-native";
@@ -23,6 +24,7 @@ export default function Saved({listing, onPress, unlike}:SavedProp){
     const styles = useStyles();
     const { priceFormat } = useHook();
     const [ liked, setLiked ] = useState(true);
+    const theme = useTheme();
     const handleUnlike = (index:string)=>{
         setLiked(!liked);
         unlike(index)
@@ -33,7 +35,7 @@ export default function Saved({listing, onPress, unlike}:SavedProp){
                 <View style={styles.adImage}/>
                 <View style={[styles.categoryRight, {maxWidth:'60%'}]}>
                     <ThemedText style={{ fontSize:17, lineHeight:20, }} type="subtitle">{title}</ThemedText>
-                    <ThemedText style={{flexShrink:1,color:Colors.coralDark, marginVertical:Spacing.two}} type="bold">
+                    <ThemedText style={{flexShrink:1,color:theme.coralDark, marginVertical:Spacing.two}} type="bold">
                         ₦{priceFormat(price)}
                     </ThemedText>
                     <ThemedText type="small">📍 {location} · {postedAt}</ThemedText>

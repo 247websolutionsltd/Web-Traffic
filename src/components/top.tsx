@@ -1,3 +1,4 @@
+import { useTheme } from "@/hooks/use-theme";
 import MaterialIcons from "@react-native-vector-icons/material-icons";
 import { router } from "expo-router";
 import { StyleProp, TouchableOpacity, View, ViewStyle } from "react-native";
@@ -12,22 +13,23 @@ interface TopProps{
 }
 export default function Top({title="", search, filter, style}:TopProps){
     const styles = useStyles();
+    const theme = useTheme();
     return(
         <View style={[styles.topView, style]}>
             <TouchableOpacity onPress={()=>router.back()} style={styles.topIcon}>
-                <MaterialIcons name="arrow-back" size={22}/>
+                <MaterialIcons name="arrow-back" size={22} color={theme.text}/>
             </TouchableOpacity>
             <View/>
             <View><ThemedText type="subtitle">{title}</ThemedText></View>
             {
                 search ?
                 <TouchableOpacity onPress={()=>router.back()} style={styles.topIcon}>
-                    <MaterialIcons name="search" size={22}/>
+                    <MaterialIcons name="search" size={22} color={theme.text}/>
                 </TouchableOpacity>
                 :
                 filter ?
                 <TouchableOpacity onPress={()=>router.back()} style={[styles.topIcon, {right:0}]}>
-                    <MaterialIcons name="filter-list" size={22}/>
+                    <MaterialIcons name="filter-list" size={22} color={theme.text}/>
                 </TouchableOpacity>
                 
                 :

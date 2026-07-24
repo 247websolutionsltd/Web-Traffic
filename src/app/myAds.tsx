@@ -11,7 +11,7 @@ import { useStyles } from "../../styles/styles";
 
 const FILTERS = ["Active", "Sold", "Expired"];
 export default function CategoryScreen(){
-    const [activeFilter, setActiveFilter] = useState("Price");
+    const [activeFilter, setActiveFilter] = useState("Active");
     const styles = useStyles();
     return(
         <Container edges={['top', 'bottom']}>

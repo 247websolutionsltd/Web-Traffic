@@ -3,6 +3,7 @@ import Saved from "@/components/saved";
 import { ThemedText } from "@/components/themed-text";
 import { Colors, Spacing } from "@/constants/theme";
 import { favorites, listings } from "@/data/mock";
+import { useTheme } from "@/hooks/use-theme";
 import { Listing } from "@/types";
 import MaterialIcons from "@react-native-vector-icons/material-icons";
 import { router } from "expo-router";
@@ -45,17 +46,18 @@ export default function CategoryScreen(){
         setFavorite([]);
     }
     const styles = useStyles();
+    const theme = useTheme();
     return(
         <Container edges={['top', 'bottom']}>
             <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
                 <View style={styles.row}>
                     <TouchableOpacity onPress={()=>router.back()} style={[styles.top2Icon, {marginRight:Spacing.two}]}>
-                        <MaterialIcons name="arrow-back" size={23}/>
+                        <MaterialIcons name="arrow-back" size={23} color={theme.text}/>
                     </TouchableOpacity>
                     <ThemedText type="subtitle">Saved</ThemedText>
                 </View>
                 <TouchableOpacity onPress={handleClear}>
-                    <ThemedText style={{color:Colors.coralDark}}>Clear all</ThemedText>
+                    <ThemedText style={{color:theme.coralDark, fontWeight:500}}>Clear all</ThemedText>
                 </TouchableOpacity>
             </View>
             <View style={{padding:Spacing.three, flex:1,}}>

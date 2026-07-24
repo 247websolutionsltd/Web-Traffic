@@ -1,4 +1,5 @@
-import { Colors, Radius, Spacing } from "@/constants/theme";
+import { Radius, Spacing } from "@/constants/theme";
+import { useTheme } from "@/hooks/use-theme";
 import { Pressable, StyleSheet } from "react-native";
 import { ThemedText } from "./themed-text";
 
@@ -9,14 +10,15 @@ interface ChipProps {
 }
 
 export function Chip({ label, active, onPress }: ChipProps) {
+  const theme = useTheme();
   return (
     <Pressable
       onPress={onPress}
-      style={[styles.base, active && styles.active]}
+      style={[{backgroundColor:theme.card, borderColor:theme.line},styles.base, active && {backgroundColor:theme.ink, borderColor:theme.ink}]}
       accessibilityRole="button"
       accessibilityState={{ selected: !!active }}
     >
-      <ThemedText style={[styles.label, active && styles.activeLabel, {fontWeight:500}]}>{label}</ThemedText>
+      <ThemedText style={[{color:theme.inkSoft}, active && {color:theme.card}, {fontWeight:500}]}>{label}</ThemedText>
     </Pressable>
   );
 }
@@ -26,21 +28,8 @@ const styles = StyleSheet.create({
     height: 34,
     paddingHorizontal: Spacing.four,
     borderRadius: Radius.pill,
-    backgroundColor: Colors.card,
     borderWidth: 1,
-    borderColor: Colors.line,
     justifyContent: "center",
     marginRight: Spacing.two,
-  },
-  active: {
-    backgroundColor: Colors.ink,
-    borderColor: Colors.ink,
-  },
-  label: {
-    // fontFamily: fonts.bodySemibold,
-    color: Colors.inkSoft,
-  },
-  activeLabel: {
-    color: Colors.white,
   },
 });

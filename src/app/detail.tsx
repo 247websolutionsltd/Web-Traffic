@@ -4,14 +4,16 @@ import Button from "@/components/button";
 import { ThemedText } from "@/components/themed-text";
 import Top from "@/components/top2";
 import { Colors, Spacing } from "@/constants/theme";
+import { useTheme } from "@/hooks/use-theme";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../styles/styles";
 
 export default function Detail(){
     const styles = useStyles();
+    const theme = useTheme();
     return(
-        <SafeAreaView edges={['bottom']} style={{backgroundColor:Colors.paper}}>
+        <SafeAreaView edges={['bottom']} style={{backgroundColor:theme.paper}}>
                 <ScrollView contentContainerStyle={{flexGrow:1}} showsVerticalScrollIndicator={false}>
                     <SafeAreaView style={styles.detailImage}>
                         <Top/>

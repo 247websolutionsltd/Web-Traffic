@@ -8,14 +8,9 @@ import '@/global.css';
 import { Platform } from 'react-native';
 
 export const Colors = {
-   ink: "#1B1B23",
-  inkSoft: "#565660",
+  
   inkFaint: "#8C8C96",
-  paper: "#FAF9F7",
-  card: "#FFFFFF",
-  line: "#EDEBE7",
   coral: "#EF4B5F",
-  coralDark: "#C22F42",
   coralTint: "#FDEBEE",
   navy: "#16213E",
   navySoft: "#1B2A52",
@@ -32,6 +27,12 @@ export const Colors = {
     backgroundElement: '#F0F0F3',
     backgroundSelected: '#E0E1E6',
     textSecondary: '#60646C',
+    paper: "#FAF9F7",
+    card: "#FFFFFF",
+    coralDark: "#e7374e",
+    inkSoft: "#565660",
+    line: "#EDEBE7",
+    ink: "#1B1B23",
   },
   dark: {
     text: '#ffffff',
@@ -39,6 +40,12 @@ export const Colors = {
     backgroundElement: '#212225',
     backgroundSelected: '#2E3135',
     textSecondary: '#B0B4BA',
+    paper: "#3c3e3e",
+    card: "#000",
+    coralDark: "#e6445a",
+    inkSoft: "#7e7e85",
+    line: "#5e5d5c",
+    ink: "#cecee5",
   },
 } as const;
 

@@ -4,8 +4,9 @@ import Container from "@/components/custom-container";
 import { ListingCardCompact } from "@/components/ListingCard";
 import Search from "@/components/searchInput";
 import { ThemedText } from "@/components/themed-text";
-import { Colors, Spacing } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 import { categories, currentUser, listings } from "@/data/mock";
+import { useTheme } from "@/hooks/use-theme";
 import { Category } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -19,6 +20,7 @@ export default function Home(){
     const featured = useMemo(() => listings.filter((l) => l.featured), []);
     const recent = useMemo(() => listings.slice(0, 6), []);
     const styles = useStyles();
+    const theme = useTheme();
     return(
         <Container>
             <View style={{paddingHorizontal:Spacing.three}}>
@@ -29,12 +31,12 @@ export default function Home(){
                             <ThemedText>Deliver to</ThemedText>
                             <View style={styles.locationRow}>
                                 <ThemedText type="subtitle">{currentUser.location}</ThemedText>
-                                <Ionicons name="chevron-down" size={14} color={Colors.ink} />
+                                <Ionicons name="chevron-down" size={14} color={theme.ink} />
                             </View>
                         </View>
                     </View>
                     <Pressable style={styles.bell} accessibilityLabel="Notifications">
-                        <Ionicons name="notifications-outline" size={24} color={Colors.ink} />
+                        <Ionicons name="notifications-outline" size={24} color={theme.ink} />
                         <View style={styles.bellDot} />
                     </Pressable>
                 </View>

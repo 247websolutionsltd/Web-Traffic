@@ -1,4 +1,5 @@
 // components/FormTextInput.tsx
+import { useTheme } from "@/hooks/use-theme";
 import MaterialIcons from "@react-native-vector-icons/material-icons";
 import { useState } from "react";
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
@@ -28,6 +29,7 @@ export function FormTextInput<T extends FieldValues>({
 }: FormTextInputProps<T>) {
   const styles = useStyles();
   const [ secure, setSecure ] = useState(true);
+  const theme = useTheme();
   return (
     <Controller
       control={control}
@@ -45,6 +47,7 @@ export function FormTextInput<T extends FieldValues>({
                 style={styles.input} 
                 secureTextEntry={password && secure}
                 onBlur={onBlur}
+                placeholderTextColor={theme.text}
                 onChangeText={onChange}
                 value={value}
                 accessibilityLabel={label}

@@ -1,5 +1,6 @@
 // components/form/FormScreenLayout.tsx
-import { Colors, Spacing } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
+import { useTheme } from "@/hooks/use-theme";
 import { Image, TouchableOpacity, View, ViewProps } from "react-native";
 import { useStyles } from "../../styles/styles";
 import Button from "./button";
@@ -14,6 +15,7 @@ interface FormScreenLayoutProps extends ViewProps {
 
 export function FormScreenLayout({ children, onSubmit, isSubmitting, submitLabel = "Submit", style }: FormScreenLayoutProps) {
   const styles = useStyles();
+  const theme = useTheme();
   return (
     <View style={[style, {flex:1, justifyContent:'space-between'}]}>
       <View>
@@ -63,7 +65,7 @@ export function FormScreenLayout({ children, onSubmit, isSubmitting, submitLabel
             {submitLabel === "Continue" ? "Already have an account?" : submitLabel === "Send Code" ? "Remembered it?" : "New here?"}
           </ThemedText>
           <TouchableOpacity style={{marginVertical:Spacing.two}}>
-            <ThemedText style={{fontWeight:500, color:Colors.coralDark}}>
+            <ThemedText style={{fontWeight:500, color:theme.coralDark}}>
               {" "}{submitLabel === "Log In" ? "Create an account" : "Log in"}
             </ThemedText>
           </TouchableOpacity>

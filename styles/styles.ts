@@ -64,15 +64,16 @@ const createStyles = (theme:any)=>StyleSheet.create({
     },
     input:{
       flex:1,
+      color: theme.text
     },
     inputView:{
         flexDirection:'row',
         padding: Spacing.two,
-        backgroundColor: Colors.card,
+        backgroundColor: theme.card,
         borderRadius: Radius.sm,
         alignItems:'center',
         borderWidth:1,
-        borderColor:Colors.line
+        borderColor:theme.line
     },
     inputError:{
       borderColor: Colors.coral,
@@ -83,7 +84,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
     },
     prefixWrap: {
       borderRightWidth: 1,
-      borderRightColor: Colors.line,
+      borderRightColor: theme.line,
       paddingRight: Spacing.two,
       marginRight: Spacing.one,
     },
@@ -97,7 +98,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
     line: {
       flex: 1,
       height: 1,
-      backgroundColor: Colors.line,
+      backgroundColor: theme.line,
     },
     dividerText: {
       // fontFamily: fonts.bodyRegular,
@@ -113,8 +114,8 @@ const createStyles = (theme:any)=>StyleSheet.create({
       height: 46,
       borderRadius: 12,
       borderWidth: 1,
-      borderColor: Colors.line,
-      backgroundColor: Colors.card,
+      borderColor: theme.line,
+      backgroundColor: theme.card,
       alignItems: "center",
       justifyContent: "center",
       flexDirection:'row'
@@ -122,7 +123,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
     socialLabel: {
       // fontFamily: fonts.bodySemibold,
       fontSize: 12,
-      color: Colors.ink,
+      color: theme.ink,
     },
     upload1:{
       width: 150,
@@ -146,7 +147,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
       borderRadius: 14,
       backgroundColor: Colors.coral,
       borderWidth: 2,
-      borderColor: Colors.paper,
+      borderColor: theme.paper,
       alignItems: "center",
       justifyContent: "center",
     },
@@ -191,15 +192,15 @@ const createStyles = (theme:any)=>StyleSheet.create({
   locationText: {
     // fontFamily: fonts.displaySemibold,
     fontSize: 14.5,
-    color: Colors.ink,
+    color: theme.ink,
   },
   bell: {
     width: 44,
     height: 44,
     borderRadius: 60,
-    backgroundColor: Colors.card,
+    backgroundColor: theme.card,
     borderWidth: 1,
-    borderColor: Colors.line,
+    borderColor: theme.line,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -224,12 +225,12 @@ const createStyles = (theme:any)=>StyleSheet.create({
   sectionTitle: {
     // fontFamily: fonts.displaySemibold,
     fontSize: 15,
-    color: Colors.ink,
+    color: theme.ink,
   },
   seeAll: {
     // fontFamily: fonts.bodySemibold,
     fontSize: 13,
-    color: Colors.coralDark,
+    color: theme.coralDark,
   },
   categoryGrid: {
     flexDirection: "row",
@@ -253,10 +254,10 @@ const createStyles = (theme:any)=>StyleSheet.create({
   top2Icon:{
     padding:Spacing.two,
     borderRadius:80,
-    backgroundColor:"#FFF"
+    backgroundColor:theme.card
   },
   category:{
-    backgroundColor:Colors.white,
+    backgroundColor:theme.card,
     flexDirection:'row', 
     marginVertical:Spacing.two,
     padding:12,
@@ -264,7 +265,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
     borderRadius:Radius.lg
   },
   ad:{
-    backgroundColor:Colors.white,
+    backgroundColor:theme.card,
     flexDirection:'row', 
     marginVertical:Spacing.two,
     padding:Spacing.three,
@@ -275,15 +276,15 @@ const createStyles = (theme:any)=>StyleSheet.create({
     alignItems:'center'
   },
   categoryImage:{
-    width:100,
-    height:100,
-    backgroundColor:Colors.inkSoft,
+    width:90,
+    height:90,
+    backgroundColor:theme.inkSoft,
     borderRadius:Radius.lg
   },
   adImage:{
     width:95,
     height:95,
-    backgroundColor:Colors.inkSoft,
+    backgroundColor:theme.inkSoft,
     borderRadius:Radius.lg
   },
   categoryRight:{
@@ -295,7 +296,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: Colors.paper,
+    backgroundColor: theme.paper,
   },
   header: {
     flexDirection: "row",
@@ -304,17 +305,17 @@ const createStyles = (theme:any)=>StyleSheet.create({
     paddingHorizontal: Spacing.five,
     paddingTop: 56,
     paddingBottom: Spacing.three,
-    backgroundColor: Colors.card,
+    backgroundColor: theme.card,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.line,
+    borderBottomColor: theme.line,
   },
   circleBtn: {
     width: 34,
     height: 34,
     borderRadius: 17,
-    backgroundColor: Colors.paper,
+    backgroundColor: theme.paper,
     borderWidth: 1,
-    borderColor: Colors.line,
+    borderColor: theme.line,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -327,7 +328,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
   headerName: {
     // fontFamily: fonts.displaySemibold,
     fontSize: 13.5,
-    color: Colors.ink,
+    color: theme.ink,
   },
   headerListing: {
     // fontFamily: fonts.bodyRegular,
@@ -356,9 +357,9 @@ const createStyles = (theme:any)=>StyleSheet.create({
     paddingVertical: Spacing.two + 2,
   },
   bubbleThem: {
-    backgroundColor: Colors.card,
+    backgroundColor: theme.card,
     borderWidth: 1,
-    borderColor: Colors.line,
+    borderColor: theme.line,
     borderTopLeftRadius: 4,
   },
   bubbleMe: {
@@ -368,7 +369,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
   bubbleText: {
     // fontFamily: fonts.bodyRegular,
     fontSize: 13,
-    color: Colors.ink,
+    color: theme.ink,
     lineHeight: 18,
   },
   bubbleTextMe: {
@@ -386,9 +387,9 @@ const createStyles = (theme:any)=>StyleSheet.create({
     gap: Spacing.two,
     paddingHorizontal: Spacing.five,
     paddingVertical: Spacing.three,
-    backgroundColor: Colors.card,
+    backgroundColor: theme.card,
     borderTopWidth: 1,
-    borderTopColor: Colors.line,
+    borderTopColor: theme.line,
   },
   chatInput: {
     flex: 1,
@@ -396,13 +397,13 @@ const createStyles = (theme:any)=>StyleSheet.create({
     maxHeight: 100,
     borderRadius: Radius.md,
     borderWidth: 1,
-    borderColor: Colors.line,
-    backgroundColor: Colors.paper,
+    borderColor: theme.line,
+    backgroundColor: theme.paper,
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.two + 2,
     // fontFamily: fonts.bodyRegular,
     fontSize: 13,
-    color: Colors.ink,
+    color: theme.ink,
   },
   sendBtn: {
     width: 40,
@@ -415,7 +416,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
   title: {
     // fontFamily: fonts.displayBold,
     fontSize: 20,
-    color: Colors.ink,
+    color: theme.ink,
     paddingHorizontal: Spacing.five,
     paddingTop: Spacing.two,
     marginBottom: Spacing.three,
@@ -427,7 +428,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
   name: {
     // fontFamily: fonts.displaySemibold,
     fontSize: 13,
-    color: Colors.ink,
+    color: theme.ink,
     marginBottom: 2,
   },
   message: {
@@ -460,7 +461,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: Colors.line,
+    backgroundColor: theme.line,
   },
   empty: {
     alignItems: "center",
@@ -495,7 +496,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
   },
   profileContainer:{
     flexGrow:1,
-    backgroundColor:Colors.paper
+    backgroundColor:theme.paper
   },
   profileTop:{
     backgroundColor:Colors.navy,
@@ -527,10 +528,10 @@ const createStyles = (theme:any)=>StyleSheet.create({
   statCenter:{
     borderLeftWidth:1,
     borderRightWidth:1,
-    borderColor:Colors.line
+    borderColor:theme.line
   },
   statShadow:{
-    backgroundColor:Colors.black,
+    backgroundColor:theme.ink,
     opacity:0.04,
     bottom:131,
     zIndex:-1,
@@ -540,7 +541,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
     alignItems:'center',
     justifyContent:'space-between',
     borderBottomWidth:1,
-    borderColor:Colors.line,
+    borderColor:theme.line,
     padding:Spacing.three
   },
   menuIconView:{
@@ -558,7 +559,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
   detailView:{
     borderTopLeftRadius:24,
     borderTopRightRadius:24,
-    backgroundColor:Colors.paper,
+    backgroundColor:theme.paper,
     bottom:24,
     padding:Spacing.three
   },
@@ -571,7 +572,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'space-between',
-    backgroundColor:"#FFF",
+    backgroundColor:theme.card,
     padding:Spacing.two,
     borderRadius:Radius.md,
     marginVertical:Spacing.three

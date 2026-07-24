@@ -1,6 +1,6 @@
 import { Spacing } from '@/constants/theme';
+import { useTheme } from '@/hooks/use-theme';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
-import { useTheme } from "expo-router";
 import {
   ActivityIndicator,
   TouchableOpacity,
@@ -61,7 +61,7 @@ export default function Button({
             iconLeft &&
             <MaterialIcons name={iconLeft} size={22} color={"#FFF"} style={{marginRight:Spacing.one}}/>
           }
-          <ThemedText style={{color:type === "secondary" ? "#000" : '#FFF', }} type='bold'>{title}</ThemedText>
+          <ThemedText style={{color:type === "secondary" ? theme.text : '#FFF', }} type='bold'>{title}</ThemedText>
           {
             icon &&
             <MaterialIcons name={icon} size={22} color={"#FFF"}/>
