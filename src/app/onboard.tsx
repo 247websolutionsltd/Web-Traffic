@@ -4,6 +4,7 @@ import OnboardingItem from "@/components/onboard";
 import Paginator from "@/components/paginator";
 import { ThemedText } from "@/components/themed-text";
 import useHook from "@/hooks/general-hook";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useRef, useState } from "react";
 import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
@@ -38,7 +39,8 @@ const OnboardingScreen = () => {
     setIsLoading(true);
     try {
       setIsLoading(false);
-      router.navigate("/");
+      await AsyncStorage.setItem('onboarded', 'true');
+      router.navigate("/index");
     } catch (e) {
       setIsLoading(false);
       console.error(e);

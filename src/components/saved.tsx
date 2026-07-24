@@ -1,20 +1,32 @@
 import { Colors, Spacing } from "@/constants/theme";
 import useHook from "@/hooks/general-hook";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useState } from "react";
 import { Pressable, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 import { ThemedText } from "./themed-text";
 
-interface CategoryProps{
+interface ListingProps{
     title:string;
     location:string;
     postedAt:string;
     price:number;
+    id:string;
 }
-export default function Saved({listing, onPress}:{listing:CategoryProps, onPress:() => void}){
-    const {title, location, postedAt, price} = listing
+interface SavedProp{
+    listing:ListingProps;
+    onPress:() => void;
+    unlike:(index:string)=>void;
+}
+export default function Saved({listing, onPress, unlike}:SavedProp){
+    const {title, location, postedAt, price, id} = listing
     const styles = useStyles();
     const { priceFormat } = useHook();
+    const [ liked, setLiked ] = useState(true);
+    const handleUnlike = (index:string)=>{
+        setLiked(!liked);
+        unlike(index)
+    }
     return(
         <Pressable style={styles.ad} onPress={onPress}>
             <View style={styles.row}>
@@ -27,8 +39,8 @@ export default function Saved({listing, onPress}:{listing:CategoryProps, onPress
                     <ThemedText type="small">📍 {location} · {postedAt}</ThemedText>
                 </View>
             </View>
-            <TouchableOpacity>
-                <MaterialIcons name="favorite-outline" size={22}/>
+            <TouchableOpacity onPress={()=>handleUnlike(id)} style={{padding:Spacing.three, paddingLeft:0}}>
+               <MaterialIcons name="favorite" size={22} color={'red'}/>
             </TouchableOpacity>
         </Pressable>
     )

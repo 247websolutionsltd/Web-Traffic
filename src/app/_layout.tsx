@@ -9,6 +9,7 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{headerShown: false}}>
+        <Stack.Screen name="saved" />
         <Stack.Screen name="index" />
         <Stack.Screen name="onboard" />
         <Stack.Screen name="setup" />
@@ -16,7 +17,7 @@ export default function RootLayout() {
         <Stack.Screen name="detail" />
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="myAds" />
-        <Stack.Screen name="saved" />
+        {/* <Stack.Screen name="saved" /> */}
       </Stack>
     </ThemeProvider>
     </GestureHandlerRootView>

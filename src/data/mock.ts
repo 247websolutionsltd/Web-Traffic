@@ -11,6 +11,10 @@ export const categories: Category[] = [
   { id: "other", name: "Others", icon: "grid-outline", tint: "#EDEBFB", count: 18 },
 ];
 
+export const favorites = [
+  "1","2","3","4","5","7"
+]
+
 export const listings: Listing[] = [
   {
     id: "1",

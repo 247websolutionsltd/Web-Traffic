@@ -267,9 +267,10 @@ const createStyles = (theme:any)=>StyleSheet.create({
     backgroundColor:Colors.white,
     flexDirection:'row', 
     marginVertical:Spacing.two,
-    padding:12,
+    padding:Spacing.three,
+    paddingRight:0,
     borderRadius:Radius.lg,
-    height:170,
+    minHeight:170,
     justifyContent:'space-between',
     alignItems:'center'
   },
