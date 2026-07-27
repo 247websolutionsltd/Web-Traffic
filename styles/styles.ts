@@ -47,7 +47,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
       right: 20,
       zIndex: 10,
       padding:Spacing.two,
-      backgroundColor:"#FAF9F722",
+      backgroundColor:"#5c534232",
       borderRadius:Radius.md
     },
     splash:{
@@ -276,7 +276,6 @@ const createStyles = (theme:any)=>StyleSheet.create({
     borderRadius:Radius.lg,
     minHeight:170,
     justifyContent:'space-between',
-    alignItems:'center'
   },
   categoryImage:{
     width:90,
@@ -294,7 +293,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
     padding:Spacing.two,
     paddingVertical:Spacing.one,
     justifyContent:'space-between',
-    maxWidth:'70%'
+    maxWidth:'58%'
   },
 
   container: {
@@ -586,5 +585,17 @@ const createStyles = (theme:any)=>StyleSheet.create({
     padding:Spacing.one,
     paddingHorizontal:Spacing.three,
     borderRadius:Radius.md,
+  },
+  adType:{
+    width:9,
+    height:9,
+    borderRadius:20,
+  },
+  optionCircle:{
+    width:3.5,
+    height:3.5,
+    borderRadius:10,
+    backgroundColor:Colors.inkFaint,
+    marginVertical:0.8
   }
 });

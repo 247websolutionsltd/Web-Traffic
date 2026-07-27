@@ -30,7 +30,7 @@ export default function Saved({listing, onPress, unlike}:SavedProp){
         unlike(index)
     }
     return(
-        <Pressable style={styles.ad} onPress={onPress}>
+        <Pressable style={[styles.ad, {alignItems:'center'}]} onPress={onPress}>
             <View style={styles.row}>
                 <View style={styles.adImage}/>
                 <View style={[styles.categoryRight, {maxWidth:'60%'}]}>

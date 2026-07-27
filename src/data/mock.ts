@@ -1,4 +1,8 @@
+import { Colors } from "@/constants/theme";
 import { Category, ChatThread, CurrentUser, Listing } from "@/types";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+
 
 export const categories: Category[] = [
   { id: "electronics", name: "Electronics", icon: "phone-portrait-outline", tint: "#FDEBEE", count: 248 },
@@ -212,3 +216,19 @@ export function getListingsByCategory(categoryId: string): Listing[] {
 export function formatNaira(amount: number): string {
   return `₦${amount.toLocaleString("en-NG")}`;
 }
+
+type IconName = keyof typeof Ionicons.glyphMap;
+export const OPTIONMENU: { icon: IconName; label: string; onPress: () => void, color:string, background:string; }[] = [
+  { icon: "create-outline", label: "Edit Listing", onPress: () => {router.navigate('/myAds')}, background: Colors.coralTint, color: "#e7374e" },
+  { icon: "star-outline", label: "Boost / feature this add", onPress: () => {router.navigate('/saved')}, background:Colors.goldTint, color:"#8A5A0F" },
+  { icon: "checkmark-outline", label: "Mark as sold", onPress: () => {}, color:Colors.green, background:Colors.greenTint },
+  { icon: "trash-outline", label: "Delete Ad", onPress: () => {}, color: "#e7374e", background: Colors.coralTint },
+];
+
+export const PROFILEMENU: { icon: IconName; label: string; onPress: () => void }[] = [
+  { icon: "pricetags-outline", label: "My ads", onPress: () => {router.navigate('/myAds')} },
+  { icon: "heart-outline", label: "Saved", onPress: () => {router.navigate('/saved')} },
+  { icon: "card-outline", label: "Plans & billing", onPress: () => {router.navigate('/billing')} },
+  { icon: "settings-outline", label: "Settings", onPress: () => {} },
+  { icon: "help-buoy-outline", label: "Help & support", onPress: () => {} },
+];

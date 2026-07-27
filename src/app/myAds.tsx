@@ -1,21 +1,52 @@
 import Ad from "@/components/ad";
 import { Chip } from "@/components/Chip";
 import Container from "@/components/custom-container";
-import Top from "@/components/top";
-import { Spacing } from "@/constants/theme";
-import { listings } from "@/data/mock";
+import OptionCard from "@/components/option";
+import { ThemedText } from "@/components/themed-text";
+import { Radius, Spacing } from "@/constants/theme";
+import { listings, OPTIONMENU } from "@/data/mock";
+import { useTheme } from "@/hooks/use-theme";
+import { MaterialIcons } from "@expo/vector-icons";
+import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
-import { useState } from "react";
-import { FlatList, ScrollView, View } from "react-native";
+import { useCallback, useRef, useState } from "react";
+import { FlatList, ScrollView, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../styles/styles";
 
 const FILTERS = ["Active", "Sold", "Expired"];
 export default function CategoryScreen(){
     const [activeFilter, setActiveFilter] = useState("Active");
     const styles = useStyles();
+    const theme = useTheme();
+    const optionRef = useRef<BottomSheet>(null);
+    const [index, setIndex] = useState(-1);
+    const handleOption=()=>{
+        setIndex(0)
+        console.log(index)
+    }
+    // const snapPoints = useMemo(() => ["55%"],['75%']);
+    const renderBackdrop = useCallback(
+        (props: any) => (
+            <BottomSheetBackdrop
+            {...props}
+            appearsOnIndex={0}
+            disappearsOnIndex={-1}
+            opacity={0.6}
+            pressBehavior="close"
+            />
+        ),
+        []
+    );
     return(
+        <View style={{flex:1}}>
         <Container edges={['top', 'bottom']}>
-            <Top title="Electronics" filter style={{marginHorizontal:Spacing.three}}/>
+            <View style={[styles.row, {paddingHorizontal:Spacing.three}]}>
+                <TouchableOpacity onPress={()=>router.back()} style={[styles.top2Icon, {marginRight:Spacing.two}]}>
+                    <MaterialIcons name="arrow-back" size={23} color={theme.text}/>
+                </TouchableOpacity>
+                <ThemedText type="subtitle">My ads</ThemedText>
+            </View>
             <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -33,10 +64,44 @@ export default function CategoryScreen(){
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <Ad listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} />
+                        <Ad 
+                        listing={item} 
+                        onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} 
+                        type="expire"
+                        onOption={handleOption}
+                        />
                     )}
                 />
             </View>
-        </Container>
+            </Container>
+            {
+                index === 0 &&
+                <BottomSheet
+                ref={optionRef}
+                index={index}
+                enableDynamicSizing
+                enablePanDownToClose
+                onClose={()=>setIndex(-1)}
+                backdropComponent={renderBackdrop}
+                >
+                <BottomSheetView style={{ flex: 1, backgroundColor: theme.background, borderRadius:Radius.lg}}>
+                    <SafeAreaView edges={['bottom']}>
+                        {
+                            OPTIONMENU.map((item, i) => (
+                            <OptionCard 
+                            title={item.label} 
+                            key={item.label} 
+                            onPress={item.onPress} 
+                            icon={item.icon} 
+                            color={item.color}
+                            background={item.background}
+                            />
+                        ))}
+                    </SafeAreaView>
+                </BottomSheetView>
+                </BottomSheet>
+            }
+        
+        </View>
     )
 }
