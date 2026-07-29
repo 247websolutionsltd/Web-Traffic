@@ -609,7 +609,7 @@ const createStyles = (theme:any)=>StyleSheet.create({
     borderRadius:Radius.pill
   },
   toggleCircle:{
-    backgroundColor:"#FAF9F7",
+    backgroundColor:"#FFF",
     borderRadius:150,
     margin:4
   }

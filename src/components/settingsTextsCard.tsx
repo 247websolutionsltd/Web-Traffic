@@ -1,9 +1,8 @@
-import { Colors, Spacing } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
 import { useStyles } from "../../styles/styles";
-import Radio from "./radio";
 import { ThemedText } from "./themed-text";
 
 type IconName = keyof typeof Ionicons.glyphMap;
@@ -11,8 +10,9 @@ interface ProfileCardProps {
     title: string;
     icon: IconName;
     end: boolean;
+    text?: string;
 }
-export default function SettingsToggleCard({title, icon, end}:ProfileCardProps){
+export default function SettingsTextsCard({title, icon, end, text}:ProfileCardProps){
     const styles = useStyles();
     const theme = useTheme()
     return(
@@ -27,7 +27,12 @@ export default function SettingsToggleCard({title, icon, end}:ProfileCardProps){
                     </ThemedText>
                 </View>
             </View>
-            <Radio activeColor={Colors.coral} inactiveColor={theme.line}/>
+            {
+                text &&
+                <ThemedText type="small">
+                    {text}
+                </ThemedText>
+            }
         </View>
     )
 }

@@ -236,15 +236,9 @@ export const PROFILEMENU: { icon: IconName; label: string; onPress: () => void }
 export const SETTINGSMENU1: { icon: IconName; label: string; onPress: () => void }[] = [
   { icon: "person", label: "Edit Profile", onPress: () => {router.navigate('/myAds')} },
   { icon: "lock-closed", label: "Change Password", onPress: () => {router.navigate('/saved')} },
-  // { icon: "card-outline", label: "Plans & billing", onPress: () => {router.navigate('/billing')} },
-  // { icon: "settings-outline", label: "Settings", onPress: () => {router.navigate('/settings')} },
-  // { icon: "help-buoy-outline", label: "Help & support", onPress: () => {} },
 ];
 
-export const SETTINGSMENU2: { icon: IconName; label: string; onPress: () => void }[] = [
-  { icon: "person", label: "Chat Messages", onPress: () => {router.navigate('/myAds')} },
-  { icon: "lock-closed", label: "Price drops on saved ads", onPress: () => {router.navigate('/saved')} },
-  // { icon: "card-outline", label: "Plans & billing", onPress: () => {router.navigate('/billing')} },
-  // { icon: "settings-outline", label: "Settings", onPress: () => {router.navigate('/settings')} },
-  // { icon: "help-buoy-outline", label: "Help & support", onPress: () => {} },
+export const SETTINGSMENU2: { icon: IconName; label: string;}[] = [
+  { icon: "person", label: "Chat Messages" },
+  { icon: "lock-closed", label: "Price drops on saved ads" },
 ];
