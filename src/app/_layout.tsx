@@ -19,6 +19,7 @@ export default function RootLayout() {
         <Stack.Screen name="myAds" />
         <Stack.Screen name="saved" />
         <Stack.Screen name="billing" />
+        <Stack.Screen name="settings" />
       </Stack>
     </ThemeProvider>
     </GestureHandlerRootView>

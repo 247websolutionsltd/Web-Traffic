@@ -23,7 +23,6 @@ export default function CategoryScreen(){
     const [index, setIndex] = useState(-1);
     const handleOption=()=>{
         setIndex(0)
-        console.log(index)
     }
     // const snapPoints = useMemo(() => ["55%"],['75%']);
     const renderBackdrop = useCallback(
@@ -83,8 +82,10 @@ export default function CategoryScreen(){
                 enablePanDownToClose
                 onClose={()=>setIndex(-1)}
                 backdropComponent={renderBackdrop}
+                backgroundStyle={{backgroundColor: theme.paper}}
+                handleIndicatorStyle={{backgroundColor:theme.text}}
                 >
-                <BottomSheetView style={{ flex: 1, backgroundColor: theme.background, borderRadius:Radius.lg}}>
+                <BottomSheetView style={{ flex: 1, backgroundColor: theme.paper, borderRadius:Radius.lg}}>
                     <SafeAreaView edges={['bottom']}>
                         {
                             OPTIONMENU.map((item, i) => (

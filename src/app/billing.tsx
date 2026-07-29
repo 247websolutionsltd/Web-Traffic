@@ -18,6 +18,7 @@ export default function Billing(){
                 </TouchableOpacity>
                 <ThemedText type="subtitle">Plans & billing</ThemedText>
             </View>
+            
         </Container>
     )
 }

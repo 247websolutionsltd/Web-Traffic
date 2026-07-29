@@ -26,7 +26,13 @@ export default function Profile(){
             <View>
                 {
                 PROFILEMENU.map((item, i) => (
-                <ProfileCard title={item.label} key={item.label} onPress={item.onPress} icon={item.icon}/>
+                <ProfileCard
+                 title={item.label} 
+                 key={item.label} 
+                 onPress={item.onPress} 
+                 icon={item.icon}
+                end={i + 1 === PROFILEMENU.length}
+                 />
                 ))}
             </View>
         </ScrollView>

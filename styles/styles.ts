@@ -542,7 +542,6 @@ const createStyles = (theme:any)=>StyleSheet.create({
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'space-between',
-    borderBottomWidth:1,
     borderColor:theme.line,
     padding:Spacing.three
   },
@@ -597,5 +596,21 @@ const createStyles = (theme:any)=>StyleSheet.create({
     borderRadius:10,
     backgroundColor:Colors.inkFaint,
     marginVertical:0.8
+  },
+  settingsView:{
+    backgroundColor:theme.card,
+    borderColor:theme.line,
+    borderWidth:1,
+    borderRadius:Radius.lg
+  },
+  toggleView:{
+    flexDirection:'row',
+    alignItems:'center',
+    borderRadius:Radius.pill
+  },
+  toggleCircle:{
+    backgroundColor:"#FAF9F7",
+    borderRadius:150,
+    margin:4
   }
 });
