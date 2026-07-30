@@ -228,7 +228,7 @@ export const OPTIONMENU: { icon: IconName; label: string; onPress: () => void, c
 export const PROFILEMENU: { icon: IconName; label: string; onPress: () => void }[] = [
   { icon: "pricetags-outline", label: "My ads", onPress: () => {router.navigate('/myAds')} },
   { icon: "heart-outline", label: "Saved", onPress: () => {router.navigate('/saved')} },
-  { icon: "card-outline", label: "Plans & billing", onPress: () => {router.navigate('/billing')} },
+  { icon: "card-outline", label: "My store", onPress: () => {router.navigate('/store')} },
   { icon: "settings-outline", label: "Settings", onPress: () => {router.navigate('/settings')} },
   { icon: "help-buoy-outline", label: "Help & support", onPress: () => {} },
 ];
@@ -242,3 +242,51 @@ export const SETTINGSMENU2: { icon: IconName; label: string;}[] = [
   { icon: "person", label: "Chat Messages" },
   { icon: "lock-closed", label: "Price drops on saved ads" },
 ];
+
+export const stores = [
+    {
+      id:1,
+      displayPic: "https://images.unsplash.com/photo-1785142893942-dd29da7e38a6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8",
+      headerPic: "https://images.unsplash.com/photo-1785327831299-eddf16a18328?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8",
+      name:"Vix Fashion",
+      ads: 248,
+      star:"4.0",
+      location:"Lagos"
+    },
+    {
+      id:2,
+      displayPic: "https://images.unsplash.com/photo-1785142893942-dd29da7e38a6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8",
+      headerPic: "https://images.unsplash.com/photo-1785327831299-eddf16a18328?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8",
+      name:"Vix Fashion",
+      ads: 248,
+      star:"4.0",
+      location:"Lagos"
+    },
+    {
+      id:3,
+      displayPic: "https://images.unsplash.com/photo-1785142893942-dd29da7e38a6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8",
+      headerPic: "https://images.unsplash.com/photo-1785327831299-eddf16a18328?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8",
+      name:"Vix Fashion",
+      ads: 248,
+      star:"4.0",
+      location:"Lagos"
+    },
+    {
+      id:4,
+      displayPic: "https://images.unsplash.com/photo-1785142893942-dd29da7e38a6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8",
+      headerPic: "https://images.unsplash.com/photo-1785327831299-eddf16a18328?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8",
+      name:"Vix Fashion",
+      ads: 248,
+      star:"4.0",
+      location:"Lagos"
+    },
+    {
+      id:5,
+      displayPic: "https://images.unsplash.com/photo-1785142893942-dd29da7e38a6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8",
+      headerPic: "https://images.unsplash.com/photo-1785327831299-eddf16a18328?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8",
+      name:"Vix Fashion",
+      ads: 248,
+      star:"4.0",
+      location:"Lagos"
+    },
+  ]

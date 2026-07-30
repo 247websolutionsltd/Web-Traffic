@@ -40,7 +40,7 @@ export default function Home(){
                         <View style={styles.bellDot} />
                     </Pressable>
                 </View>
-                <Search/>
+                <Search placeholder="Search cars, phones, homes…"/>
             </View>
 
             <ScrollView

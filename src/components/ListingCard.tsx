@@ -1,6 +1,7 @@
 import { Badge } from "@/components/badge";
 import { Colors, Radius, Spacing } from "@/constants/theme";
 import { formatNaira } from "@/data/mock";
+import { useTheme } from "@/hooks/use-theme";
 import { Listing } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
@@ -13,9 +14,10 @@ interface CardProps {
 }
 
 export function ListingCardCompact({ listing, onPress }: CardProps) {
+  const theme = useTheme();
   const [saved, setSaved] = useState(false);
   return (
-    <Pressable onPress={onPress} style={styles.compactCard}>
+    <Pressable onPress={onPress} style={[styles.compactCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
       <View style={[styles.compactImage, { backgroundColor: listing.imageColors[0] }]}>
         {listing.featured && (
           <View style={styles.badgeSlot}>
@@ -30,7 +32,7 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
           style={styles.heart}
           accessibilityLabel={saved ? "Remove from saved" : "Save listing"}
         >
-          <Ionicons name={saved ? "heart" : "heart-outline"} size={13} color={saved ? Colors.coral : Colors.ink} />
+          <Ionicons name={saved ? "heart" : "heart-outline"} size={13} color={saved ? Colors.coral : theme.ink} />
         </Pressable>
         {listing.soldOut && (
           <View style={styles.soldOverlay}>
@@ -53,8 +55,9 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
 }
 
 export function ListingCardRow({ listing, onPress }: CardProps) {
+  const theme = useTheme();
   return (
-    <Pressable onPress={onPress} style={styles.rowCard}>
+    <Pressable onPress={onPress} style={[styles.rowCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
       <View style={[styles.rowThumb, { backgroundColor: listing.imageColors[0] }]}>
         {listing.soldOut && (
           <View style={styles.soldOverlaySmall}>
@@ -64,7 +67,7 @@ export function ListingCardRow({ listing, onPress }: CardProps) {
       </View>
       <View style={styles.rowBody}>
         {listing.featured && <Badge label="Featured" tone="gold" />}
-        <Text style={styles.rowTitle} numberOfLines={2}>
+        <Text style={[styles.rowTitle, {color: theme.ink,}]} numberOfLines={2}>
           {listing.title}
         </Text>
         <View style={styles.locRow}>
@@ -73,7 +76,7 @@ export function ListingCardRow({ listing, onPress }: CardProps) {
             {listing.location} · {listing.postedAt}
           </Text>
         </View>
-        <Text style={styles.rowPrice}>{formatNaira(listing.price)}</Text>
+        <Text style={[styles.rowPrice, {color: theme.coralDark,}]}>{formatNaira(listing.price)}</Text>
       </View>
     </Pressable>
   );
@@ -82,10 +85,8 @@ export function ListingCardRow({ listing, onPress }: CardProps) {
 const styles = StyleSheet.create({
   compactCard: {
     width: 156,
-    backgroundColor: Colors.card,
     borderRadius: Radius.md,
     borderWidth: 1,
-    borderColor: Colors.line,
     overflow: "hidden",
     marginRight: Spacing.three,
   },
@@ -146,18 +147,6 @@ const styles = StyleSheet.create({
   compactInfo: {
     padding: Spacing.three,
   },
-  compactPrice: {
-    // fontFamily: fonts.displaySemibold,
-    fontSize: 14,
-    color: Colors.ink,
-  },
-  compactTitle: {
-    // fontFamily: fonts.bodyRegular,
-    fontSize: 11,
-    color: Colors.inkSoft,
-    marginTop: 2,
-    marginBottom: 4,
-  },
   locRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -171,9 +160,7 @@ const styles = StyleSheet.create({
   rowCard: {
     flexDirection: "row",
     gap: Spacing.three,
-    backgroundColor: Colors.card,
     borderWidth: 1,
-    borderColor: Colors.line,
     borderRadius: Radius.md,
     padding: Spacing.two + 2,
     marginBottom: Spacing.three,
@@ -192,7 +179,7 @@ const styles = StyleSheet.create({
   rowTitle: {
     // fontFamily: fonts.displaySemibold,
     fontSize: 13,
-    color: Colors.ink,
+    
   },
   rowMeta: {
     // fontFamily: fonts.bodyRegular,
@@ -202,7 +189,6 @@ const styles = StyleSheet.create({
   rowPrice: {
     // fontFamily: fonts.displaySemibold,
     fontSize: 14,
-    color: Colors.coralDark,
     marginTop: 2,
   },
 });

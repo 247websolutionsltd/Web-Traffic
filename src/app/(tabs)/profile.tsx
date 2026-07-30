@@ -19,7 +19,7 @@ export default function Profile(){
                 </View>
                 <View style={{marginVertical:Spacing.three}}>
                     <ThemedText type="subtitle" style={{color:"#FAF9F7"}}>Tunde Adebayo</ThemedText>
-                    <ThemedText style={{color:"#F0F0F3"}}>Ikeja, Lagos · Member since 2022</ThemedText>
+                    <ThemedText style={{color:"#F0F0F3"}}>example@gmail.com</ThemedText>
                 </View>
             </SafeAreaView>
             <Stats/>

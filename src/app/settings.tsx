@@ -12,11 +12,11 @@ import { useStyles } from "../../styles/styles";
 export default function Settings(){
     const styles = useStyles();
     return(
-        <Container>
+        <Container edges={['bottom', 'top']}>
             <Top title="Settings"/>
 
             <View style={{paddingHorizontal:Spacing.three, marginVertical:12}}>
-                <ThemedText style={{fontSize:18, fontWeight:500, marginBottom:Spacing.two}}>ACCOUNT</ThemedText>
+                <ThemedText style={{fontSize:17, fontWeight:500, marginBottom:Spacing.two}}>ACCOUNT</ThemedText>
                 <View style={styles.settingsView}>
                     {
                         SETTINGSMENU1.map((item, i) => (
@@ -32,7 +32,7 @@ export default function Settings(){
             </View>
 
             <View style={{paddingHorizontal:Spacing.three, marginVertical:12}}>
-                <ThemedText style={{fontSize:18, fontWeight:500, marginBottom:Spacing.two}}>NOTIFICATION</ThemedText>
+                <ThemedText style={{fontSize:17, fontWeight:500, marginBottom:Spacing.two}}>NOTIFICATION</ThemedText>
                 <View style={styles.settingsView}>
                     {
                         SETTINGSMENU2.map((item, i) => (
@@ -47,7 +47,7 @@ export default function Settings(){
             </View>
 
             <View style={{paddingHorizontal:Spacing.three, marginVertical:12}}>
-                <ThemedText style={{fontSize:18, fontWeight:500, marginBottom:Spacing.two}}>PRIVACY</ThemedText>
+                <ThemedText style={{fontSize:17, fontWeight:500, marginBottom:Spacing.two}}>PRIVACY</ThemedText>
                 <View style={styles.settingsView}>
                     <SettingsToggleCard
                         title={"Show phone number on ads"} 
@@ -64,11 +64,11 @@ export default function Settings(){
             </View>
 
             <View style={{paddingHorizontal:Spacing.three, marginVertical:12}}>
-                <ThemedText style={{fontSize:18, fontWeight:500, marginBottom:Spacing.two}}>APP</ThemedText>
+                <ThemedText style={{fontSize:17, fontWeight:500, marginBottom:Spacing.two}}>APP</ThemedText>
                 <View style={styles.settingsView}>
                     <SettingsTextsCard
                         title="Language" 
-                        icon={"bar-chart"} 
+                        icon={"globe"} 
                         end={false}
                         text="English"
                     />
@@ -78,25 +78,26 @@ export default function Settings(){
                         end={false}
                     />
                     <SettingsTextsCard
-                        title="Language" 
-                        icon={"bar-chart"} 
+                        title="App version" 
+                        icon={"information-circle-outline"} 
                         end={false}
-                        text="English"
+                        text="1.1.1"
+                        iconSize={20}
                     />
                 </View>
             </View>
 
             <View style={{paddingHorizontal:Spacing.three, marginVertical:12}}>
-                <ThemedText style={{fontSize:18, fontWeight:500, marginBottom:Spacing.two}}>APP</ThemedText>
+                <ThemedText style={{fontSize:17, fontWeight:500, marginBottom:Spacing.two}}>DANGER ZONE</ThemedText>
                 <View style={styles.settingsView}>
                     <SettingsTextsCard
-                        title="Language" 
-                        icon={"bar-chart"} 
+                        title="Log Out" 
+                        icon={"ban"} 
                         end={false}
                     />
                     <SettingsTextsCard
-                        title="Language" 
-                        icon={"bar-chart"} 
+                        title="Delete Account" 
+                        icon={"trash"} 
                         end={false}
                     />
                 </View>

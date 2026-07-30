@@ -18,7 +18,8 @@ export default function RootLayout() {
         {/* <Stack.Screen name="(tabs)" /> */}
         <Stack.Screen name="myAds" />
         <Stack.Screen name="saved" />
-        <Stack.Screen name="billing" />
+        <Stack.Screen name="[store]" />
+        <Stack.Screen name="myStore" />
         <Stack.Screen name="settings" />
       </Stack>
     </ThemeProvider>

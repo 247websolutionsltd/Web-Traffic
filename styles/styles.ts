@@ -612,5 +612,31 @@ const createStyles = (theme:any)=>StyleSheet.create({
     backgroundColor:"#FFF",
     borderRadius:150,
     margin:4
+  },
+  store:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    minHeight:120,
+    padding:Spacing.three,
+    borderRadius:Radius.lg,
+    backgroundColor:theme.card,
+    marginVertical:Spacing.two,
+    
+  },
+  storeMid:{
+    flexShrink:1,
+    padding:10,
+    justifyContent:'space-between',
+  },
+  storeHeader:{
+    height:'30%',
+    padding:Spacing.three
+  },
+  storeTop:{
+    bottom:50,
+    backgroundColor:theme.card,
+    marginHorizontal:Spacing.four,
+    borderRadius:Radius.md
   }
 });

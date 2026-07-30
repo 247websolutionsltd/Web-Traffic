@@ -11,15 +11,16 @@ interface ProfileCardProps {
     icon: IconName;
     end: boolean;
     text?: string;
+    iconSize?: number;
 }
-export default function SettingsTextsCard({title, icon, end, text}:ProfileCardProps){
+export default function SettingsTextsCard({title, icon, end, text, iconSize=16}:ProfileCardProps){
     const styles = useStyles();
     const theme = useTheme()
     return(
         <View style={[styles.profileCard, {borderBottomWidth:end ? 0 : 1}]} >
             <View style={[styles.row, {flexShrink:1}]}>
                 <View style={styles.menuIconView}>
-                    <Ionicons name={icon} size={16} color={theme.coralDark} />
+                    <Ionicons name={icon} size={iconSize} color={theme.coralDark} />
                 </View>
                 <View style={{ flexShrink: 1, padding:Spacing.one }}>
                     <ThemedText type="bold" style={{ flexWrap: 'wrap' }}>

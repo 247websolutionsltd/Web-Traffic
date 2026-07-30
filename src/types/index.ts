@@ -32,6 +32,15 @@ export interface Listing {
   };
 }
 
+export interface InfoProps{
+  id: number;
+  displayPic: string;
+  name: string;
+  ads: number;
+  star: string;
+  location: string;
+}
+
 export interface ChatMessage {
   id: string;
   fromMe: boolean;

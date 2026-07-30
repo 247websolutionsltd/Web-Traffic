@@ -32,7 +32,7 @@ export default function Button({
   icon,
   type = "primary",
   isLoading = false,
-  textSize=16,
+  textSize=18,
   title,
   disabled=false,
   style,
@@ -61,7 +61,11 @@ export default function Button({
             iconLeft &&
             <MaterialIcons name={iconLeft} size={22} color={"#FFF"} style={{marginRight:Spacing.one}}/>
           }
-          <ThemedText style={{color:type === "secondary" ? theme.text : '#FFF', }} type='bold'>{title}</ThemedText>
+          <ThemedText
+           style={{color:type === "secondary" ? textColor || theme.text : '#FFF', fontSize:textSize}}
+            type='bold'>
+              {title}
+            </ThemedText>
           {
             icon &&
             <MaterialIcons name={icon} size={22} color={"#FFF"}/>

@@ -7,7 +7,7 @@ import { router } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 
-export default function Billing(){
+export default function MyStore(){
     const styles = useStyles();
     const theme = useTheme();
     return(
@@ -16,7 +16,7 @@ export default function Billing(){
                 <TouchableOpacity onPress={()=>router.back()} style={[styles.top2Icon, {marginRight:Spacing.two}]}>
                     <MaterialIcons name="arrow-back" size={23} color={theme.text}/>
                 </TouchableOpacity>
-                <ThemedText type="subtitle">Plans & billing</ThemedText>
+                <ThemedText type="subtitle">My store</ThemedText>
             </View>
             
         </Container>
