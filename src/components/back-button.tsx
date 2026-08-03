@@ -1,7 +1,6 @@
 import { Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
-import { Ionicons } from "@expo/vector-icons";
-import MaterialIcons from "@react-native-vector-icons/material-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 import { ThemedText } from "./themed-text";

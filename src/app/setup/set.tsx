@@ -2,7 +2,7 @@ import Button from "@/components/button";
 import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
-import MaterialIcons from "@react-native-vector-icons/material-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { View } from "react-native";
 import { useStyles } from "../../../styles/styles";

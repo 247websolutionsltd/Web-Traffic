@@ -1,6 +1,6 @@
 import { Radius, Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
-import MaterialIcons from "@react-native-vector-icons/material-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { TextInput, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 

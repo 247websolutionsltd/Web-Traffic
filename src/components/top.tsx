@@ -1,5 +1,5 @@
 import { useTheme } from "@/hooks/use-theme";
-import MaterialIcons from "@react-native-vector-icons/material-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { StyleProp, TouchableOpacity, View, ViewStyle } from "react-native";
 import { useStyles } from "../../styles/styles";

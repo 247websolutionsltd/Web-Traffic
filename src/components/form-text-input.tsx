@@ -1,6 +1,6 @@
 // components/FormTextInput.tsx
 import { useTheme } from "@/hooks/use-theme";
-import MaterialIcons from "@react-native-vector-icons/material-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import { TextInput, TextInputProps, TouchableOpacity, View } from "react-native";

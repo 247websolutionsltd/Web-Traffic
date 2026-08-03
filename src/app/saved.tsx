@@ -5,7 +5,7 @@ import { Colors, Spacing } from "@/constants/theme";
 import { favorites, listings } from "@/data/mock";
 import { useTheme } from "@/hooks/use-theme";
 import { Listing } from "@/types";
-import MaterialIcons from "@react-native-vector-icons/material-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Alert, FlatList, TouchableOpacity, View } from "react-native";
