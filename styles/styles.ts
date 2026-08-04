@@ -1,17 +1,17 @@
 import { Colors, Radius, Spacing } from "@/constants/theme";
-import { StyleSheet, useColorScheme } from "react-native";
+import { Dimensions, StyleSheet, useColorScheme } from "react-native";
 
 // export type ThemeType = typeof Colors.light;
 export function useStyles() {
   const colorScheme = useColorScheme() ?? 'light';
   const theme = colorScheme === "light" ? Colors.light : Colors.dark;
-
+  const {width} = Dimensions.get('window');
   // Pass the active theme colors into the factory function below
-  return createStyles(theme);
+  return createStyles(theme, width);
 }
 
 
-const createStyles = (theme:any)=>StyleSheet.create({
+const createStyles = (theme:any, width:any)=>StyleSheet.create({
     button: {
     height:60,
     borderRadius: 16,
@@ -243,7 +243,11 @@ const createStyles = (theme:any)=>StyleSheet.create({
   },
   horizontalList: {
     marginVertical: Spacing.two,
-    marginLeft: Spacing.three,
+    paddingHorizontal:Spacing.two
+  },
+  listing:{
+    width:'50%',
+    padding:Spacing.two,
   },
   topIcon:{
     position:'absolute', 

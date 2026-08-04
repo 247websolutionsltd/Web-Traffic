@@ -11,7 +11,7 @@ import { Category } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useMemo, useState } from "react";
-import { FlatList, Pressable, ScrollView, View } from "react-native";
+import { Dimensions, FlatList, Pressable, ScrollView, View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 
 const FILTERS = ["All", "Buy", "Sell", "To let", "Jobs"];
@@ -21,6 +21,7 @@ export default function Home(){
     const recent = useMemo(() => listings.slice(0, 6), []);
     const styles = useStyles();
     const theme = useTheme();
+    const {width} = Dimensions.get('window');
     return(
         <Container>
             <View style={{paddingHorizontal:Spacing.three}}>
@@ -80,7 +81,9 @@ export default function Home(){
                     keyExtractor={(item) => item.id}
                     contentContainerStyle={[styles.horizontalList]}
                     renderItem={({ item }) => (
-                        <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} />
+                        <View style={{padding:Spacing.two, width:width/2-Spacing.two}}>
+                            <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} />
+                        </View>
                     )}
                 />
             </View>
@@ -92,13 +95,16 @@ export default function Home(){
                     </Pressable>
                 </View>
                 <FlatList
-                    data={recent}
-                    horizontal
+                    data={listings}
+                    scrollEnabled={false}
+                    numColumns={2}
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item) => item.id}
                     contentContainerStyle={styles.horizontalList}
                     renderItem={({ item }) => (
-                        <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} />
+                        <View style={styles.listing}>
+                            <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} />
+                        </View>
                     )}
                 />
             </View>

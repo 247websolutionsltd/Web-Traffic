@@ -47,6 +47,7 @@ export default function SplashScreen(){
           enableDynamicSizing={false}
           handleComponent={null}
           enablePanDownToClose={false}
+          backgroundStyle={{backgroundColor:theme.background}}
         >
           <BottomSheetView style={{ flex: 1, padding: 24, backgroundColor: theme.background, borderRadius:Radius.lg}}>
             <ThemedText style={{textAlign:'center', lineHeight:30}} type="title">Buy, sell, and trade near you</ThemedText>

@@ -29,7 +29,7 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
             e.stopPropagation?.();
             setSaved((s) => !s);
           }}
-          style={styles.heart}
+          style={[styles.heart, {backgroundColor: theme.backgroundElement,}]}
           accessibilityLabel={saved ? "Remove from saved" : "Save listing"}
         >
           <Ionicons name={saved ? "heart" : "heart-outline"} size={13} color={saved ? Colors.coral : theme.ink} />
@@ -41,10 +41,12 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
         )}
       </View>
       <View style={styles.compactInfo}>
-        <ThemedText style={{fontWeight:600}}>{formatNaira(listing.price)}</ThemedText>
-        <ThemedText style={{fontSize:14}} numberOfLines={1}>
-          {listing.title}
-        </ThemedText>
+        <View>
+          <ThemedText style={{fontWeight:600}}>{formatNaira(listing.price)}</ThemedText>
+          <ThemedText style={{fontSize:14}} numberOfLines={1}>
+            {listing.title}
+          </ThemedText>
+        </View>
         <View style={styles.locRow}>
           <Ionicons name="location-outline" size={10} color={Colors.inkFaint} />
           <ThemedText type="small">{listing.location}</ThemedText>
@@ -84,14 +86,14 @@ export function ListingCardRow({ listing, onPress }: CardProps) {
 
 const styles = StyleSheet.create({
   compactCard: {
-    width: 156,
+    width: "100%",
     borderRadius: Radius.md,
     borderWidth: 1,
     overflow: "hidden",
     marginRight: Spacing.three,
   },
   compactImage: {
-    height: 128,
+    height: 140,
     position: "relative",
   },
   badgeSlot: {
@@ -106,7 +108,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: "rgba(255,255,255,0.92)",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -146,6 +147,8 @@ const styles = StyleSheet.create({
   },
   compactInfo: {
     padding: Spacing.three,
+    minHeight:120,
+    justifyContent:'space-between'
   },
   locRow: {
     flexDirection: "row",
