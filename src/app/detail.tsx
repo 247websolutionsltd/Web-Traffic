@@ -5,6 +5,7 @@ import { ThemedText } from "@/components/themed-text";
 import Top from "@/components/top2";
 import { Colors, Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
+import { ImageBackground } from "expo-image";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../styles/styles";
@@ -15,9 +16,9 @@ export default function Detail(){
     return(
         <SafeAreaView edges={['bottom']} style={{backgroundColor:theme.paper}}>
                 <ScrollView contentContainerStyle={{flexGrow:1}} showsVerticalScrollIndicator={false}>
-                    <SafeAreaView style={styles.detailImage}>
+                    <ImageBackground style={styles.detailImage}>
                         <Top/>
-                    </SafeAreaView>
+                    </ImageBackground>
                     <View style={styles.detailView}>
                         <View style={[styles.badgeSlot, {position:'relative', marginBottom:Spacing.three}]}>
                             <Badge label="Featured" tone="gold" />

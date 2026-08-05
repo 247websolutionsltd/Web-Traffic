@@ -68,7 +68,7 @@ export default function Button({
             </ThemedText>
           {
             icon &&
-            <MaterialIcons name={icon} size={22} color={"#FFF"}/>
+            <MaterialIcons name={icon} size={textSize || 22} color={"#FFF"}/>
           }
           
         </View>

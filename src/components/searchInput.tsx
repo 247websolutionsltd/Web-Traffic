@@ -11,7 +11,7 @@ export default function Search({placeholder}:{placeholder:string;}){
         <View style={[styles.row, {backgroundColor:theme.card, padding:Spacing.two, borderRadius:Radius.md}]}>
             <MaterialIcons name="search" size={20} style={{marginRight:Spacing.one}} color={theme.textSecondary}/>
             <TextInput 
-                style={[styles.input, {fontSize:17}]} 
+                style={[styles.input, {fontSize:15, lineHeight:17}]} 
                 placeholder={placeholder}
                 placeholderTextColor={theme.textSecondary}
             />

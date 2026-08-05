@@ -23,7 +23,7 @@ export const Colors = {
   primary:"#EF4B5F",
   light: {
     text: '#1B1B230',
-    background: '#FAF9F7',
+    background: '#FFF',
     backgroundElement: '#F0F0F3',
     backgroundSelected: '#E0E1E6',
     textSecondary: '#60646C',
@@ -36,7 +36,7 @@ export const Colors = {
   },
   dark: {
     text: '#ffffff',
-    background: '#000000',
+    background: '#1B2A4A',
     backgroundElement: '#212225',
     backgroundSelected: '#2E3135',
     textSecondary: '#B0B4BA',
@@ -84,6 +84,7 @@ export const Spacing = {
   four: 24,
   five: 32,
   six: 64,
+  banner:200
 } as const;
 
 export const Radius = {

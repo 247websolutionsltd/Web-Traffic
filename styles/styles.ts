@@ -232,7 +232,8 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
   },
   seeAll: {
     // fontFamily: fonts.bodySemibold,
-    fontSize: 13,
+    fontSize: 14,
+    fontWeight:500,
     color: theme.coralDark,
   },
   categoryGrid: {
@@ -642,5 +643,78 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     backgroundColor:theme.card,
     marginHorizontal:Spacing.four,
     borderRadius:Radius.md
-  }
+  },
+  banner:{
+    width:width-Spacing.five,
+    height:Spacing.banner,
+  },
+  bannerView:{
+    flex:1,
+    backgroundColor:'#00000065',
+    padding:Spacing.three,
+    justifyContent:'center',
+    borderRadius:Radius.lg
+  },
+  bannerLeft:{
+    maxWidth:'55%'
+  },
+  bannerButton:{
+    borderWidth:1,
+    borderColor:"#fff",
+    borderRadius:Radius.sm,
+    alignSelf:'flex-start',
+    padding:Spacing.two,
+    paddingHorizontal:Spacing.three,
+    marginVertical:Spacing.two
+  },
+  sponsoredImage:{
+    height:Spacing.banner,
+    marginVertical:Spacing.three
+  },
+  sponsoredView:{
+    flex:1,
+    backgroundColor:'#0000005d',
+    padding:Spacing.three,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  sponsoredTag:{
+    backgroundColor:'#00000093',
+    alignSelf:'flex-start',
+    padding:Spacing.two,
+    borderRadius:Radius.md,
+    position:'absolute',
+    top:0,
+    margin:Spacing.two
+  },
+  catTest:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    minHeight:Spacing.banner,
+    borderWidth:1,
+    borderColor:theme.line,
+    backgroundColor:'#00000075',
+    paddingBottom:Spacing.three,
+    margin:Spacing.two
+  },
+  catTestLeft:{
+    flexShrink:1, 
+    maxWidth:'50%',
+    justifyContent:'space-between',
+  },
+  newBottom:{
+    flexDirection:'row',
+    alignItems:'flex-end',
+    justifyContent:'space-between',
+    padding:Spacing.three,
+  },
+  newArrivals:{
+    marginVertical:Spacing.three,
+    borderWidth:1,
+    borderColor:theme.line,
+  },
+  newArrivalsImage:{
+    height:Spacing.banner-50,
+    width:'100%',
+  },
 });

@@ -4,6 +4,7 @@ import { formatNaira } from "@/data/mock";
 import { useTheme } from "@/hooks/use-theme";
 import { Listing } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
+import { ImageBackground } from "expo-image";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ThemedText } from "./themed-text";
@@ -18,7 +19,7 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
   const [saved, setSaved] = useState(false);
   return (
     <Pressable onPress={onPress} style={[styles.compactCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
-      <View style={[styles.compactImage, { backgroundColor: listing.imageColors[0] }]}>
+      <ImageBackground style={[styles.compactImage, { backgroundColor: listing.imageColors[0] }]} source={{uri:listing.image}}>
         {listing.featured && (
           <View style={styles.badgeSlot}>
             <Badge label="Featured" tone="gold" />
@@ -39,8 +40,8 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
             <Text style={styles.soldText}>Sold out</Text>
           </View>
         )}
-      </View>
-      <View style={styles.compactInfo}>
+      </ImageBackground>
+      <View style={[styles.compactInfo, {backgroundColor:theme.background}]}>
         <View>
           <ThemedText style={{fontWeight:600}}>{formatNaira(listing.price)}</ThemedText>
           <ThemedText style={{fontSize:14}} numberOfLines={1}>
@@ -148,7 +149,7 @@ const styles = StyleSheet.create({
   compactInfo: {
     padding: Spacing.three,
     minHeight:120,
-    justifyContent:'space-between'
+    justifyContent:'space-between',
   },
   locRow: {
     flexDirection: "row",

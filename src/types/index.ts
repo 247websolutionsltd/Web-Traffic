@@ -23,6 +23,7 @@ export interface Listing {
   featured?: boolean;
   soldOut?: boolean;
   description: string;
+  image:string;
   imageColors: [string, string];
   seller: {
     id: string;
