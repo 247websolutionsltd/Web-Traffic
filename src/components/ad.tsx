@@ -1,33 +1,34 @@
 import { Colors, Spacing } from "@/constants/theme";
+import { listings } from "@/data/mock";
 import useHook from "@/hooks/general-hook";
 import { useTheme } from "@/hooks/use-theme";
+import { Image } from "expo-image";
 import { Pressable, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 import { ThemedText } from "./themed-text";
 
-interface CategoryProps{
-    title:string;
-    location:string;
-    postedAt:string;
-    price:number;
-}
 interface AdProps{
-    listing:CategoryProps, 
+    id: string;
+    condition: string;
     onPress:() => void, 
-    type?:string,
     onOption:()=>void
 }
-export default function Ad({listing, onPress, type="live", onOption}:AdProps){
-    const {title, location, postedAt, price} = listing
+export default function Ad({id, onPress, condition, onOption}:AdProps){
+    const {
+        image, 
+        title, 
+        price,
+        views,
+    } = listings.filter((obj)=>obj.id===id)[0];
     const styles = useStyles();
     const theme = useTheme();
     const { priceFormat } = useHook();
     return(
         <Pressable style={styles.ad} onPress={onPress}>
-            <View style={styles.row}>
-                <View style={styles.adImage}/>
+            <View style={[styles.row, {flexShrink:1}]}>
+                <Image style={styles.adImage}  source={{uri:image}}/>
                 <View style={[styles.categoryRight, ]}>
-                    <ThemedText style={{ fontSize:17, lineHeight:20, }} type="subtitle">{title}</ThemedText>
+                    <ThemedText style={{ fontSize:17, lineHeight:20 }} type="subtitle">{title}</ThemedText>
                     <ThemedText style={{flexShrink:1,color:theme.coralDark, marginVertical:Spacing.two}} type="bold">
                         ₦{priceFormat(price)}
                     </ThemedText>
@@ -38,22 +39,16 @@ export default function Ad({listing, onPress, type="live", onOption}:AdProps){
                                 styles.adType, 
                                 {
                                     marginRight:Spacing.one, 
-                                    backgroundColor:type==="live" ? 'green' : Colors.gold
+                                    backgroundColor:condition==="Live" ? 'green' : condition==="Expired" ? 'grey': Colors.gold
                                 }
                             ]
                         }
                         />
-                        <ThemedText type="small">{type==="live" ? 'Live' : "Expiring in 2 days"}</ThemedText>
+                        <ThemedText type="small">{condition}</ThemedText>
                     </View>
                     <View style={styles.row}>
-                        <View style={{marginRight:Spacing.three}}>
-                            <ThemedText type="small" style={{textAlign:'center'}}>👁 198</ThemedText>
-                            <ThemedText type="small" style={{textAlign:'center'}}>views</ThemedText>
-                        </View>
-                        <View>
-                            <ThemedText type="small" style={{textAlign:'center'}}>💬 </ThemedText>
-                            <ThemedText type="small" style={{textAlign:'center'}}>chats</ThemedText>
-                        </View>
+                        <ThemedText type="small" style={{marginRight:Spacing.three}}>👁 {views} views</ThemedText>
+                        <ThemedText type="small" style={{marginRight:Spacing.three}}>💬 chats</ThemedText>
                     </View>
                 </View>
             </View>

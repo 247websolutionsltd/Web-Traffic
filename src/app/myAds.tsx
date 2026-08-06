@@ -4,7 +4,7 @@ import Container from "@/components/custom-container";
 import OptionCard from "@/components/option";
 import { ThemedText } from "@/components/themed-text";
 import { Radius, Spacing } from "@/constants/theme";
-import { listings, OPTIONMENU } from "@/data/mock";
+import { ads, OPTIONMENU } from "@/data/mock";
 import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
@@ -58,15 +58,15 @@ export default function CategoryScreen(){
             </ScrollView>
             <View style={{padding:Spacing.three}}>
                 <FlatList
-                    data={listings}
+                    data={ads}
                     scrollEnabled={false}
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
                         <Ad 
-                        listing={item} 
+                        id={item.id}
                         onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} 
-                        type="expire"
+                        condition={item.condition}
                         onOption={handleOption}
                         />
                     )}

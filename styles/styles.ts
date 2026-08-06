@@ -268,9 +268,11 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     backgroundColor:theme.card,
     flexDirection:'row', 
     marginVertical:Spacing.two,
-    padding:12,
-    maxWidth:'100%',
-    borderRadius:Radius.lg
+    padding:Spacing.two,
+    borderRadius:Radius.lg,
+    minHeight:120,
+    borderWidth:1,
+    borderColor:theme.line,
   },
   ad:{
     backgroundColor:theme.card,
@@ -281,12 +283,13 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     borderRadius:Radius.lg,
     minHeight:170,
     justifyContent:'space-between',
+    borderWidth:1,
+    borderColor:theme.line
   },
   categoryImage:{
-    width:90,
-    height:90,
-    backgroundColor:theme.inkSoft,
-    borderRadius:Radius.lg
+    width:100,
+    height:100,
+    borderRadius:Radius.md
   },
   adImage:{
     width:95,
@@ -296,9 +299,8 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
   },
   categoryRight:{
     padding:Spacing.two,
-    paddingVertical:Spacing.one,
     justifyContent:'space-between',
-    maxWidth:'58%'
+    flexShrink:1
   },
 
   container: {
@@ -520,7 +522,7 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
   },
   stats:{
     flexDirection:'row',
-    backgroundColor: theme.background,
+    backgroundColor: theme.card,
     justifyContent:'space-between',
     borderRadius:Radius.lg,
     marginHorizontal:Spacing.five,
@@ -539,7 +541,7 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
   },
   statShadow:{
     backgroundColor:theme.ink,
-    opacity:0.04,
+    opacity:0.1,
     bottom:131,
     zIndex:-1,
   },
@@ -560,14 +562,15 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     height:350,
     width:'100%',
     backgroundColor:"#C7C2B6",
-    paddingHorizontal:Spacing.three
   },
   detailView:{
     borderTopLeftRadius:24,
     borderTopRightRadius:24,
     backgroundColor:theme.paper,
     bottom:24,
-    padding:Spacing.three
+    padding:Spacing.three,
+    flex:1,
+    justifyContent:'space-between'
   },
   badgeSlot: {
     position: "absolute",
@@ -585,7 +588,6 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
   },
   verifiedView:{
     alignItems:'center',
-    backgroundColor:Colors.greenTint,
     padding:Spacing.one,
     paddingHorizontal:Spacing.three,
     borderRadius:Radius.md,
@@ -717,4 +719,40 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     height:Spacing.banner-50,
     width:'100%',
   },
+  categoryCardImage:{
+    width:"100%",
+    height:120,
+    borderTopRightRadius:Radius.sm,
+    borderTopLeftRadius:Radius.sm
+  },
+  categoriesView:{
+    flexDirection:'row',
+    flexWrap:'wrap',
+    padding:Spacing.two,
+    marginTop:Spacing.two
+  },
+  categoriesDataView:{
+    width:'50%',
+    padding:Spacing.two
+  },
+  categoriesCard:{
+    width:'100%',
+    borderWidth:1,
+    borderColor:theme.line,
+    borderRadius:Radius.sm
+  },
+  categoriesCardBottom:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    backgroundColor:theme.card,
+    padding:Spacing.three,
+    borderBottomRightRadius:Radius.sm,
+    borderBottomLeftRadius:Radius.sm
+  },
+  categoriesListingNumber:{
+    backgroundColor:theme.paper, 
+    paddingHorizontal:10,
+    borderRadius:Radius.lg
+  }
 });

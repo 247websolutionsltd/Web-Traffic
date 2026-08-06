@@ -15,7 +15,7 @@ export default function CategoryScreen(){
     const displayFavorites = (fav: string[])=>{
         const data: Listing[] = []
         fav.forEach((id:string)=>{
-           listings.map((listing)=>{
+           listings.filter((obj)=>obj.id===id).map((listing)=>{
             if (listing.id === id){
                 data.push(listing);
             }

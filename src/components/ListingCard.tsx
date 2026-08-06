@@ -41,7 +41,7 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
           </View>
         )}
       </ImageBackground>
-      <View style={[styles.compactInfo, {backgroundColor:theme.background}]}>
+      <View style={[styles.compactInfo]}>
         <View>
           <ThemedText style={{fontWeight:600}}>{formatNaira(listing.price)}</ThemedText>
           <ThemedText style={{fontSize:14}} numberOfLines={1}>

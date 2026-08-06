@@ -1,5 +1,5 @@
 import { Colors } from "@/constants/theme";
-import { Category, ChatThread, CurrentUser, Listing } from "@/types";
+import { Ads, Category, ChatThread, CurrentUser, Listing } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 
@@ -149,6 +149,33 @@ export const listings: Listing[] = [
   },
 ];
 
+export const ads: Ads[] = [
+  {
+    id: "1",
+    condition:'Live'
+  },
+  {
+    id: "3",
+    condition:'Expiring in 2 days'
+  },
+  {
+    id: "5",
+    condition:'Expired'
+  },
+  {
+    id: "6",
+    condition:'Live'
+  },
+  {
+    id: "7",
+    condition:'Expired'
+  },
+];
+
+export const saved: string[]=[
+  "4", "2", "8", "6"
+]
+
 export const chatThreads: ChatThread[] = [
   {
     id: "c1",
@@ -228,8 +255,8 @@ export function formatNaira(amount: number): string {
 
 type IconName = keyof typeof Ionicons.glyphMap;
 export const OPTIONMENU: { icon: IconName; label: string; onPress: () => void, color:string, background:string; }[] = [
-  { icon: "create-outline", label: "Edit Listing", onPress: () => {router.navigate('/myAds')}, background: Colors.coralTint, color: "#e7374e" },
-  { icon: "star-outline", label: "Boost / feature this add", onPress: () => {router.navigate('/saved')}, background:Colors.goldTint, color:"#8A5A0F" },
+  { icon: "create-outline", label: "Edit Listing", onPress: () => {}, background: Colors.coralTint, color: "#e7374e" },
+  { icon: "star-outline", label: "Boost / feature this add", onPress: () => {}, background:Colors.goldTint, color:"#8A5A0F" },
   { icon: "checkmark-outline", label: "Mark as sold", onPress: () => {}, color:Colors.green, background:Colors.greenTint },
   { icon: "trash-outline", label: "Delete Ad", onPress: () => {}, color: "#e7374e", background: Colors.coralTint },
 ];
@@ -297,5 +324,32 @@ export const stores = [
       ads: 248,
       star:"4.0",
       location:"Lagos"
+    },
+  ]
+
+  export const categoriesData = [
+    {
+      image:"https://images.unsplash.com/photo-1593344484962-796055d4a3a4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGVsZWN0cm9uaWNzfGVufDB8fDB8fHww",
+      category:"Electronics",
+    },
+    {
+      image:"https://plus.unsplash.com/premium_photo-1682435561654-20d84cef00eb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8fDA%3D",
+      category:"Shoes",
+    },
+    {
+      image:"https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YmFnc3xlbnwwfHwwfHx8MA%3D%3D",
+      category:"Bags",
+    },
+    {
+      image:"https://images.unsplash.com/photo-1653681498612-37ec55093e29?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c3BvcnRzJTIwZ2VhcnxlbnwwfHwwfHx8MA%3D%3D",
+      category:"Sports Gear",
+    },
+    {
+      image:"https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
+      category:"Property",
+    },
+    {
+      image:"https://images.unsplash.com/photo-1493238792000-8113da705763?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGNhcnN8ZW58MHx8MHx8fDA%3D",
+      category:"Vehicles",
     },
   ]

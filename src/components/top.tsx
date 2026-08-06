@@ -17,7 +17,7 @@ export default function Top({title="", search, filter, style}:TopProps){
     return(
         <View style={[styles.topView, style]}>
             <TouchableOpacity onPress={()=>router.back()} style={styles.topIcon}>
-                <MaterialIcons name="arrow-back" size={22} color={theme.text}/>
+                <MaterialIcons name="arrow-back" size={25} color={theme.text}/>
             </TouchableOpacity>
             <View/>
             <View><ThemedText type="subtitle">{title}</ThemedText></View>

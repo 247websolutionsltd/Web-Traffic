@@ -16,7 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { useMemo } from "react";
-import { Dimensions, FlatList, Pressable, View } from "react-native";
+import { Dimensions, FlatList, Pressable, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 
 
@@ -52,11 +52,11 @@ export default function Home(){
             </View>
             <Banners bannerSliderData={bannerSliderData}/>
             <View style={{marginVertical:Spacing.two}}>
-                <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
+                <View style={[styles.row, {justifyContent:'space-between', paddingLeft:Spacing.three}]}>
                     <ThemedText type="subtitle">Categories</ThemedText>
-                    <Pressable onPress={() => router.push("/(tabs)/categories")}>
+                    <TouchableOpacity onPress={() => router.push("/(tabs)/categories")} style={{padding:Spacing.three}}>
                         <ThemedText style={styles.seeAll}>See all</ThemedText>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.categoryGrid}>
                     {categories.slice(0, 4).map((c: Category) => (
@@ -122,7 +122,7 @@ export default function Home(){
             <NewArrivals/>
             <View style={{marginVertical:Spacing.three}}>
                 <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
-                    <ThemedText type="subtitle">Best Selleres</ThemedText>
+                    <ThemedText type="subtitle">Best Sellers</ThemedText>
                     <Pressable onPress={() => router.push("/")}>
                         <ThemedText style={styles.seeAll}>See all</ThemedText>
                     </Pressable>

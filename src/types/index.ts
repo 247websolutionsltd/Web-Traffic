@@ -2,6 +2,10 @@ import { Ionicons } from "@expo/vector-icons";
 
 export type Condition = "New" | "Used" | "Refurbished";
 
+export interface Ads {
+  id: string;
+  condition: string;
+}
 export interface Category {
   id: string;
   name: string;
