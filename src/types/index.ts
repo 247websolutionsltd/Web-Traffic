@@ -38,7 +38,7 @@ export interface Listing {
 }
 
 export interface InfoProps{
-  id: number;
+  id: string;
   displayPic: string;
   name: string;
   ads: number;

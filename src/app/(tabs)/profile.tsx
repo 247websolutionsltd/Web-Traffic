@@ -31,7 +31,7 @@ export default function Profile(){
                  key={item.label} 
                  onPress={item.onPress} 
                  icon={item.icon}
-                end={i + 1 === PROFILEMENU.length}
+                 end={i + 1 === PROFILEMENU.length}
                  />
                 ))}
             </View>

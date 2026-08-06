@@ -6,10 +6,11 @@ import { ListingCardCompact } from "@/components/ListingCard";
 import NewArrivals from "@/components/newArrival";
 import Search from "@/components/searchInput";
 import Sponsored from "@/components/sponsored";
+import StoreCard from "@/components/storeCard";
 import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
 import { bannerSliderData } from "@/data/bannerSliderData";
-import { categories, currentUser, listings } from "@/data/mock";
+import { categories, currentUser, listings, stores } from "@/data/mock";
 import { useTheme } from "@/hooks/use-theme";
 import { Category } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
@@ -43,15 +44,14 @@ export default function Home(){
                             </View>
                         </View>
                     </View>
-                    <Pressable style={styles.bell} accessibilityLabel="Notifications">
-                        <Ionicons name="notifications-outline" size={24} color={theme.ink} />
-                        <View style={styles.bellDot} />
-                    </Pressable>
+                    <TouchableOpacity style={styles.bell} accessibilityLabel="Notifications" onPress={()=>router.navigate('/stores')}>
+                        <Ionicons name="storefront-outline" size={24} color={theme.ink} />
+                    </TouchableOpacity>
                 </View>
                 <Search placeholder="Search cars, phones, homes…"/>
             </View>
             <Banners bannerSliderData={bannerSliderData}/>
-            <View style={{marginVertical:Spacing.two}}>
+            <View style={{marginBottom:Spacing.two}}>
                 <View style={[styles.row, {justifyContent:'space-between', paddingLeft:Spacing.three}]}>
                     <ThemedText type="subtitle">Categories</ThemedText>
                     <TouchableOpacity onPress={() => router.push("/(tabs)/categories")} style={{padding:Spacing.three}}>
@@ -120,7 +120,7 @@ export default function Home(){
                 />
             </View>
             <NewArrivals/>
-            <View style={{marginVertical:Spacing.three}}>
+            <View style={{marginTop:Spacing.three}}>
                 <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
                     <ThemedText type="subtitle">Best Sellers</ThemedText>
                     <Pressable onPress={() => router.push("/")}>
@@ -140,6 +140,30 @@ export default function Home(){
                         </View>
                     )}
                 />
+            </View>
+            <Sponsored
+             image="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2hvcHxlbnwwfHwwfHx8MA%3D%3D"
+             deal="Secure a Store"
+            />
+            <View style={{marginTop:Spacing.three}}>
+                <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
+                    <ThemedText type="subtitle">Top Stores</ThemedText>
+                    <TouchableOpacity onPress={() => router.push("/stores")}>
+                        <ThemedText style={styles.seeAll}>See all</ThemedText>
+                    </TouchableOpacity>
+                </View>
+                <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+                    {
+                        stores.slice(0,4).map((item, index)=>(
+                            <View style={styles.categoriesDataView} key={index}>
+                                <StoreCard
+                                    image={item.displayPic}
+                                    title={item.name}
+                                />
+                            </View>
+                        ))
+                    }
+                </View>
             </View>
         </Container>
     )

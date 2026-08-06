@@ -13,7 +13,7 @@ export default function Sponsored({image, deal}:SponsoredProps){
         <ImageBackground source={{uri:image}} style={styles.sponsoredImage}>
             <View style={styles.sponsoredView}>
                 <ThemedText style={[styles.sponsoredTag, {color:"#FFF"}]} type="small">Sponsored</ThemedText>
-                <ThemedText type="subtitle" style={{textAlign:'center', color:"#FFF"}}>50% off</ThemedText>
+                <ThemedText type="subtitle" style={{textAlign:'center', color:"#FFF"}}>{deal}</ThemedText>
                 <View/>
             </View>
         </ImageBackground>

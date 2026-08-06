@@ -198,8 +198,8 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     color: theme.ink,
   },
   bell: {
-    width: 44,
-    height: 44,
+    width: 50,
+    height: 50,
     borderRadius: 60,
     backgroundColor: theme.card,
     borderWidth: 1,
@@ -629,6 +629,8 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     borderRadius:Radius.lg,
     backgroundColor:theme.card,
     marginVertical:Spacing.two,
+    borderWidth:1,
+    borderColor:theme.line
     
   },
   storeMid:{
@@ -754,5 +756,30 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     backgroundColor:theme.paper, 
     paddingHorizontal:10,
     borderRadius:Radius.lg
+  },
+  storeCardView:{
+    flex:1, 
+    backgroundColor:"#00000048", 
+    alignItems:'center', 
+    justifyContent:'center',
+    borderRadius:Radius.sm
+  },
+  storeCard:{
+    width:"100%", 
+    height:120, 
+    borderWidth:1, 
+    borderColor:theme.line,
+    borderRadius:Radius.sm
+  },
+  search:{
+    backgroundColor:theme.card, 
+    padding:Spacing.two, 
+    borderRadius:Radius.md,
+    borderWidth:1,
+    borderColor:theme.line
+  },
+  storeScreen:{
+    height:300,
+    
   }
 });

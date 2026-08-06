@@ -44,7 +44,7 @@ const viewConfig = useRef({
   viewAreaCoveragePercentThreshold: 50,
 }).current;
   return (
-      <View style={{padding:Spacing.three}}>
+      <View style={{padding:Spacing.three, paddingBottom:0}}>
         <FlatList
         data={bannerSliderData}
         pagingEnabled

@@ -18,7 +18,7 @@ export default function Store({info}: StoreProps){
     return(
         <TouchableOpacity
          style={styles.store}
-         onPress={()=>router.navigate({ pathname: "/[store]", params: { store: id } })}
+         onPress={()=>router.navigate({ pathname: "/store", params: { store:id } })}
          >
             <View style={{flexDirection:"row", alignItems:'center'}}>
                 <Image source={displayPic} style={{width:80, height:80, borderRadius:Radius.md}}/>

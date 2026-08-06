@@ -22,6 +22,7 @@ export default function RootLayout() {
         <Stack.Screen name="myStore" />
         <Stack.Screen name="settings" />
         <Stack.Screen name="stores" />
+        <Stack.Screen name="store" />
       </Stack>
     </ThemeProvider>
     </GestureHandlerRootView>
