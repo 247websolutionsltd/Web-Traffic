@@ -779,7 +779,58 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     borderColor:theme.line
   },
   storeScreen:{
-    height:300,
-    
-  }
+    height:200,
+  },
+  storeHeaderImage:{
+    width:70,
+    height:70,
+    borderRadius:Radius.md,
+  },
+  storeHeaderTop:{
+    backgroundColor:theme.card,
+    borderWidth:1,
+    borderColor:theme.line,
+    borderRadius:Radius.lg
+  },
+  storeHeaderImageView:{
+    padding:Spacing.one, 
+    bottom:Spacing.three, 
+    backgroundColor:theme.card, 
+    alignSelf:'flex-start',
+    borderRadius:Radius.md,
+    marginHorizontal:Spacing.four
+  },
+  verified:{
+    borderRadius:90,
+    width:20,
+    height:20,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  rowStretch:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between'
+  },
+  scene: {
+    padding: 12,
+    width,
+  },
+  tabBar: {
+    backgroundColor: theme.paper,
+    elevation: 0,
+    shadowOpacity: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: theme.line,
+  },
+  indicator: {
+    backgroundColor: theme.coralDark,
+    height: 2,
+    width:70
+  },
+  label: {
+    fontWeight: '600',
+    fontSize: 18,
+    textTransform: 'none',
+  },
 });

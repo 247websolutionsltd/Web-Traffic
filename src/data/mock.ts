@@ -285,45 +285,60 @@ export const stores = [
       displayPic: "https://images.unsplash.com/photo-1621768216002-5ac171876625?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGFwcGxlfGVufDB8fDB8fHww",
       headerPic: "https://images.unsplash.com/photo-1785327831299-eddf16a18328?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8",
       name:"Apple",
-      ads: 248,
-      star:"4.0",
-      location:"Lagos"
+      ads: ["2","6"],
+      star:"4.8",
+      location:"Lagos",
+      joined:"2021",
+      followers:"1.5m",
+      verified:true,
     },
     {
       id:"2",
       displayPic: "https://images.unsplash.com/photo-1662947036644-ecfde1221ac7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHdpbmRvd3N8ZW58MHx8MHx8fDA%3D",
       headerPic: "https://images.unsplash.com/photo-1785327831299-eddf16a18328?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8",
       name:"Microsoft",
-      ads: 248,
+      ads: ["1","3"],
       star:"4.0",
-      location:"Lagos"
+      location:"Lagos",
+      joined:"2021",
+      followers:"1.2m",
+      verified:true
     },
     {
       id:"3",
       displayPic: "https://images.unsplash.com/photo-1660477946008-8cd03548bdba?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHNvbnl8ZW58MHx8MHx8fDA%3D",
       headerPic: "https://images.unsplash.com/photo-1785327831299-eddf16a18328?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8",
       name:"Sony",
-      ads: 248,
-      star:"4.0",
-      location:"Lagos"
+      ads: ["1", "2", "3", "4", "5", "6", "7", "8"],
+      star:"4.3",
+      location:"Lagos",
+      joined:"2024",
+      followers:"1.7m",
+      verified:true
     },
     {
       id:"4",
       displayPic: "https://images.unsplash.com/photo-1708376368427-ede2b537d494?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bWFydmVsfGVufDB8fDB8fHww",
       headerPic: "https://images.unsplash.com/photo-1785327831299-eddf16a18328?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8",
       name:"Marvel",
-      ads: 248,
-      star:"4.0",
-      location:"Lagos"
+      ads: ["8"],
+      star:"4.1",
+      location:"Lagos",
+      joined:"2023",
+      followers:"1.9m",
+      verified:true
     },
     {
       id:"5",
       displayPic: "https://images.unsplash.com/photo-1785142893942-dd29da7e38a6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw1fHx8ZW58MHx8fHx8",
       headerPic: "https://images.unsplash.com/photo-1785327831299-eddf16a18328?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8",
       name:"Vix Fashion",
-      ads: 248,
-      star:"4.0",
-      location:"Lagos"
+      ads: ["7"],
+      star:"3.9",
+      location:"Lagos",
+      joined:"2022",
+      followers:"900k",
+      verified:true
     },
   ]
 
