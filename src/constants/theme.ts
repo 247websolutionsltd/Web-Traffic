@@ -22,6 +22,7 @@ export const Colors = {
   white: "#FFFFFF",
   black: "#000000",
   primary:"#EF4B5F",
+  purpleTint:"#F1EFEA",
   light: {
     text: '#1B1B230',
     background: '#FFF',

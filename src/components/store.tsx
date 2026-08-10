@@ -26,7 +26,7 @@ export default function Store({info}: StoreProps){
                     <View>
                         <ThemedText style={{flexWrap:"wrap"}} type="bold">{name}</ThemedText>
                         <View style={{flexDirection:'row'}}>
-                            <ThemedText>{ads} ads</ThemedText>
+                            <ThemedText>{ads.length} ads</ThemedText>
                             <ThemedText style={{marginLeft:Spacing.two}}>{star}★</ThemedText>
                         </View>
                     </View>
@@ -40,7 +40,7 @@ export default function Store({info}: StoreProps){
              type="secondary"
              textColor={Colors.coral}
              textSize={14}
-             />
+            />
         </TouchableOpacity>
     )
 }

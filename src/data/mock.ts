@@ -264,7 +264,7 @@ export const OPTIONMENU: { icon: IconName; label: string; onPress: () => void, c
 export const PROFILEMENU: { icon: IconName; label: string; onPress: () => void }[] = [
   { icon: "pricetags-outline", label: "My ads", onPress: () => {router.navigate('/myAds')} },
   { icon: "heart-outline", label: "Saved", onPress: () => {router.navigate('/saved')} },
-  { icon: "card-outline", label: "My store", onPress: () => {router.navigate('/store')} },
+  { icon: "card-outline", label: "My store", onPress: () => {router.navigate('/createStore')} },
   { icon: "settings-outline", label: "Settings", onPress: () => {router.navigate('/settings')} },
   { icon: "help-buoy-outline", label: "Help & support", onPress: () => {} },
 ];

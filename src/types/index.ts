@@ -41,7 +41,7 @@ export interface InfoProps{
   id: string;
   displayPic: string;
   name: string;
-  ads: number;
+  ads: string[];
   star: string;
   location: string;
 }

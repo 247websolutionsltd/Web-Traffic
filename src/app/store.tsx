@@ -1,3 +1,4 @@
+import Button from "@/components/button";
 import Container from "@/components/custom-container";
 import { ListingCardCompact } from "@/components/ListingCard";
 import StoreHeader from "@/components/storeHeader";
@@ -73,43 +74,6 @@ const AllAdsRoute = () => {
 const AboutRoute = () => (
   <View style={styles.scene}>
     <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>Ab</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>Abewqaout content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>Abiiout content here</ThemedText>
-    <ThemedText>About content here</ThemedText>
-    <ThemedText>Ab</ThemedText>
   </View>
 );
 
@@ -158,7 +122,8 @@ const renderScene = ({ route }:{route:any}) => {
                 verified={verified}
                 style={{marginTop:-50, marginHorizontal:Spacing.three,}}
             />
-            <View style={{marginVertical:Spacing.three}}>
+            <View style={{marginVertical:Spacing.three, flex:1, justifyContent:'space-between'}}>
+                <View>
                 <View style={[styles.row, {paddingHorizontal:Spacing.two}]} onLayout={handleLayout}>
                     <View style={{width:70, justifyContent:'center'}}>
                         <ThemedText type="bold">All Ads</ThemedText>
@@ -173,14 +138,14 @@ const renderScene = ({ route }:{route:any}) => {
                 <View style={[styles.indicator, {left:pageOffset*70}]}/>
                 <PagerView
                     style={{
-                        height: heights[page] ?? 400,
-                        backgroundColor:'green',
+                        height: heights[page] > 300 ? heights[page] : 300,
+                        // backgroundColor:'#FFFFFF22',
                     }}
                     initialPage={0}
                     onPageSelected={(e)=>{
                         setPage(e.nativeEvent.position);
                     }}
-                    onPageScroll={(e)=>setPageOffset(e.nativeEvent.position)}
+                    onPageScroll={(e)=>setPageOffset(e.nativeEvent.position + e.nativeEvent.offset)}
                 >
                     <View key="0">
                         <AllAdsRoute />
@@ -213,6 +178,12 @@ const renderScene = ({ route }:{route:any}) => {
                     </ScrollView>
 
                 </PagerView>
+                </View>
+                <Button
+                 title="Contact Seller" 
+                 onPress={()=>console.log("Hii")} 
+                 style={{margin:Spacing.three, marginBottom:0}}
+                />
             </View>
             
         </Container>
