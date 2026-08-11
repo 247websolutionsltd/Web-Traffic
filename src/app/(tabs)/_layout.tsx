@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   bar: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     borderTopWidth: 1,
     paddingTop: 10,
     ...(Platform.OS === "android" ? { elevation: 8 } : {}),

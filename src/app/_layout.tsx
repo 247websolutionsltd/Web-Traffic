@@ -25,7 +25,20 @@ export default function RootLayout() {
         <Stack.Screen name="store" />
         <Stack.Screen name="createStore" />
         <Stack.Screen name="featured" />
-        <Stack.Screen name="create" />
+        <Stack.Screen
+         name="chat" 
+         options={{ 
+          presentation: 'modal',
+          animation: 'slide_from_right',
+        }} 
+         />
+        <Stack.Screen
+         name="create" 
+         options={{ 
+          presentation: 'modal',
+          animation: 'slide_from_bottom',
+        }} 
+         />
       </Stack>
     </ThemeProvider>
     </GestureHandlerRootView>
