@@ -17,7 +17,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { useMemo } from "react";
-import { Dimensions, FlatList, Pressable, TouchableOpacity, View } from "react-native";
+import { Dimensions, FlatList, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 
 
@@ -73,9 +73,9 @@ export default function Home(){
             <View style={{marginVertical:Spacing.two}}>
                 <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
                     <ThemedText type="subtitle">Featured today</ThemedText>
-                    <Pressable onPress={() => router.push({ pathname: "/", params: { featured: "1" } })}>
+                    <TouchableOpacity onPress={() => router.push("/featured")}>
                         <ThemedText style={styles.seeAll}>See all</ThemedText>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
                 <FlatList
                     data={featured}
@@ -98,9 +98,9 @@ export default function Home(){
             <View style={{marginVertical:Spacing.three}}>
                 <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
                     <ThemedText type="subtitle">Trending Products</ThemedText>
-                    <Pressable onPress={() => router.push("/")}>
+                    <TouchableOpacity onPress={() => router.push("/products")}>
                         <ThemedText style={styles.seeAll}>See all</ThemedText>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
                 <FlatList
                     data={listings.slice(0,4)}
@@ -123,9 +123,9 @@ export default function Home(){
             <View style={{marginTop:Spacing.three}}>
                 <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
                     <ThemedText type="subtitle">Best Sellers</ThemedText>
-                    <Pressable onPress={() => router.push("/")}>
+                    <TouchableOpacity onPress={() => router.push("/products")}>
                         <ThemedText style={styles.seeAll}>See all</ThemedText>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
                 <FlatList
                     data={listings.slice(0,4)}

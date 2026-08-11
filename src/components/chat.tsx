@@ -1,5 +1,6 @@
 import { Spacing } from "@/constants/theme";
 import useHook from "@/hooks/general-hook";
+import { Image } from "expo-image";
 import { TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 import { ThemedText } from "./themed-text";
@@ -9,17 +10,18 @@ interface ChatProps{
     lastMessage:string;
     unread:number;
     time:string;
+    image:string;
 }
 interface ItemProp extends TouchableOpacityProps{
     item: ChatProps;
 }
-export default function Chat({item}:ItemProp){
+export default function Chat({item, onPress}:ItemProp){
     const styles = useStyles();
-    const {listingTitle, lastMessage, unread, time} = item;
+    const {listingTitle, lastMessage, unread, time, image} = item;
     const {linter} = useHook();
     return(
-        <TouchableOpacity style={styles.chat}>
-            <View style={styles.avatar} />
+        <TouchableOpacity style={styles.chat} onPress={onPress}>
+            <Image style={styles.avatar} source={image}/>
             <View style={styles.chatCenter}>
                 <ThemedText type="bold" style={{marginBottom:Spacing.one}}>{linter(listingTitle)}</ThemedText>
                 <ThemedText type="mid">{linter(lastMessage, 65)}</ThemedText>

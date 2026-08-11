@@ -2,8 +2,9 @@ import Activate from "@/components/createStore/activate";
 import Description from "@/components/createStore/description";
 import Name from "@/components/createStore/storeName";
 import Container from "@/components/custom-container";
+import Label from "@/components/progressLabel";
 import { ThemedText } from "@/components/themed-text";
-import { Colors, Spacing } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -24,17 +25,7 @@ export default function Create(){
                 <ThemedText type="subtitle">Create Store</ThemedText>
             </View>
 
-            <View style={styles.createLabelView}>
-                <View style={{width:'33.33%', paddingHorizontal:Spacing.one}}>
-                    <View style={[styles.createLabel, {backgroundColor:page > 0 ? Colors.coral : theme.textSecondary}]}/>
-                </View>
-                <View style={{width:'33.33%', paddingHorizontal:Spacing.one}}>
-                    <View style={[styles.createLabel, {backgroundColor:page > 1 ? Colors.coral : theme.textSecondary}]}/>
-                </View>
-                <View style={{width:'33.33%', paddingHorizontal:Spacing.one}}>
-                    <View style={[styles.createLabel, {backgroundColor:page > 2 ? Colors.coral : theme.textSecondary}]}/>
-                </View>
-            </View>
+            <Label page={page}/>
 
             {
                 page === 1 ?

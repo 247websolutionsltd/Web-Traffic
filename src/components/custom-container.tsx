@@ -10,7 +10,12 @@ export default function Container({children, backgroundColor, style, edges=['top
     const theme = useTheme();
     return(
         <SafeAreaView style={{flex:1, backgroundColor:backgroundColor || theme.paper}} edges={edges}>
-            <ScrollView contentContainerStyle={[{flexGrow:1}, style]} showsVerticalScrollIndicator={false} scrollEnabled={scroll}>
+            <ScrollView 
+             contentContainerStyle={[{flexGrow:1}, style]} 
+             showsVerticalScrollIndicator={false} 
+             scrollEnabled={scroll} 
+             overScrollMode="never"
+             alwaysBounceVertical={false}>
                 {children}
             </ScrollView>
         </SafeAreaView>

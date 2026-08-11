@@ -62,6 +62,7 @@ export interface ChatThread {
   unread: number;
   type: "buying" | "selling";
   messages: ChatMessage[];
+  image: string;
 }
 
 export interface CurrentUser {

@@ -24,6 +24,8 @@ export default function RootLayout() {
         <Stack.Screen name="stores" />
         <Stack.Screen name="store" />
         <Stack.Screen name="createStore" />
+        <Stack.Screen name="featured" />
+        <Stack.Screen name="create" />
       </Stack>
     </ThemeProvider>
     </GestureHandlerRootView>

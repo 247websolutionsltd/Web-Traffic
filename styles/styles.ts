@@ -177,10 +177,9 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     gap: Spacing.three,
   },
   avatar: {
-    width: 52,
-    height: 52,
+    width: 50,
+    height: 50,
     borderRadius: 100,
-    backgroundColor: Colors.navy,
   },
   deliverTo: {
     // fontFamily: fonts.bodyRegular,
@@ -311,17 +310,15 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.three,
-    paddingHorizontal: Spacing.five,
-    paddingTop: 56,
+    padding:Spacing.three,
     paddingBottom: Spacing.three,
     backgroundColor: theme.card,
     borderBottomWidth: 1,
     borderBottomColor: theme.line,
   },
   circleBtn: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
+    padding:Spacing.two,
+    borderRadius: 100,
     backgroundColor: theme.paper,
     borderWidth: 1,
     borderColor: theme.line,
@@ -329,9 +326,9 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     justifyContent: "center",
   },
   headerAvatar: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 40,
+    height: 40,
+    borderRadius: 60,
     backgroundColor: Colors.navy,
   },
   headerName: {
@@ -345,12 +342,11 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     color: Colors.inkFaint,
   },
   messagesList: {
-    padding: Spacing.five,
-    gap: Spacing.three,
+    padding: Spacing.three,
+    gap: Spacing.one,
   },
   bubbleRow: {
     maxWidth: "80%",
-    marginBottom: Spacing.two,
   },
   bubbleRowMe: {
     alignSelf: "flex-end",
@@ -394,7 +390,7 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-end",
     gap: Spacing.two,
-    paddingHorizontal: Spacing.five,
+    paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.three,
     backgroundColor: theme.card,
     borderTopWidth: 1,
@@ -402,8 +398,8 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
   },
   chatInput: {
     flex: 1,
-    minHeight: 40,
-    maxHeight: 100,
+    minHeight: 50,
+    maxHeight: 120,
     borderRadius: Radius.md,
     borderWidth: 1,
     borderColor: theme.line,
@@ -413,10 +409,10 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     // fontFamily: fonts.bodyRegular,
     fontSize: 13,
     color: theme.ink,
+    marginRight:Spacing.two
   },
   sendBtn: {
-    width: 40,
-    height: 40,
+    padding:Spacing.two,
     borderRadius: 20,
     backgroundColor: Colors.coral,
     alignItems: "center",
@@ -835,7 +831,7 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
   },
   createLabelView:{
     flexDirection:'row',
-    margin:Spacing.three-Spacing.one,
+    margin:Spacing.three,
     marginBottom:0
   },
   createLabel:{
@@ -907,7 +903,26 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     padding:Spacing.two
   },
   statCardImage:{
-    width:150, 
-    height:150
+    width:80, 
+    height:80,
+    borderRadius:Radius.md
+  },
+  statCard:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    backgroundColor:theme.card,
+    marginVertical:Spacing.two,
+    borderRadius:Radius.lg,
+    padding:Spacing.two
+  },
+  startCardRight:{
+    flexShrink:1,
+    paddingHorizontal:Spacing.two
+  },
+  circle:{
+    height:8,
+    width:8,
+    borderRadius:20
   }
 });

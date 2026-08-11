@@ -1,17 +1,19 @@
-import { Chip } from "@/components/Chip";
 import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
 import { chatThreads } from "@/data/mock";
+import { useTheme } from "@/hooks/use-theme";
 import { ChatMessage } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { FlatList, KeyboardAvoidingView, Platform, Pressable, ScrollView, TextInput, View } from "react-native";
+import { FlatList, KeyboardAvoidingView, Platform, Pressable, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../styles/styles";
 
 const FILTERS = ["All", "Buying", "Selling"];
 export default function Chats(){
+    const theme = useTheme();
     const styles = useStyles();
     const [activeFilter, setActiveFilter] = useState("All");
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -26,47 +28,39 @@ export default function Chats(){
         setDraft("");
     }
     return(
-        <Container>
-            <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined}>
-            
-                <View style={styles.header}>
-                    <Pressable onPress={() => router.back()} style={styles.circleBtn} accessibilityLabel="Go back">
-                    <Ionicons name="arrow-back" size={17} color={Colors.ink} />
-                    </Pressable>
-                    <View style={styles.headerAvatar} />
-                    <View style={{ flex: 1 }}>
-                    <ThemedText style={styles.headerName}>{thread.personName}</ThemedText>
-                    <ThemedText style={styles.headerListing} numberOfLines={1}>
+        <Container edges={["bottom"]}>            
+            <SafeAreaView style={styles.header} edges={["top"]}>
+                <Pressable onPress={() => router.back()} style={styles.circleBtn} accessibilityLabel="Go back">
+                    <Ionicons name="arrow-back" size={23} color={theme.ink} />
+                </Pressable>
+                <View style={styles.headerAvatar} />
+                <View style={{ flex: 1 }}>
+                    <ThemedText type="subtitle">{thread.personName}</ThemedText>
+                    <ThemedText type="mid" numberOfLines={1}>
                         {thread.listingTitle}
                     </ThemedText>
-                    </View>
-                    <Pressable style={styles.circleBtn} accessibilityLabel="Call">
-                        <Ionicons name="call-outline" size={16} color={Colors.ink} />
-                    </Pressable>
                 </View>
-                <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.chipRow}
-                    style={{flexGrow:0,}}
-                    >
-                    {FILTERS.map((f) => (
-                        <Chip key={f} label={f} active={f === activeFilter} onPress={() => setActiveFilter(f)} />
-                    ))}
-                </ScrollView>
-
+                <Pressable style={styles.circleBtn} accessibilityLabel="Call">
+                    <Ionicons name="call-outline" size={23} color={theme.ink} />
+                </Pressable>
+            </SafeAreaView>
+            <KeyboardAvoidingView 
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={styles.container}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+            >
                 <FlatList
                     data={messages}
                     keyExtractor={(m) => m.id}
                     scrollEnabled={false}
                     contentContainerStyle={styles.messagesList}
                     renderItem={({ item }) => (
-                    <View style={[styles.bubbleRow, item.fromMe ? styles.bubbleRowMe : styles.bubbleRowThem]}>
-                        <View style={[styles.bubble, item.fromMe ? styles.bubbleMe : styles.bubbleThem]}>
-                        <ThemedText style={[styles.bubbleText, item.fromMe && styles.bubbleTextMe]}>{item.text}</ThemedText>
+                        <View style={[styles.bubbleRow, item.fromMe ? styles.bubbleRowMe : styles.bubbleRowThem]}>
+                            <View style={[styles.bubble, item.fromMe ? styles.bubbleMe : styles.bubbleThem]}>
+                                <ThemedText style={[item.fromMe && {color:"#FFF"}]} type="mid">{item.text}</ThemedText>
+                            </View>
+                            <ThemedText style={styles.bubbleTime}>{item.time}</ThemedText>
                         </View>
-                        <ThemedText style={styles.bubbleTime}>{item.time}</ThemedText>
-                    </View>
                     )}
                 />
 
@@ -80,7 +74,7 @@ export default function Chats(){
                         multiline
                     />
                     <Pressable onPress={handleSend} style={styles.sendBtn} accessibilityLabel="Send message">
-                    <Ionicons name="send" size={16} color={Colors.white} />
+                        <Ionicons name="send" size={20} color={Colors.white} />
                     </Pressable>
                 </View>
             </KeyboardAvoidingView>

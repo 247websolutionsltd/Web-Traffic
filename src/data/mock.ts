@@ -186,10 +186,26 @@ export const chatThreads: ChatThread[] = [
     unread: 2,
     type: "selling",
     messages: [
-      { id: "m1", fromMe: false, text: "Hi, is this still available?", time: "10:02" },
-      { id: "m2", fromMe: true, text: "Yes it is, still in great condition.", time: "10:05" },
-      { id: "m3", fromMe: false, text: "Is the price still negotiable?", time: "10:07" },
+      { 
+        id: "m1", 
+        fromMe: false, 
+        text: "Hi, is this still available?", 
+        time: "10:02", 
+      },
+      { 
+        id: "m2", 
+        fromMe: true, 
+        text: "Yes it is, still in great condition.", 
+        time: "10:05",
+      },
+      { 
+        id: "m3", 
+        fromMe: false, 
+        text: "Is the price still negotiable?", 
+        time: "10:07" 
+      },
     ],
+    image:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cGVyc29ufGVufDB8fDB8fHww"
   },
   {
     id: "c2",
@@ -203,6 +219,7 @@ export const chatThreads: ChatThread[] = [
       { id: "m1", fromMe: false, text: "Can we schedule a viewing?", time: "09:10" },
       { id: "m2", fromMe: true, text: "Sure, I can do 2pm tomorrow", time: "09:20" },
     ],
+    image:"https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww"
   },
   {
     id: "c3",
@@ -216,6 +233,7 @@ export const chatThreads: ChatThread[] = [
       { id: "m1", fromMe: true, text: "The car is available for inspection this weekend.", time: "Mon" },
       { id: "m2", fromMe: false, text: "Thanks, will check it out", time: "Mon" },
     ],
+    image:"https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww"
   },
   {
     id: "c4",
@@ -226,6 +244,7 @@ export const chatThreads: ChatThread[] = [
     unread: 0,
     type: "selling",
     messages: [{ id: "m1", fromMe: false, text: "Deal closed, thank you!", time: "Mon" }],
+    image:"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fHww"
   },
   
 ];

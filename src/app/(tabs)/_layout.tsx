@@ -2,7 +2,7 @@ import { Colors } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 import { Ionicons } from "@expo/vector-icons";
 import { router, Tabs } from "expo-router";
-import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type IconName = keyof typeof Ionicons.glyphMap;
@@ -54,14 +54,14 @@ function CustomTabBar({ state, navigation }: TabBarProps) {
   return (
     <View style={[{backgroundColor: theme.card, borderTopColor: theme.line,}, styles.bar, { paddingBottom: Math.max(insets.bottom, 10) }]}>
       {leftRoutes.map(renderTab)}
-      <Pressable
-        onPress={() => router.push("/")}
+      <TouchableOpacity
+        onPress={() => router.push("/create")}
         style={styles.fab}
         accessibilityRole="button"
         accessibilityLabel="Post a new ad"
       >
         <Ionicons name="add" size={26} color={Colors.white} />
-      </Pressable>
+      </TouchableOpacity>
       {rightRoutes.map(renderTab)}
     </View>
   );
