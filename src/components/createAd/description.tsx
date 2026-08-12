@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ScrollView, TextInput, View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 import { Chip } from "../Chip";
+import Dropdown from "../dropdown";
 import { ThemedText } from "../themed-text";
 
 const FILTERS = ["New", "Used", "Refurbished"];
@@ -14,7 +15,7 @@ export default function Description(){
     const [ title, setTitle ] = useState("");
     const [activeFilter, setActiveFilter] = useState("");
     return(
-        <View style={{flex:1}}>
+        <View style={{flex:1, paddingHorizontal:Spacing.three}}>
             <View style={{marginVertical:Spacing.two}}>
                 <ThemedText type="subtitle">What are you posting?</ThemedText>
                 <ThemedText style={{color:theme.textSecondary}}>Choose one... this shapes the questions we ask next</ThemedText>
@@ -61,6 +62,11 @@ export default function Description(){
                     </View>
                 </View>
 
+                <View style={{marginVertical:Spacing.two}}>
+                    <ThemedText>Category</ThemedText>
+                    <Dropdown/>
+                </View>
+                
                 <View style={{marginVertical:Spacing.two}}>
                     <ThemedText>Description</ThemedText>
                     <View style={[styles.inputView, ]}>

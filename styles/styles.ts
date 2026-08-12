@@ -924,5 +924,63 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     height:8,
     width:8,
     borderRadius:20
+  },
+  cancelView:{
+    padding:Spacing.one,
+    borderRadius:50,
+    backgroundColor:Colors.black,
+  },
+  imageUpload:{
+    width:'100%',
+    height:100,
+  },
+  imageUploadView:{
+    flex:1, 
+    backgroundColor:"#00000033",
+    borderRadius:Radius.md,
+    justifyContent:'space-between',
+    padding:6
+  },
+  coverView:{
+    backgroundColor:Colors.black,
+    alignSelf:'flex-start',
+    padding:Spacing.one,
+    paddingHorizontal:Spacing.two,
+    borderRadius:Radius.lg
+  },
+  uploadImages:{
+    flexDirection:'row',
+    flexWrap:'wrap',
+    paddingHorizontal:Spacing.two
+  },
+  negotiable:{
+    margin:Spacing.three,
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    backgroundColor:theme.card,
+    padding:Spacing.three,
+    borderRadius:Radius.md,
+    borderWidth:1,
+    borderColor:theme.line
+  },
+  createCard:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    padding:Spacing.three,
+    backgroundColor:theme.card,
+    borderRadius:Radius.md,
+    borderWidth:1,
+    borderColor:theme.line,
+  },
+  previewCard:{
+    borderRadius:Radius.lg,
+    backgroundColor:theme.card,
+  },
+  previewCardImage:{
+    width:'100%',
+    height:160,
+    padding:Spacing.two
   }
 });
