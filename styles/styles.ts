@@ -982,5 +982,35 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     width:'100%',
     height:160,
     padding:Spacing.two
+  },
+  checkBox:{
+    borderRadius:7,
+    alignSelf:'flex-start',
+    height:22,
+    width:22,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  boostInfo:{
+    padding:Spacing.three,
+    borderRadius:Radius.md,
+    backgroundColor:Colors.goldTint,
+    marginVertical:Spacing.three,
+  },
+  liveImage:{
+    width:80, 
+    height:80,
+    borderRadius:Radius.md
+  },
+  liveCard:{
+    flexDirection:'row',
+    alignItems:'center',
+    width:'100%',
+    backgroundColor:theme.card,
+    borderRadius:Radius.md,
+    padding:Spacing.two,
+    borderWidth:1,
+    borderColor:theme.line,
+    marginVertical:Spacing.three
   }
 });

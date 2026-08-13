@@ -44,7 +44,7 @@ export default function Chats() {
                 scrollEnabled={false}
                 keyExtractor={(i, index) => index.toString()}
                 renderItem={({item})=>(
-                    <Chat item={item} onPress={()=>router.navigate('/chat')}/>
+                    <Chat item={item} onPress={() => router.navigate({ pathname: "/chat", params: { id: item.id } })}/>
                 )}
                 ItemSeparatorComponent={() => <View style={styles.separator} />}
                 contentContainerStyle={{ paddingBottom: 100 }}

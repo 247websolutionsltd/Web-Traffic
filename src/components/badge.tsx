@@ -6,8 +6,8 @@ type Tone = "gold" | "green" | "coral" | "ink";
 const toneMap: Record<Tone, { bg: string; fg: string }> = {
   gold: { bg: Colors.goldTint, fg: "#8A5A0F" },
   green: { bg: Colors.greenTint, fg: Colors.green },
-  coral: { bg: Colors.coralTint, fg: Colors.coralDark },
-  ink: { bg: "#EFEFEF", fg: Colors.inkSoft },
+  coral: { bg: Colors.coralTint, fg: "#e6445a" },
+  ink: { bg: "#EFEFEF", fg: "#7e7e85" },
 };
 
 export function Badge({ label, tone = "coral" }: { label: string; tone?: Tone }) {

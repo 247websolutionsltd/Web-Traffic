@@ -25,6 +25,8 @@ export default function RootLayout() {
         <Stack.Screen name="store" />
         <Stack.Screen name="createStore" />
         <Stack.Screen name="featured" />
+        <Stack.Screen name="boost" />
+        <Stack.Screen name="live" />
         <Stack.Screen
          name="chat" 
          options={{ 

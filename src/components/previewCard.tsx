@@ -3,6 +3,7 @@ import { useTheme } from "@/hooks/use-theme";
 import { ImageBackground } from "expo-image";
 import { View } from "react-native";
 import { useStyles } from "../../styles/styles";
+import { Badge } from "./badge";
 import { ThemedText } from "./themed-text";
 
 interface PreviewCardProps{
@@ -20,7 +21,7 @@ export default function PreviewCard({image, price, description}:PreviewCardProps
              style={styles.previewCardImage}
              imageStyle={{borderTopLeftRadius:Radius.lg, borderTopRightRadius:Radius.lg}}
             >
-                <ThemedText type="small" >PREVIEW</ThemedText>
+               <Badge label="Preview" tone="gold" />
             </ImageBackground>
             <View style={{padding:Spacing.three}}>
                 <ThemedText type="subtitle">{price}</ThemedText>

@@ -11,7 +11,7 @@ import { FlatList, KeyboardAvoidingView, Platform, Pressable, TextInput, View } 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../styles/styles";
 
-const FILTERS = ["All", "Buying", "Selling"];
+
 export default function Chats(){
     const theme = useTheme();
     const styles = useStyles();
@@ -20,7 +20,6 @@ export default function Chats(){
     const thread = chatThreads.find((c) => c.id === id) ?? chatThreads[0];
     const [messages, setMessages] = useState<ChatMessage[]>(thread.messages);
     const [draft, setDraft] = useState("");
-
     function handleSend() {
         const text = draft.trim();
         if (!text) return;

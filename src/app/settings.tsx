@@ -40,7 +40,7 @@ export default function Settings(){
                         title={item.label} 
                         key={item.label} 
                         icon={item.icon} 
-                        end={i + 1 === SETTINGSMENU1.length}
+                        end={i + 1 === SETTINGSMENU2.length}
                         />
                     ))}
                 </View>
