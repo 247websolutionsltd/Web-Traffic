@@ -6,7 +6,7 @@ import { Listing } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { ImageBackground } from "expo-image";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./themed-text";
 
 interface CardProps {
@@ -18,7 +18,7 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
   const theme = useTheme();
   const [saved, setSaved] = useState(false);
   return (
-    <Pressable onPress={onPress} style={[styles.compactCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
+    <TouchableOpacity onPress={onPress} style={[styles.compactCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
       <ImageBackground style={[styles.compactImage, { backgroundColor: listing.imageColors[0] }]} source={{uri:listing.image}}>
         {listing.featured && (
           <View style={styles.badgeSlot}>
@@ -53,14 +53,14 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
           <ThemedText type="small">{listing.location}</ThemedText>
         </View>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 
 export function ListingCardRow({ listing, onPress }: CardProps) {
   const theme = useTheme();
   return (
-    <Pressable onPress={onPress} style={[styles.rowCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
+    <TouchableOpacity onPress={onPress} style={[styles.rowCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
       <View style={[styles.rowThumb, { backgroundColor: listing.imageColors[0] }]}>
         {listing.soldOut && (
           <View style={styles.soldOverlaySmall}>
@@ -81,7 +81,7 @@ export function ListingCardRow({ listing, onPress }: CardProps) {
         </View>
         <Text style={[styles.rowPrice, {color: theme.coralDark,}]}>{formatNaira(listing.price)}</Text>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 

@@ -12,8 +12,9 @@ interface StatProps{
     icon:keyof typeof MaterialIcons.glyphMap;
     iconBackground: string;
     topRightColor: string;
+    iconColor: string;
 }
-export default function Stat({topRight, title, desc, icon, iconBackground, topRightColor}:StatProps){
+export default function Stat({topRight, title, desc, icon, iconBackground, topRightColor, iconColor}:StatProps){
     const styles = useStyles();
     const theme = useTheme();
     return(
@@ -21,7 +22,7 @@ export default function Stat({topRight, title, desc, icon, iconBackground, topRi
             <View style={styles.storeStat}>
                 <View style={styles.rowStretch}>
                     <View style={[styles.storeStatIcon, {backgroundColor:iconBackground}]}>
-                        <MaterialIcons name={icon} size={17} color={theme.text}/>
+                        <MaterialIcons name={icon} size={17} color={iconColor}/>
                     </View>
                     <ThemedText type="small" style={{color:topRightColor}}>{topRight}</ThemedText>
                 </View>

@@ -24,6 +24,7 @@ export interface Listing {
   condition: Condition;
   postedAt: string;
   views: number;
+  memberImage: string;
   featured?: boolean;
   soldOut?: boolean;
   description: string;

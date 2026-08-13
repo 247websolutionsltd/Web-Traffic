@@ -7,13 +7,18 @@ interface RadioProps{
     inactiveColor: string;
     toggled?: boolean;
     size?:number;
+    onToggle: ()=>void;
 }
-export default function Radio({activeColor, inactiveColor, toggled=false, size=45}:RadioProps){
+export default function Radio({activeColor, inactiveColor, toggled=false, size=45, onToggle}:RadioProps){
     const styles = useStyles();
     const [ toggle, setToggle ] = useState(toggled);
+    const handleToggle = ()=>{
+        setToggle(!toggle);
+        onToggle()
+    }
     return(
         <TouchableOpacity 
-            onPress={()=>setToggle(!toggle)}
+            onPress={handleToggle}
             style={[
                 styles.toggleView, 
                 {

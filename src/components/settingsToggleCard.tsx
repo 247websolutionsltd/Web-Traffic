@@ -11,8 +11,10 @@ interface ProfileCardProps {
     title: string;
     icon: IconName;
     end: boolean;
+    onToggle: ()=>void;
+    toggled?:boolean;
 }
-export default function SettingsToggleCard({title, icon, end}:ProfileCardProps){
+export default function SettingsToggleCard({title, icon, end, onToggle, toggled=false}:ProfileCardProps){
     const styles = useStyles();
     const theme = useTheme()
     return(
@@ -27,7 +29,7 @@ export default function SettingsToggleCard({title, icon, end}:ProfileCardProps){
                     </ThemedText>
                 </View>
             </View>
-            <Radio activeColor={Colors.coral} inactiveColor={theme.line}/>
+            <Radio activeColor={Colors.coral} inactiveColor={theme.line} onToggle={onToggle} toggled={toggled}/>
         </View>
     )
 }

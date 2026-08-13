@@ -18,7 +18,7 @@ export default function Label({page, labelNum=3}:LabelProps){
             {
                 labelNumber.map((i, index)=>(
                     <View style={{width:labelWidth, paddingHorizontal:Spacing.one}} key={index}>
-                        <View style={[styles.createLabel, {backgroundColor:page > index ? Colors.coral : theme.textSecondary}]}/>
+                        <View style={[styles.createLabel, {backgroundColor:page > index ? Colors.coral : theme.line}]}/>
                     </View>
                 ))
             }

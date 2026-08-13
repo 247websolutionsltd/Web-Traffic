@@ -6,11 +6,15 @@ import { ThemedText } from "@/components/themed-text";
 import Top from "@/components/top3";
 import { Spacing } from "@/constants/theme";
 import { SETTINGSMENU1, SETTINGSMENU2 } from "@/data/mock";
-import { View } from "react-native";
+import { Appearance, useColorScheme, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 
 export default function Settings(){
     const styles = useStyles();
+    const scheme = useColorScheme();
+    const handleDarkMode = ()=>{
+        Appearance.setColorScheme(scheme==='dark' ? 'light' : 'dark');
+    }
     return(
         <Container edges={['bottom', 'top']}>
             <Top title="Settings"/>
@@ -41,6 +45,7 @@ export default function Settings(){
                         key={item.label} 
                         icon={item.icon} 
                         end={i + 1 === SETTINGSMENU2.length}
+                        onToggle={()=>console.log('hi')}
                         />
                     ))}
                 </View>
@@ -53,6 +58,7 @@ export default function Settings(){
                         title={"Show phone number on ads"} 
                         icon={"call"} 
                         end={false}
+                        onToggle={()=>console.log('hi')}
                     />
                     <ProfileCard
                         title={"Privacy Policy"} 
@@ -76,6 +82,14 @@ export default function Settings(){
                         title={"Data saver mode"} 
                         icon={"bar-chart"} 
                         end={false}
+                        onToggle={()=>console.log('hi')}
+                    />
+                    <SettingsToggleCard
+                        title={"Dark mode"} 
+                        icon={"contrast"} 
+                        end={false}
+                        onToggle={handleDarkMode}
+                        toggled={scheme==="dark"}
                     />
                     <SettingsTextsCard
                         title="App version" 

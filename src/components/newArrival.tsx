@@ -6,7 +6,7 @@ import Button from "./button";
 import { ThemedText } from "./themed-text";
 import { ThemedView } from "./themed-view";
 
-export default function NewArrivals(){
+export default function NewArrivals({onPress}:{onPress:()=>void}){
     const styles = useStyles();
     return(
         <ThemedView style={styles.newArrivals}>
@@ -21,7 +21,7 @@ export default function NewArrivals(){
                 </View>
                 <Button
                  title="View all"
-                 onPress={()=>console.log('hi')}
+                 onPress={onPress}
                  style={{height:30, paddingHorizontal:Spacing.two, borderRadius:5}}
                  textSize={14}
                  icon={"arrow-forward"}

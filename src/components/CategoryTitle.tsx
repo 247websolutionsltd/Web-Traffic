@@ -1,19 +1,21 @@
-import { Colors, Radius } from "@/constants/theme";
+import { Radius } from "@/constants/theme";
+import { useTheme } from "@/hooks/use-theme";
 import { Category } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./themed-text";
 
 export function CategoryTile({ category, onPress }: { category: Category; onPress?: () => void }) {
+  const theme = useTheme();
   return (
-    <Pressable onPress={onPress} style={styles.wrap} accessibilityRole="button" accessibilityLabel={category.name}>
+    <TouchableOpacity onPress={onPress} style={styles.wrap} accessibilityRole="button" accessibilityLabel={category.name}>
       <View style={[styles.iconWrap, { backgroundColor: category.tint }]}>
-        <Ionicons name={category.icon} size={22} color={Colors.coralDark} />
+        <Ionicons name={category.icon} size={22} />
       </View>
       <ThemedText type="small" numberOfLines={2} style={{textAlign:'center'}}>
         {category.name}
       </ThemedText>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 
@@ -29,12 +31,5 @@ const styles = StyleSheet.create({
     borderRadius: Radius.md,
     alignItems: "center",
     justifyContent: "center",
-  },
-  label: {
-    // fontFamily: fonts.bodyMedium,
-    fontSize: 10,
-    color: Colors.inkSoft,
-    textAlign: "center",
-    lineHeight: 13,
   },
 });

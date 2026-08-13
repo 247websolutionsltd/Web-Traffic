@@ -9,8 +9,9 @@ interface CatTestProps{
     image: string;
     title: string;
     desc: string;
+    onPress: ()=>void;
 }
-export default function CatTest({image, title, desc}:CatTestProps){
+export default function CatTest({image, title, desc, onPress}:CatTestProps){
     const styles = useStyles();
     return(
         <ImageBackground
@@ -31,7 +32,7 @@ export default function CatTest({image, title, desc}:CatTestProps){
                 </View>
                 <Button
                     title="Check it out" 
-                    onPress={()=>console.log('here')} 
+                    onPress={onPress} 
                     style={{height:40, alignSelf:'flex-start', marginTop:Spacing.two, paddingHorizontal:Spacing.two}}
                     textSize={13}
                 />

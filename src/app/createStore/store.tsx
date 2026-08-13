@@ -43,6 +43,7 @@ export default function Store(){
                     desc="Profile views this week"
                     iconBackground={Colors.coralTint}
                     topRightColor={Colors.green}
+                    iconColor={theme.coralDark}
                 />
                 <Stat
                     topRight="+64"
@@ -51,6 +52,7 @@ export default function Store(){
                     desc="Followers"
                     iconBackground={Colors.greenTint}
                     topRightColor={Colors.green}
+                    iconColor={Colors.green}
                 />
                 <Stat
                     topRight="21 Live"
@@ -59,6 +61,7 @@ export default function Store(){
                     desc="Total ads"
                     iconBackground={Colors.goldTint}
                     topRightColor={Colors.green}
+                    iconColor={Colors.gold}
                 />
                 <Stat
                     topRight="-3%"
@@ -67,6 +70,7 @@ export default function Store(){
                     desc="Unread chats"
                     iconBackground={Colors.purpleTint}
                     topRightColor={"red"}
+                    iconColor={"purple"}
                 />
             </View>
 

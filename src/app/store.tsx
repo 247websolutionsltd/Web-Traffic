@@ -9,8 +9,8 @@ import { listings, stores } from "@/data/mock";
 import { useTheme } from "@/hooks/use-theme";
 import { ImageBackground } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
-import { FlatList, ScrollView, useWindowDimensions, View } from "react-native";
+import { useRef, useState } from "react";
+import { FlatList, ScrollView, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../styles/styles";
@@ -35,6 +35,11 @@ export default function Store(){
         followers,
         verified
     } = stores.filter((obj)=>obj.id===store)[0];
+    const pagerRef = useRef<PagerView>(null);
+
+    const goToPage = (page: number) => {
+        pagerRef.current?.setPage(page);
+    };
 
     const [ tabWidth, setTabWidth ] = useState(0);
     const handleLayout = (event: { nativeEvent: { layout: { width: any; }; }; }) => {
@@ -124,18 +129,18 @@ const renderScene = ({ route }:{route:any}) => {
             />
             <View style={{marginVertical:Spacing.three, flex:1, justifyContent:'space-between'}}>
                 <View>
-                <View style={[styles.row, {paddingHorizontal:Spacing.two}]} onLayout={handleLayout}>
-                    <View style={{width:70, justifyContent:'center'}}>
+                <View style={[styles.row, {}]} onLayout={handleLayout}>
+                    <TouchableOpacity style={styles.tab} onPress={()=>goToPage(0)}>
                         <ThemedText type="bold">All Ads</ThemedText>
-                    </View>
-                    <View style={{width:70, justifyContent:'center'}}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tab} onPress={()=>goToPage(1)}>
                         <ThemedText type="bold">About</ThemedText>
-                    </View>
-                    <View style={{width:70, justifyContent:'center'}}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tab} onPress={()=>goToPage(2)}>
                         <ThemedText type="bold">Reviews</ThemedText>
-                    </View>
+                    </TouchableOpacity>
                 </View>
-                <View style={[styles.indicator, {left:pageOffset*70}]}/>
+                <View style={[styles.indicator, {left:pageOffset*80}]}/>
                 <PagerView
                     style={{
                         height: heights[page] > 300 ? heights[page] : 300,
@@ -145,6 +150,7 @@ const renderScene = ({ route }:{route:any}) => {
                     onPageSelected={(e)=>{
                         setPage(e.nativeEvent.position);
                     }}
+                    ref={pagerRef}
                     onPageScroll={(e)=>setPageOffset(e.nativeEvent.position + e.nativeEvent.offset)}
                 >
                     <View key="0">

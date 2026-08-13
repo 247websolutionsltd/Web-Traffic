@@ -1,3 +1,4 @@
+import Back from "@/components/back-button";
 import Button from "@/components/button";
 import Contact from "@/components/createAd/contact";
 import Description from "@/components/createAd/description";
@@ -29,7 +30,7 @@ export default function Create(){
             <View>
 
                 <View style={[styles.row, {paddingHorizontal:Spacing.three}]}>
-                    <TouchableOpacity onPress={()=>page === 1 ?router.back() : setPage(page-1)} style={[styles.top2Icon, {marginRight:10}]}>
+                    <TouchableOpacity onPress={()=>router.back()} style={[styles.top2Icon, {marginRight:10}]}>
                         <MaterialIcons name="arrow-back" size={23} color={theme.text}/>
                     </TouchableOpacity>
                     <ThemedText type="subtitle">Post an ad</ThemedText>
@@ -52,13 +53,20 @@ export default function Create(){
                         }
                     </View>
                 </View>
-
-                <Button
-                    onPress={handleNext} 
-                    title={page===4?"Finish ":"Next "} 
-                    icon={'arrow-forward'} 
-                    style={{margin:Spacing.three}}
-                />
+                <View style={styles.bottom}>
+                    {
+                        page > 1 &&
+                        <Back onPress={()=>setPage(page-1)}/>
+                    }
+                    
+                    <Button
+                        onPress={handleNext} 
+                        title={page===4?"Finish ":"Next "} 
+                        icon={'arrow-forward'} 
+                        style={{flex:1}}
+                    />
+                </View>
+                
         </Container>
     )
 }

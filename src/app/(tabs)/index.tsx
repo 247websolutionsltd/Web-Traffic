@@ -60,7 +60,7 @@ export default function Home(){
                 </View>
                 <View style={styles.categoryGrid}>
                     {categories.slice(0, 4).map((c: Category) => (
-                        <CategoryTile key={c.id} category={c} onPress={() => router.push({ pathname: "/", params: { categoryId: c.id } })} />
+                        <CategoryTile key={c.id} category={c} onPress={() => router.push({ pathname: "/category", params: { category: c.name } })} />
                     ))}
                 </View>
             </View>
@@ -94,6 +94,7 @@ export default function Home(){
                 image="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHNwb3J0c3xlbnwwfHwwfHx8MA%3D%3D"
                 title="A1 Sport Items"
                 desc="Get your high quality sport clothing, gear and merchandice"
+                onPress={() => router.push("/products")}
             />
             <View style={{marginVertical:Spacing.three}}>
                 <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
@@ -119,7 +120,7 @@ export default function Home(){
                     )}
                 />
             </View>
-            <NewArrivals/>
+            <NewArrivals onPress={() => router.push("/products")}/>
             <View style={{marginTop:Spacing.three}}>
                 <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
                     <ThemedText type="subtitle">Best Sellers</ThemedText>
@@ -156,10 +157,12 @@ export default function Home(){
                     {
                         stores.slice(0,4).map((item, index)=>(
                             <View style={styles.categoriesDataView} key={index}>
-                                <StoreCard
-                                    image={item.displayPic}
-                                    title={item.name}
-                                />
+                                <TouchableOpacity onPress={()=>router.navigate({ pathname: "/store", params: { store:item.id } })}>
+                                    <StoreCard
+                                        image={item.displayPic}
+                                        title={item.name}
+                                    />
+                                </TouchableOpacity>
                             </View>
                         ))
                     }

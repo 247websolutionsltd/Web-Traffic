@@ -2,7 +2,7 @@ import { Spacing } from "@/constants/theme";
 import useHook from "@/hooks/general-hook";
 import { useTheme } from "@/hooks/use-theme";
 import { Image } from "expo-image";
-import { Pressable, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 import { ThemedText } from "./themed-text";
 
@@ -19,7 +19,7 @@ export default function Category({listing, onPress}:{listing:CategoryProps, onPr
     const { priceFormat } = useHook();
     const theme = useTheme();
     return(
-        <Pressable style={styles.category} onPress={onPress}>
+        <TouchableOpacity style={styles.category} onPress={onPress}>
             <Image style={styles.categoryImage} source={{uri:image}}/>
             <View style={styles.categoryRight}>
                 <ThemedText style={{ fontSize:17, lineHeight:20}} type="subtitle">{title}</ThemedText>
@@ -28,6 +28,6 @@ export default function Category({listing, onPress}:{listing:CategoryProps, onPr
                     ₦{priceFormat(price)}
                 </ThemedText>
             </View>
-        </Pressable>
+        </TouchableOpacity>
     )
 }

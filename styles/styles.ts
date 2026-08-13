@@ -563,7 +563,7 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     borderTopLeftRadius:24,
     borderTopRightRadius:24,
     backgroundColor:theme.paper,
-    bottom:24,
+    marginTop:-24,
     padding:Spacing.three,
     flex:1,
     justifyContent:'space-between'
@@ -822,7 +822,7 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
   indicator: {
     backgroundColor: theme.coralDark,
     height: 2,
-    width:70
+    width:80
   },
   label: {
     fontWeight: '600',
@@ -890,7 +890,7 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
   },
   storeStat:{
     padding:Spacing.three,
-    backgroundColor:theme.background,
+    backgroundColor:theme.card,
     borderRadius:Radius.md,
     borderWidth:1,
     borderColor:theme.line,
@@ -996,6 +996,7 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     borderRadius:Radius.md,
     backgroundColor:Colors.goldTint,
     marginVertical:Spacing.three,
+    flexShrink:1
   },
   liveImage:{
     width:80, 
@@ -1012,5 +1013,32 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     borderWidth:1,
     borderColor:theme.line,
     marginVertical:Spacing.three
+  },
+  uploadEmpty:{
+    borderWidth:1,
+    borderColor:Colors.coral,
+    borderRadius:Radius.md,
+    borderStyle:'dashed',
+    height:100,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:Colors.coralTint
+  },
+  bottom:{
+    flexDirection:'row',
+    alignItems:'center',
+    paddingHorizontal:Spacing.three,
+    marginTop:Spacing.three
+  },
+  tab:{
+    width:80, 
+    alignItems:'center', 
+    paddingVertical:Spacing.one
+  },
+  absoluteCenter:{
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    height:'100%'
   }
 });

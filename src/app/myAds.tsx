@@ -56,7 +56,7 @@ export default function CategoryScreen(){
                     <Chip key={f} label={f} active={f === activeFilter} onPress={() => setActiveFilter(f)} />
                 ))}
             </ScrollView>
-            <View style={{padding:Spacing.three}}>
+            <View style={{padding:Spacing.three, paddingTop:0}}>
                 <FlatList
                     data={ads}
                     scrollEnabled={false}
@@ -69,6 +69,12 @@ export default function CategoryScreen(){
                         condition={item.condition}
                         onOption={handleOption}
                         />
+                    )}
+                    ListEmptyComponent={()=>(
+                        <View style={styles.absoluteCenter}>
+                            <ThemedText type="title" style={{color:theme.textSecondary}}>♡</ThemedText>
+                            <ThemedText style={{color:theme.textSecondary}}>No ads yet</ThemedText>
+                        </View>
                     )}
                 />
             </View>
