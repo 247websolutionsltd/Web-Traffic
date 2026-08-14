@@ -297,8 +297,8 @@ export const PROFILEMENU: { icon: IconName; label: string; onPress: () => void }
 ];
 
 export const SETTINGSMENU1: { icon: IconName; label: string; onPress: () => void }[] = [
-  { icon: "person", label: "Edit Profile", onPress: () => {router.navigate('/myAds')} },
-  { icon: "lock-closed", label: "Change Password", onPress: () => {router.navigate('/saved')} },
+  { icon: "person", label: "Edit Profile", onPress: () => {router.navigate('/edit')} },
+  { icon: "lock-closed", label: "Change Password", onPress: () => {router.navigate('/setup/reset')} },
 ];
 
 export const SETTINGSMENU2: { icon: IconName; label: string;}[] = [

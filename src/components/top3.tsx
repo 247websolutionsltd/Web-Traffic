@@ -8,16 +8,25 @@ import { ThemedText } from "./themed-text";
 
 interface TopProps{
     title: string;
+    save?:boolean;
 }
-export default function Top({title}:TopProps){
+export default function Top({title, save=false}:TopProps){
     const styles = useStyles();
     const theme = useTheme();
     return(
-        <View style={[styles.row, {paddingHorizontal:Spacing.three}]}>
-            <TouchableOpacity onPress={()=>router.back()} style={[styles.top2Icon, {marginRight:Spacing.two}]}>
-                <MaterialIcons name="arrow-back" size={23} color={theme.text}/>
-            </TouchableOpacity>
-            <ThemedText type="subtitle">{title}</ThemedText>
+        <View style={[styles.rowStretch, {paddingHorizontal:Spacing.three}]}>
+            <View style={styles.row}>
+                <TouchableOpacity onPress={()=>router.back()} style={[styles.top2Icon, {marginRight:Spacing.two}]}>
+                    <MaterialIcons name="arrow-back" size={23} color={theme.text}/>
+                </TouchableOpacity>
+                <ThemedText type="subtitle">{title}</ThemedText>
+            </View>
+            {
+                save &&
+                <TouchableOpacity onPress={()=>router.back()}>
+                    <ThemedText style={{color:theme.textSecondary}}>Save</ThemedText>
+                </TouchableOpacity>
+            }
         </View>
     )
 }

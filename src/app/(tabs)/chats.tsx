@@ -1,5 +1,4 @@
 import Chat from "@/components/chat";
-import { Chip } from "@/components/Chip";
 import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import { Colors, Spacing } from "@/constants/theme";
@@ -7,7 +6,7 @@ import { chatThreads } from "@/data/mock";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useMemo, useState } from "react";
-import { FlatList, ScrollView, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 
 
@@ -29,7 +28,7 @@ export default function Chats() {
     return(
         <Container>
             <ThemedText style={{paddingHorizontal:Spacing.three}} type="subtitle">Chats</ThemedText>
-            <ScrollView
+            {/* <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.chipRow}
@@ -38,7 +37,7 @@ export default function Chats() {
                 {FILTERS.map((f) => (
                 <Chip key={f.key} label={f.label} active={filter === f.key} onPress={() => setFilter(f.key)} />
                 ))}
-            </ScrollView>
+            </ScrollView> */}
             <FlatList
                 data={chatThreads}
                 scrollEnabled={false}

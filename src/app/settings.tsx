@@ -94,7 +94,7 @@ export default function Settings(){
                     <SettingsTextsCard
                         title="App version" 
                         icon={"information-circle-outline"} 
-                        end={false}
+                        end
                         text="1.1.1"
                         iconSize={20}
                     />
@@ -112,7 +112,7 @@ export default function Settings(){
                     <SettingsTextsCard
                         title="Delete Account" 
                         icon={"trash"} 
-                        end={false}
+                        end
                     />
                 </View>
             </View>

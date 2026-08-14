@@ -1039,6 +1039,10 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     flex:1,
     alignItems:'center',
     justifyContent:'center',
-    height:'100%'
+  },
+  profileEditView:{
+    backgroundColor:"#000",
+    borderRadius:Radius.pill,
+    padding:6
   }
 });

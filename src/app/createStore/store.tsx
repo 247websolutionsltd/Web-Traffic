@@ -70,7 +70,7 @@ export default function Store(){
                     desc="Unread chats"
                     iconBackground={Colors.purpleTint}
                     topRightColor={"red"}
-                    iconColor={"purple"}
+                    iconColor={"#3E3A33"}
                 />
             </View>
 
