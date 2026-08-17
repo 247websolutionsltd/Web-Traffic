@@ -4,6 +4,7 @@ import { Radius } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -16,9 +17,13 @@ export default function SplashScreen(){
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [index, setIndex] = useState(-1);
   const theme = useTheme();
-
   const snapPoints = useMemo(() => ["55%"],['75%']);
   useEffect(() => {
+      GoogleSignin.configure({
+        // Replace this string with your real WEB CLIENT ID (do not use Android/iOS client IDs here)
+        webClientId: '391322710451-hug7a4sg00a7caqh8hlv7ei93ba68mje.apps.googleusercontent.com', 
+        offlineAccess: true, 
+      });
       const loadTasks = async () => {
           const onboarded = await AsyncStorage.getItem('onboarded');
           if (onboarded === 'true'){

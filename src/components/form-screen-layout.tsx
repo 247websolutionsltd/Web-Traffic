@@ -1,5 +1,6 @@
 // components/form/FormScreenLayout.tsx
 import { Spacing } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
 import { Image, TouchableOpacity, View, ViewProps } from "react-native";
 import { useStyles } from "../../styles/styles";
@@ -16,6 +17,10 @@ interface FormScreenLayoutProps extends ViewProps {
 export function FormScreenLayout({ children, onSubmit, isSubmitting, submitLabel = "Submit", style }: FormScreenLayoutProps) {
   const styles = useStyles();
   const theme = useTheme();
+    const {
+      loginGoogle,
+      isLoading,
+    } = useAuth();
   return (
     <View style={[style, {flex:1, justifyContent:'space-between'}]}>
       <View>
@@ -49,14 +54,14 @@ export function FormScreenLayout({ children, onSubmit, isSubmitting, submitLabel
             </View>
 
             <View style={styles.socialRow}>
-              <TouchableOpacity style={styles.socialBtn}>
+              <TouchableOpacity style={styles.socialBtn} onPress={loginGoogle}>
                 <Image source={require('../../assets/images/google.png')} style={{width:27, height:27, marginRight:5}}/>
                 <ThemedText >Google</ThemedText>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.socialBtn}>
+              {/* <TouchableOpacity style={styles.socialBtn}>
                 <Image source={require('../../assets/images/apple.png')} style={{width:23, height:23, marginRight:5}} resizeMode="contain"/>
                 <ThemedText>Apple</ThemedText>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
         }

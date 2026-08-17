@@ -1,6 +1,8 @@
+import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
 import { ScrollView } from "react-native";
 import { SafeAreaView, SafeAreaViewProps } from "react-native-safe-area-context";
+import Load from "./load";
 
 interface ContainerProps extends SafeAreaViewProps{
     backgroundColor?:string;
@@ -8,6 +10,9 @@ interface ContainerProps extends SafeAreaViewProps{
 }
 export default function Container({children, backgroundColor, style, edges=['top'], scroll=true}:ContainerProps){
     const theme = useTheme();
+    const {
+        pageLoad
+    } = useAuth();
     return(
         <SafeAreaView style={{flex:1, backgroundColor:backgroundColor || theme.paper}} edges={edges}>
             <ScrollView 
@@ -18,6 +23,10 @@ export default function Container({children, backgroundColor, style, edges=['top
              alwaysBounceVertical={false}>
                 {children}
             </ScrollView>
+            {
+                pageLoad &&
+                <Load/>
+            }
         </SafeAreaView>
     )
 }

@@ -1,3 +1,4 @@
+import { AuthProvider } from '@/context/AuthContext';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -8,6 +9,7 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <AuthProvider>
       <Stack screenOptions={{headerShown: false}}>
         <Stack.Screen name="index" />
         <Stack.Screen name="onboard" />
@@ -42,6 +44,7 @@ export default function RootLayout() {
         }} 
          />
       </Stack>
+    </AuthProvider>
     </ThemeProvider>
     </GestureHandlerRootView>
   );

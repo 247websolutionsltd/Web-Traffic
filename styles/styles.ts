@@ -5,13 +5,13 @@ import { Dimensions, StyleSheet, useColorScheme } from "react-native";
 export function useStyles() {
   const colorScheme = useColorScheme() ?? 'light';
   const theme = colorScheme === "light" ? Colors.light : Colors.dark;
-  const {width} = Dimensions.get('window');
+  const {width, height} = Dimensions.get('window');
   // Pass the active theme colors into the factory function below
-  return createStyles(theme, width);
+  return createStyles(theme, width, height);
 }
 
 
-const createStyles = (theme:any, width:any)=>StyleSheet.create({
+const createStyles = (theme:any, width:any, height:any)=>StyleSheet.create({
     button: {
     height:60,
     borderRadius: 16,
@@ -1044,5 +1044,14 @@ const createStyles = (theme:any, width:any)=>StyleSheet.create({
     backgroundColor:"#000",
     borderRadius:Radius.pill,
     padding:6
+  },
+  loadView:{
+    flex:1,
+    position:'absolute',
+    alignItems:'center',
+    justifyContent:'center',
+    width:'100%',
+    height,
+    backgroundColor:'#00000055'
   }
 });

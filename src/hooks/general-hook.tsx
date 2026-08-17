@@ -1,6 +1,4 @@
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useState } from "react";
-import { Appearance } from "react-native";
 
 export default function useHook() {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,10 +29,7 @@ export default function useHook() {
     return result;
   }
 
-  const toggleTheme = ()=>{
-    const scheme = useColorScheme();
-    Appearance.setColorScheme(scheme==='dark' ? 'light' : 'dark');
-  }
+  
   
   return {
     isLoading,
@@ -43,6 +38,5 @@ export default function useHook() {
     savings,
     priceFormat,
     linter,
-    toggleTheme
   };
 }

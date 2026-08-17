@@ -11,7 +11,11 @@ import { TextInput, TouchableOpacity, ViewProps } from "react-native";
 import { useStyles } from "../../styles/styles";
 import { ThemedText } from "./themed-text";
 
-export default function SignUp({style}:ViewProps) {
+
+
+
+export default function SignIn({style}:ViewProps) {
+  
   const {
     control,
     handleSubmit,
@@ -26,7 +30,6 @@ export default function SignUp({style}:ViewProps) {
   });
 
   const onSubmit = async (data: SignInFormValues) => {
-    // await api.signUp(data);
     router.navigate('/(tabs)')
   };
 
