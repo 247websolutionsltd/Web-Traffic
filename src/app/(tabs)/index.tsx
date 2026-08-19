@@ -9,8 +9,10 @@ import Sponsored from "@/components/sponsored";
 import StoreCard from "@/components/storeCard";
 import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
 import { bannerSliderData } from "@/data/bannerSliderData";
-import { categories, currentUser, listings, stores } from "@/data/mock";
+import { categories, listings, stores } from "@/data/mock";
+import useAuthentication from "@/hooks/authHook";
 import { useTheme } from "@/hooks/use-theme";
 import { Category } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
@@ -27,19 +29,23 @@ export default function Home(){
     const styles = useStyles();
     const theme = useTheme();
     const {width} = Dimensions.get('window');
+    const {user} = useAuth();
+    const {image, changeProfileImage} = useAuthentication();
     return(
         <Container>
             <View style={{paddingHorizontal:Spacing.three}}>
                 <View style={styles.topBar}>
                     <View style={styles.topBarLeft}>
-                        <Image
-                         style={styles.avatar}
-                         source={{uri:"https://images.unsplash.com/photo-1518882570151-157128e78fa1?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YmxhY2slMjBwZXJzb258ZW58MHx8MHx8fDA%3D"}}
-                         />
+                        <TouchableOpacity onPress={changeProfileImage}>
+                            <Image
+                            style={styles.avatar}
+                            source={{uri:user?.profileImage || image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaBCpyQIJSGIUWdn05vYhV4n6Tcf1LzrZSsHHBA8I0XA&s=10"}}
+                            />
+                         </TouchableOpacity>
                         <View>
-                            <ThemedText>Deliver to</ThemedText>
+                            <ThemedText>Good day</ThemedText>
                             <View style={styles.locationRow}>
-                                <ThemedText type="subtitle">{currentUser.location}</ThemedText>
+                                <ThemedText type="subtitle">{user?.firstName} {user?.lastName}</ThemedText>
                                 <Ionicons name="chevron-down" size={14} color={theme.ink} />
                             </View>
                         </View>

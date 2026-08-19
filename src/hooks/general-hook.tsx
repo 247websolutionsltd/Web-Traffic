@@ -1,6 +1,8 @@
+import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 
 export default function useHook() {
+  const {user} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const showTitle = (title:string, length=25)=>{
     if(title.length < length) return title
@@ -29,6 +31,12 @@ export default function useHook() {
     return result;
   }
 
+  const getInitials = (firstName=user?.firstName, lastName=user?.lastName)=>{
+    const firstInitials = firstName?.split("")[0] || ""
+    const lastInitials = lastName?.split("")[0] || ""
+    return(firstInitials+lastInitials)
+  }
+
   
   
   return {
@@ -38,5 +46,6 @@ export default function useHook() {
     savings,
     priceFormat,
     linter,
+    getInitials
   };
 }

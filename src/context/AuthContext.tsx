@@ -1,18 +1,20 @@
 import { signInWithGoogle } from '@/signIn/googleSignIn';
 import { router } from 'expo-router';
 import {
-    createContext,
-    useContext,
-    useState,
-    type ReactNode
+  createContext,
+  useContext,
+  useState,
+  type ReactNode
 } from 'react';
 
 
 type User = {
     id: string | undefined;
-    name: string | null | undefined;
+    firstName: string | null | undefined;
+    lastName: string | null | undefined;
     email: string | undefined;
-    profilePicture: string | null | undefined;
+    profileImage: string | null | undefined;
+    role: string | undefined;
 };
 
 type AuthContextType = {
@@ -23,6 +25,8 @@ type AuthContextType = {
   loginGoogle: () => void;
   logout: () => Promise<void>;
   pageLoad:boolean;
+  setPageLoad:any;
+  setUser:any;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(
@@ -47,11 +51,15 @@ export function AuthProvider({
   const loginGoogle = async()=>{
     setPageLoad(true);
     const response = signInWithGoogle();
+    setPageLoad(false);
     const user = {
-        id: (await response).data?.user.id,
-        name: (await response).data?.user.name,
-        email: (await response).data?.user.email,
-        profilePicture: (await response).data?.user.photo,
+        id: (await response).user.id,
+        firstName: (await response).user.firstName,
+        lastName:(await response).user.lastName,
+        email: (await response).user.email,
+        profileImage: (await response).user.profileImage,
+        role: (await response).user.role
+
     }
     setUser(user);
     setPageLoad(false);
@@ -121,7 +129,9 @@ export function AuthProvider({
         isAuthenticated,
         loginGoogle,
         logout,
-        pageLoad
+        pageLoad,
+        setPageLoad,
+        setUser
       }}
     >
       {children}

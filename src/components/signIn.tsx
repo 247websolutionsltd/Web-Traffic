@@ -1,6 +1,7 @@
 // screens/SignUpScreen.tsx
 import { FormScreenLayout } from "@/components/form-screen-layout";
 import { FormTextInput } from "@/components/form-text-input";
+import useAuthentication from "@/hooks/authHook";
 import { useTheme } from "@/hooks/use-theme";
 import { SignInFormValues, signInSchema } from "@/schema/signInSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,14 +24,16 @@ export default function SignIn({style}:ViewProps) {
   } = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      phone: "",
+      email: "",
       password: "",
     },
     mode: "onBlur", // validate on blur, not every keystroke
   });
 
+  const { logInUser } = useAuthentication();
+
   const onSubmit = async (data: SignInFormValues) => {
-    router.navigate('/(tabs)')
+    console.log(logInUser(data));
   };
 
   const phoneRef = useRef<TextInput>(null);
@@ -47,14 +50,12 @@ export default function SignIn({style}:ViewProps) {
     >
       <FormTextInput
         control={control}
-        name="phone"
-        label="Phone Number"
-        error={errors.phone?.message}
-        keyboardType="numeric"
+        name="email"
+        label="Email"
+        error={errors.email?.message}
         textContentType="none"
         ref={phoneRef}
         returnKeyType="next"
-        prefix="🇳🇬 +234"
         onSubmitEditing={() => passwordRef.current?.focus()}
       />
       <FormTextInput

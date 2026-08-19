@@ -1,14 +1,18 @@
 // screens/SignUpScreen.tsx
 import { FormScreenLayout } from "@/components/form-screen-layout";
 import { FormTextInput } from "@/components/form-text-input";
+import { useAuth } from "@/context/AuthContext";
+import useAuthentication from "@/hooks/authHook";
 import { SignUpFormValues, signUpSchema } from "@/schema/signUpSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { router } from "expo-router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { TextInput, ViewProps } from "react-native";
 
 export default function SignUp({style}:ViewProps) {
+  const { createUser } = useAuthentication();
+  const { setPageLoad, setUser } = useAuth();
+  const [ error, setError ] = useState("");
   const {
     control,
     handleSubmit,
@@ -16,7 +20,9 @@ export default function SignUp({style}:ViewProps) {
   } = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      fullName: "",
+      firstName: "",
+      lastName: "",
+      email:"",
       phone: "",
       password: "",
       confirmPassword:"",
@@ -25,11 +31,13 @@ export default function SignUp({style}:ViewProps) {
   });
 
   const onSubmit = async (data: SignUpFormValues) => {
-    // await api.signUp(data);
-    router.navigate('/setup')
+    console.log(createUser(data))
+    // router.navigate('/setup')
   };
 
   const phoneRef = useRef<TextInput>(null);
+  const emailRef = useRef<TextInput>(null);
+  const lastNameRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
   const confirmPasswordRef = useRef<TextInput>(null);
 
@@ -47,12 +55,34 @@ export default function SignUp({style}:ViewProps) {
     >
       <FormTextInput
         control={control}
-        name="fullName"
-        label="Full name"
-        error={errors.fullName?.message}
+        name="firstName"
+        label="First name"
+        error={errors.firstName?.message}
         autoCapitalize="words"
         textContentType="name"
         returnKeyType="next"
+        onSubmitEditing={() => lastNameRef.current?.focus()}
+      />
+      <FormTextInput
+        control={control}
+        name="lastName"
+        label="Last name"
+        error={errors.lastName?.message}
+        autoCapitalize="words"
+        textContentType="name"
+        returnKeyType="next"
+        ref={lastNameRef}
+        onSubmitEditing={() => emailRef.current?.focus()}
+      />
+      <FormTextInput
+        control={control}
+        name="email"
+        label="Email"
+        error={errors.email?.message}
+        autoCapitalize="words"
+        textContentType="name"
+        returnKeyType="next"
+        ref={emailRef}
         onSubmitEditing={() => phoneRef.current?.focus()}
       />
       <FormTextInput

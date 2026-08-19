@@ -10,13 +10,16 @@
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-google-signin/google-signin": "^16.1.4",
     "@reduxjs/toolkit": "^2.12.0",
+    "axios": "^1.19.0",
     "expo": "~57.0.14",
     "expo-constants": "~57.0.5",
     "expo-dev-client": "~57.0.13",
     "expo-device": "~57.0.1",
+    "expo-file-system": "~57.0.4",
     "expo-font": "~57.0.1",
     "expo-glass-effect": "~57.0.1",
     "expo-image": "~57.0.3",
+    "expo-image-picker": "~57.0.11",
     "expo-linking": "~57.0.6",
     "expo-router": "~57.0.14",
     "expo-secure-store": "~57.0.1",
@@ -46,6 +49,7 @@
   "devDependencies": {
     "@expo/ngrok": "^4.1.0",
     "@types/react": "~19.2.2",
+    "react-native-dotenv": "^4.1.1",
     "typescript": "~6.0.3"
   },
   "scripts": {

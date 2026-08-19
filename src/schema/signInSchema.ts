@@ -2,9 +2,7 @@
 import { z } from "zod";
 
 export const signInSchema = z.object({
-  phone: z
-    .string()
-    .regex(/^\+?(0|\+)\d{7,14}$/, "Enter a valid phone number"),
+  email: z.string().email("Enter a valid email"),
   password: z
     .string()
     .min(8, "At least 8 characters")
