@@ -18,7 +18,7 @@ import { Category } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Dimensions, FlatList, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 
@@ -30,7 +30,10 @@ export default function Home(){
     const theme = useTheme();
     const {width} = Dimensions.get('window');
     const {user} = useAuth();
-    const {image, changeProfileImage} = useAuthentication();
+    const {changeProfileImage, image} = useAuthentication();
+    useEffect(()=>{
+        console.log(user)
+    },[])
     return(
         <Container>
             <View style={{paddingHorizontal:Spacing.three}}>

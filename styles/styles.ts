@@ -129,11 +129,10 @@ const createStyles = (theme:any, width:any, height:any)=>StyleSheet.create({
       color: theme.ink,
     },
     upload1:{
-      width: 150,
-      height: 150,
+      width: 200,
+      height: 200,
       borderRadius: 600,
       backgroundColor: Colors.coralTint,
-      borderWidth: 1.5,
       borderColor: "#D8B6BC",
       borderStyle: "dashed",
       alignItems: "center",
