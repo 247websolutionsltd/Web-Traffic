@@ -511,7 +511,7 @@ const createStyles = (theme:any, width:any, height:any)=>StyleSheet.create({
     borderWidth:3,
     borderColor:"rgba(255,255,255,0.2)",
     padding:Spacing.four,
-    borderRadius:500,
+    borderRadius:900,
     backgroundColor:Colors.coral,
     alignSelf:'flex-start'
   },

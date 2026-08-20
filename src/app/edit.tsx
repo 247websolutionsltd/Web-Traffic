@@ -2,34 +2,46 @@ import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import Top from "@/components/top3";
 import { Spacing } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
+import useAuthentication from "@/hooks/authHook";
+import useHook from "@/hooks/general-hook";
 import { useTheme } from "@/hooks/use-theme";
-import { MaterialIcons } from "@expo/vector-icons";
+import { Image } from "expo-image";
 import { TextInput, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 
 export default function Edit(){
     const styles = useStyles();
     const theme = useTheme();
+    const {user} = useAuth();
+    const { getInitials } = useHook();
+    const {changeProfileImage} = useAuthentication();
     return(
         <Container>
             <Top title="Edit account" save/>
-            <View style={{alignItems:'center', padding:Spacing.three}}>
-                <View style={[styles.profileInit, {alignSelf:'auto'}]}>
-                    <ThemedText style={{fontSize:40, lineHeight:45, color:'#FFF', fontWeight:700}}>TA</ThemedText>
-                </View>
-                <TouchableOpacity style={[styles.profileEditView, {marginRight:-60, marginTop:-30}]}>
-                    <MaterialIcons name="edit" size={20} color={"#FFF"}/>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={{alignItems:'center', marginTop:Spacing.three}} onPress={changeProfileImage}>
+                <Image
+                 source={{uri:user?.profileImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaBCpyQIJSGIUWdn05vYhV4n6Tcf1LzrZSsHHBA8I0XA&s=10"}}
+                 style={{width:140, height:140, borderRadius:900}}
+                />
+            </TouchableOpacity>
             <View style={{padding:Spacing.three}}>
                 <View style={{marginVertical:Spacing.two}}>
-                    <ThemedText>Full name</ThemedText>
+                    <ThemedText>First name</ThemedText>
                     <View style={[styles.inputView, ]}>
                         <TextInput
-                            placeholder="Enter your brand name"
-                            placeholderTextColor={theme.textSecondary}
                             style={styles.input}
-                            value="Tunde Adebayo"
+                            value={user?.firstName||""}
+                        />
+                    </View>
+                </View>
+
+                <View style={{marginVertical:Spacing.two}}>
+                    <ThemedText>Last name</ThemedText>
+                    <View style={[styles.inputView, ]}>
+                        <TextInput
+                            style={styles.input}
+                            value={user?.lastName||""}
                         />
                     </View>
                 </View>
@@ -38,10 +50,8 @@ export default function Edit(){
                     <ThemedText>Phone number</ThemedText>
                     <View style={[styles.inputView, ]}>
                         <TextInput
-                        placeholder="Enter your brand name"
-                        placeholderTextColor={theme.textSecondary}
                         style={styles.input}
-                        value="+234 802 123 4567"
+                        value={user?.phone||""}
                         />
                     </View>
                 </View>
@@ -53,6 +63,7 @@ export default function Edit(){
                         placeholder="Add an email address"
                         placeholderTextColor={theme.textSecondary}
                         style={styles.input}
+                        value={user?.email}
                         />
                     </View>
                 </View>

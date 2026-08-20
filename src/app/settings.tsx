@@ -6,6 +6,7 @@ import { ThemedText } from "@/components/themed-text";
 import Top from "@/components/top3";
 import { Spacing } from "@/constants/theme";
 import { SETTINGSMENU1, SETTINGSMENU2 } from "@/data/mock";
+import useAuthentication from "@/hooks/authHook";
 import { Appearance, useColorScheme, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 
@@ -15,6 +16,7 @@ export default function Settings(){
     const handleDarkMode = ()=>{
         Appearance.setColorScheme(scheme==='dark' ? 'light' : 'dark');
     }
+    const {logout} = useAuthentication();
     return(
         <Container edges={['bottom', 'top']}>
             <Top title="Settings"/>
@@ -108,6 +110,7 @@ export default function Settings(){
                         title="Log Out" 
                         icon={"ban"} 
                         end={false}
+                        onPress={logout}
                     />
                     <SettingsTextsCard
                         title="Delete Account" 

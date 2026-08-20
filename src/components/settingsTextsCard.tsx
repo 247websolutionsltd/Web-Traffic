@@ -1,23 +1,23 @@
 import { Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 import { Ionicons } from "@expo/vector-icons";
-import { View } from "react-native";
+import { TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 import { ThemedText } from "./themed-text";
 
 type IconName = keyof typeof Ionicons.glyphMap;
-interface ProfileCardProps {
+interface ProfileCardProps extends TouchableOpacityProps {
     title: string;
     icon: IconName;
     end: boolean;
     text?: string;
     iconSize?: number;
 }
-export default function SettingsTextsCard({title, icon, end, text, iconSize=16}:ProfileCardProps){
+export default function SettingsTextsCard({title, icon, end, text, iconSize=16, onPress}:ProfileCardProps){
     const styles = useStyles();
     const theme = useTheme()
     return(
-        <View style={[styles.profileCard, {borderBottomWidth:end ? 0 : 1}]} >
+        <TouchableOpacity style={[styles.profileCard, {borderBottomWidth:end ? 0 : 1}]} onPress={onPress}>
             <View style={[styles.row, {flexShrink:1}]}>
                 <View style={styles.menuIconView}>
                     <Ionicons name={icon} size={iconSize} color={theme.coralDark} />
@@ -34,6 +34,6 @@ export default function SettingsTextsCard({title, icon, end, text, iconSize=16}:
                     {text}
                 </ThemedText>
             }
-        </View>
+        </TouchableOpacity>
     )
 }

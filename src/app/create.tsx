@@ -8,11 +8,12 @@ import Container from "@/components/custom-container";
 import Label from "@/components/progressLabel";
 import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
+import useData from "@/hooks/dataHook";
 import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Alert, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 
 
@@ -20,10 +21,24 @@ export default function Create(){
     const styles = useStyles();
     const theme = useTheme();
     const [ page, setPage ] = useState(1);
+    const { 
+        adTitle,
+        activeFilter, 
+        description, 
+    } = useData();
     const handleNext = ()=>{
-        if (page === 4){
+        if(page === 1){
+            console.log("title:",adTitle)
+            if(adTitle && activeFilter && description){
+                setPage(page+1)
+            }else{
+                Alert.alert("Select all fields")
+            }
+        }else if(page === 2){
+
+        }else {
             router.push("/review")
-        }else {setPage(page+1)}
+        }
     }
     return(
         <Container edges={["top","bottom"]} style={{justifyContent:'space-between'}}>

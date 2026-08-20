@@ -1,6 +1,7 @@
 import Button from "@/components/button";
 import { ThemedText } from "@/components/themed-text";
 import { Radius } from "@/constants/theme";
+import useAuthentication from "@/hooks/authHook";
 import { useTheme } from "@/hooks/use-theme";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,18 +19,23 @@ export default function SplashScreen(){
   const [index, setIndex] = useState(-1);
   const theme = useTheme();
   const snapPoints = useMemo(() => ["55%"],['75%']);
+  const {getCurrentUser} = useAuthentication();
   useEffect(() => {
       GoogleSignin.configure({
-        // Replace this string with your real WEB CLIENT ID (do not use Android/iOS client IDs here)
         webClientId: '391322710451-hug7a4sg00a7caqh8hlv7ei93ba68mje.apps.googleusercontent.com', 
         offlineAccess: true, 
       });
       const loadTasks = async () => {
+          const token = await AsyncStorage.getItem("token");
+          const person = await getCurrentUser(token);
           const onboarded = await AsyncStorage.getItem('onboarded');
           if (onboarded === 'true'){
+            if(person){
+              router.replace('/(tabs)')
+            }else{
               setIndex(0);
+            }
           }else{
-            
               router.replace('/onboard');
           }
       };

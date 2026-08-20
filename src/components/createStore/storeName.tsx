@@ -8,9 +8,10 @@ import Button from "../button";
 import { ThemedText } from "../themed-text";
 
 interface NameProps{
-    handleNext:()=>void
+    handleNext:()=>void;
+    handleTitle:React.Dispatch<React.SetStateAction<string>>;
 }
-export default function Name({handleNext}: NameProps){
+export default function Name({handleNext, handleTitle}: NameProps){
     const styles = useStyles();
     const theme = useTheme();
     return(
@@ -33,6 +34,7 @@ export default function Name({handleNext}: NameProps){
                             placeholder="Enter your store name"
                             placeholderTextColor={theme.textSecondary}
                             style={styles.input}
+                            onChangeText={(text)=>handleTitle(text)}
                             />
                         </View>
                     </View>

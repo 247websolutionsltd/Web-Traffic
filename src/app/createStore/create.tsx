@@ -16,6 +16,8 @@ export default function Create(){
     const styles = useStyles();
     const theme = useTheme();
     const [ page, setPage ] = useState(1);
+    const [ title, setTitle ] = useState("");
+
     return(
         <Container edges={['top','bottom']}>
             <View style={[styles.row, {paddingHorizontal:Spacing.three}]}>
@@ -29,7 +31,7 @@ export default function Create(){
 
             {
                 page === 1 ?
-                <Name handleNext={()=>setPage(page + 1)}/>
+                <Name handleNext={()=>setPage(page + 1)} handleTitle={setTitle}/>
                 :
                 page === 2 ?
                 <Description handleNext={()=>setPage(page + 1)}/>

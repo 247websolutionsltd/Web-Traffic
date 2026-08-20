@@ -1,6 +1,6 @@
 import { Spacing } from "@/constants/theme";
+import useData from "@/hooks/dataHook";
 import { useTheme } from "@/hooks/use-theme";
-import { useState } from "react";
 import { ScrollView, TextInput, View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 import { Chip } from "../Chip";
@@ -11,9 +11,14 @@ const FILTERS = ["New", "Used", "Refurbished"];
 export default function Description(){
     const theme = useTheme();
     const styles = useStyles();
-    const [ description, setDescription ] = useState("");
-    const [ title, setTitle ] = useState("");
-    const [activeFilter, setActiveFilter] = useState("");
+    const { 
+        adTitle, 
+        setAdTitle, 
+        activeFilter, 
+        setActiveFilter, 
+        description, 
+        setDescription,
+    } = useData();
     return(
         <View style={{flex:1, paddingHorizontal:Spacing.three}}>
             <View style={{marginVertical:Spacing.two}}>
@@ -28,13 +33,13 @@ export default function Description(){
                             placeholder="What is the name of your store?"
                             placeholderTextColor={theme.textSecondary}
                             style={[styles.input, {maxHeight:80}]}
-                            onChangeText={(text)=>setTitle(text)}
-                            value={title}
+                            onChangeText={(text)=>setAdTitle(text)}
+                            value={adTitle}
                             multiline
                             maxLength={70}
                         />
                     </View>
-                    <ThemedText style={{textAlign:'right', fontSize:10}}>{title.length}/70</ThemedText>
+                    <ThemedText style={{textAlign:'right', fontSize:10}}>{adTitle.length}/70</ThemedText>
                 </View>
 
                 <View style={{marginVertical:Spacing.two}}>

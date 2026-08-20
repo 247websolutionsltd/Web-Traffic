@@ -46,8 +46,7 @@ export default function useAuthentication(){
     };
 
   const [uploading, setUploading] = useState(false);
-  const [image, setImage] = useState<string | undefined>(undefined);
-  const BASE_URL = "http://192.168.1.6:500";
+
 
   const changeProfileImage = async () => {
     const token = await AsyncStorage.getItem("token");
@@ -70,9 +69,8 @@ export default function useAuthentication(){
         headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` },
         transformRequest: (data) => data,
         });
-        console.log(data.data);
         setUploading(false);
-        setImage(data.data.profileImage)
+        getCurrentUser(token);
 
     } catch (error: any) {
       console.error(error);
@@ -88,11 +86,34 @@ export default function useAuthentication(){
     }
   };
 
+  const getCurrentUser = async (token:string|null) => {
+    try{
+      const data = await uploadApi.get('/api/auth/user',{headers: { Authorization: `Bearer ${token}` }});
+      setUser(data.data.user);
+      return true
+    }catch(e){
+      console.log(e);
+      return false
+    }
+  };
+
+  const logout = async () => {
+  try {
+    await AsyncStorage.removeItem("token");
+    setUser(null);
+    router.dismissAll()
+
+  } catch (error) {
+    console.error("Logout error:", error);
+  }
+};
+
     return{
         createUser,
         logInUser,
-        image,
         uploading,
-        changeProfileImage
+        changeProfileImage,
+        getCurrentUser,
+        logout
     }
 }

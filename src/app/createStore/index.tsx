@@ -12,7 +12,7 @@ import { useStyles } from "../../../styles/styles";
 export default function CreateStore(){
     const theme = useTheme();
     const styles = useStyles();
-    const store: string[] = ["hd"];
+    const store: string[] = [];
 
     useEffect(()=>{
         if(store.length>0){

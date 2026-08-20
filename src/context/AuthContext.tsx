@@ -14,7 +14,11 @@ type User = {
     lastName: string | null | undefined;
     email: string | undefined;
     profileImage: string | null | undefined;
+    phone: string | null | undefined;
     role: string | undefined;
+    ads: string | null | undefined;
+    saved: string | null | undefined;
+    store: string | null | undefined;
 };
 
 type AuthContextType = {
@@ -58,59 +62,16 @@ export function AuthProvider({
         lastName:(await response).user.lastName,
         email: (await response).user.email,
         profileImage: (await response).user.profileImage,
-        role: (await response).user.role
-
+        phone: (await response).user.phone,
+        role: (await response).user.role,
+        ads: (await response).user.ads,
+        saved: (await response).user.saved,
+        store: (await response).user.store,
     }
     setUser(user);
     setPageLoad(false);
     router.replace("/(tabs)")
   }
-//   useEffect(() => {
-//     loadSession();
-//   }, []);
-
-//   const loadSession = async () => {
-//     try {
-//       const storedToken =
-//         await SecureStore.getItemAsync(TOKEN_KEY);
-
-//       const storedUser =
-//         await SecureStore.getItemAsync(USER_KEY);
-
-//       if (storedToken) {
-//         setToken(storedToken);
-//       }
-
-//       if (storedUser) {
-//         setUser(JSON.parse(storedUser));
-//       }
-//     } catch (error) {
-//       console.error(
-//         'Failed to load authentication session:',
-//         error
-//       );
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   const login = async (
-//     newToken: string,
-//     newUser: User
-//   ) => {
-//     await SecureStore.setItemAsync(
-//       TOKEN_KEY,
-//       newToken
-//     );
-
-//     await SecureStore.setItemAsync(
-//       USER_KEY,
-//       JSON.stringify(newUser)
-//     );
-
-//     setToken(newToken);
-//     setUser(newUser);
-//   };
 
   const logout = async () => {
     // await SecureStore.deleteItemAsync(TOKEN_KEY);

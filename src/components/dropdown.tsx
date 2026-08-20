@@ -1,3 +1,4 @@
+import useData from '@/hooks/dataHook';
 import { useTheme } from '@/hooks/use-theme';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
@@ -13,8 +14,8 @@ import { Dropdown } from 'react-native-element-dropdown';
     { label: 'Home appliances', value: '6' },
     { label: 'Others', value: '7' },
   ];
-
   const DropdownComponent = () => {
+    const {setCategory} = useData();
     const theme = useTheme();
     const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
@@ -47,6 +48,7 @@ import { Dropdown } from 'react-native-element-dropdown';
           placeholder={!isFocus ? 'Enter a category' : '...'}
           searchPlaceholder="Search..."
           value={value}
+          onChangeText={(text)=>setCategory(text)}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {

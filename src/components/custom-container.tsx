@@ -1,6 +1,6 @@
 import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
-import { ScrollView } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { SafeAreaView, SafeAreaViewProps } from "react-native-safe-area-context";
 import Load from "./load";
 
@@ -15,18 +15,27 @@ export default function Container({children, backgroundColor, style, edges=['top
     } = useAuth();
     return(
         <SafeAreaView style={{flex:1, backgroundColor:backgroundColor || theme.paper}} edges={edges}>
-            <ScrollView 
-             contentContainerStyle={[{flexGrow:1}, style]} 
-             showsVerticalScrollIndicator={false} 
-             scrollEnabled={scroll} 
-             overScrollMode="never"
-             alwaysBounceVertical={false}>
-                {children}
-            </ScrollView>
-            {
-                pageLoad &&
-                <Load/>
-            }
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+            >
+                <ScrollView 
+                contentContainerStyle={[{flexGrow:1, paddingBottom:30}, style]} 
+                showsVerticalScrollIndicator={false} 
+                scrollEnabled={scroll} 
+                overScrollMode="never"
+                keyboardShouldPersistTaps="handled"
+                alwaysBounceVertical={false}
+                >
+                
+                    {children}
+                </ScrollView>
+                {
+                    pageLoad &&
+                    <Load/>
+                }
+            </KeyboardAvoidingView>
         </SafeAreaView>
     )
 }
