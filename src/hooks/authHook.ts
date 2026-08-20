@@ -7,7 +7,7 @@ import { Alert } from "react-native";
 import { uploadApi } from "./axios";
 
 export default function useAuthentication(){
-    const { setPageLoad, setUser } = useAuth();
+    const { setPageLoad, setUser, setCategory, setListings } = useAuth();
     const createUser = async (data: any) => {
         try {
             setPageLoad(true)
@@ -98,15 +98,80 @@ export default function useAuthentication(){
   };
 
   const logout = async () => {
-  try {
-    await AsyncStorage.removeItem("token");
-    setUser(null);
-    router.dismissAll()
+    try {
+      await AsyncStorage.removeItem("token");
+      setUser(null);
+      router.dismissAll()
 
-  } catch (error) {
-    console.error("Logout error:", error);
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
+  const addCategory = async () => {
+    const token = await AsyncStorage.getItem("token");
+    try {
+      const data = await uploadApi.post('/api/categories',
+        {
+          "name": "Real Estate",
+          "description": "Houses, apartments and land"
+        },
+        {headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log(data.data)
+
+    }catch (error){
+      console.error(error)
+    }
   }
-};
+
+  const getCategory = async () => {
+    try {
+      const data = await uploadApi.get('/api/categories');
+      setCategory(data.data);
+
+    }catch (error){
+      console.error(error)
+    }
+  }
+
+  const addListing = async () => {
+    const token = await AsyncStorage.getItem("token");
+    try {
+      const data = await uploadApi.post('/api/listings',
+        {
+          title: "Iphone 16",
+          description: "Very good phone",
+          price: 8000,
+          category: "Electronics",
+          images:[
+            "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aXBob25lfGVufDB8fDB8fHww",
+            "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aXBob25lfGVufDB8fDB8fHww",
+            "https://images.unsplash.com/photo-1616410011236-7a42121dd981?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aXBob25lfGVufDB8fDB8fHww"
+          ],
+          quantity: 1,
+          condition: "used",
+          location: "Lagos",
+        },
+        {headers: { Authorization: `Bearer ${token}` }
+      });
+
+    }catch (error){
+      console.error(error)
+    }
+  }
+
+  const getListings = async () => {
+    try {
+      const data = await uploadApi.get('/api/listings');
+      console.log(data.data.slice(0,3))
+      setListings(data.data);
+
+    }catch (error){
+      console.error(error)
+    }
+  }
+
 
     return{
         createUser,
@@ -114,6 +179,10 @@ export default function useAuthentication(){
         uploading,
         changeProfileImage,
         getCurrentUser,
-        logout
+        logout,
+        addCategory,
+        getCategory,
+        addListing,
+        getListings
     }
 }

@@ -31,6 +31,10 @@ type AuthContextType = {
   pageLoad:boolean;
   setPageLoad:any;
   setUser:any;
+  categories:any;
+  setCategory:any;
+  listings:any;
+  setListings:any;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(
@@ -49,6 +53,8 @@ export function AuthProvider({
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [pageLoad, setPageLoad] = useState(false);
+  const [categories, setCategory] = useState();
+  const [listings, setListings] = useState();
 
   const isAuthenticated = !!token;
 
@@ -76,7 +82,6 @@ export function AuthProvider({
   const logout = async () => {
     // await SecureStore.deleteItemAsync(TOKEN_KEY);
     // await SecureStore.deleteItemAsync(USER_KEY);
-
     setToken(null);
     setUser(null);
   };
@@ -92,7 +97,11 @@ export function AuthProvider({
         logout,
         pageLoad,
         setPageLoad,
-        setUser
+        setUser,
+        categories,
+        setCategory,
+        listings,
+        setListings
       }}
     >
       {children}

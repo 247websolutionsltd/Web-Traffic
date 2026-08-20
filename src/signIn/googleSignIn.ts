@@ -13,7 +13,7 @@ export async function signInWithGoogle() {
     const idToken = response.data?.idToken;
     console.log(response);
     const backendResponse = await fetch(
-      "http://192.168.1.3:500/api/auth/google",
+      "http://192.168.1.2:500/api/auth/google",
       {
         method: "POST",
         headers: {

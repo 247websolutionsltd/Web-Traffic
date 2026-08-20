@@ -33,9 +33,9 @@ export default function CreateStore(){
                     You are yet to set up a store 
                 </ThemedText>
                 <Button
-                title="Create a Store" 
-                onPress={()=>router.push('/createStore/create')} 
-                style={{paddingHorizontal:Spacing.three, marginVertical:Spacing.three}}
+                    title="Create a Store" 
+                    onPress={()=>router.push('/createStore/create')} 
+                    style={{paddingHorizontal:Spacing.three, marginVertical:Spacing.three}}
                 />
              </View>
         </SafeAreaView>

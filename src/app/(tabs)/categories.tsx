@@ -1,22 +1,27 @@
 import Category from "@/components/categoryCard";
 import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
-import { categoriesData } from "@/data/mock";
+import { useAuth } from "@/context/AuthContext";
+import { Key, useEffect } from "react";
 import { View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 
 export default function Categories(){
     const styles = useStyles();
+    const {categories} = useAuth();
+    useEffect(()=>{
+        console.log(categories)
+    },[])
     return(
         <Container>
             <ThemedText style={{alignSelf:'center'}} type="title">Categories</ThemedText>
             <View style={styles.categoriesView}>
                 {
-                    categoriesData.map((item, index)=>(
+                    categories.map((item: { image: string; name: string; }, index: Key | null | undefined)=>(
                         <View style={styles.categoriesDataView} key={index}>
                             <Category
                                 image={item.image}
-                                category={item.category}
+                                category={item.name}
                             />
                         </View>
                     ))

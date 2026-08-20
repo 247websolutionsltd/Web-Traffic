@@ -11,7 +11,7 @@ import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
 import { bannerSliderData } from "@/data/bannerSliderData";
-import { categories, listings, stores } from "@/data/mock";
+import { categories, stores } from "@/data/mock";
 import useAuthentication from "@/hooks/authHook";
 import { useTheme } from "@/hooks/use-theme";
 import { Category } from "@/types";
@@ -24,13 +24,14 @@ import { useStyles } from "../../../styles/styles";
 
 
 export default function Home(){
-    const featured = useMemo(() => listings.filter((l) => l.featured), []);
-    const recent = useMemo(() => listings.slice(0, 6), []);
+    
     const styles = useStyles();
     const theme = useTheme();
     const {width} = Dimensions.get('window');
-    const {user} = useAuth();
-    const {changeProfileImage} = useAuthentication();
+    const {user, listings} = useAuth();
+    const featured = useMemo(() => listings.filter((l: { featured: any; }) => l.featured), []);
+    const recent = useMemo(() => listings.slice(0, 6), []);
+    const {changeProfileImage, getCategory} = useAuthentication();
     return(
         <Container>
             <View style={{paddingHorizontal:Spacing.three}}>
@@ -87,7 +88,7 @@ export default function Home(){
                     data={featured}
                     horizontal
                     showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item, index) => index.toString()}
                     contentContainerStyle={[styles.horizontalList]}
                     renderItem={({ item }) => (
                         <View style={{padding:Spacing.two, width:width/2-Spacing.two}}>
@@ -114,7 +115,7 @@ export default function Home(){
                     scrollEnabled={false}
                     numColumns={2}
                     showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item, index) => index.toString()}
                     contentContainerStyle={styles.horizontalList}
                     renderItem={({ item }) => (
                         <View style={styles.listing}>
@@ -139,7 +140,7 @@ export default function Home(){
                     scrollEnabled={false}
                     numColumns={2}
                     showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item, index) => index.toString()}
                     contentContainerStyle={styles.horizontalList}
                     renderItem={({ item }) => (
                         <View style={styles.listing}>

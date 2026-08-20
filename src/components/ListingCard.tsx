@@ -20,7 +20,7 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.compactCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
       <ImageBackground style={[styles.compactImage, { backgroundColor: listing.imageColors[0] }]} source={{uri:listing.image}}>
-        {listing.featured && (
+        {listing.tag === "featured" && (
           <View style={styles.badgeSlot}>
             <Badge label="Featured" tone="gold" />
           </View>
@@ -61,7 +61,7 @@ export function ListingCardRow({ listing, onPress }: CardProps) {
   const theme = useTheme();
   return (
     <TouchableOpacity onPress={onPress} style={[styles.rowCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
-      <View style={[styles.rowThumb, { backgroundColor: listing.imageColors[0] }]}>
+      <View style={[styles.rowThumb, { backgroundColor: ["#E7E4DE", "#D8D4CB"][0] }]}>
         {listing.soldOut && (
           <View style={styles.soldOverlaySmall}>
             <Text style={styles.soldTextSmall}>Sold</Text>

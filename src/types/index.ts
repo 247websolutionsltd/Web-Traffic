@@ -29,6 +29,7 @@ export interface Listing {
   soldOut?: boolean;
   description: string;
   image:string;
+  tag:string;
   imageColors: [string, string];
   seller: {
     id: string;
