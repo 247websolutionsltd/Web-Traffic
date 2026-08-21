@@ -4,7 +4,7 @@ import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import Top from "@/components/top";
 import { Spacing } from "@/constants/theme";
-import { listings } from "@/data/mock";
+import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
@@ -14,10 +14,11 @@ import { useStyles } from "../../styles/styles";
 const FILTERS = ["Price", "Condition", "Location"];
 export default function CategoryScreen(){
     const [activeFilter, setActiveFilter] = useState("Price");
+    const {listings} = useAuth();
     const styles = useStyles();
     const theme = useTheme();
     const { category } = useLocalSearchParams<{ category: string; }>();
-    const listingData = listings.filter((obj)=>obj.categoryId===category.toLowerCase());
+    const listingData = listings.filter((obj: { category: string; })=>obj.category===category);
     return(
         <Container edges={['top', 'bottom']}>
             <Top title={category} filter style={{marginHorizontal:Spacing.three}}/>
@@ -36,9 +37,9 @@ export default function CategoryScreen(){
                     data={listingData}
                     scrollEnabled={false}
                     showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => (
-                        <Category listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} />
+                        <Category listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} />
                     )}
                     ListEmptyComponent={()=>(
                         <View style={styles.absoluteCenter}>

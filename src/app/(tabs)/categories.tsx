@@ -2,16 +2,13 @@ import Category from "@/components/categoryCard";
 import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import { useAuth } from "@/context/AuthContext";
-import { Key, useEffect } from "react";
+import { Key } from "react";
 import { View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 
 export default function Categories(){
     const styles = useStyles();
     const {categories} = useAuth();
-    useEffect(()=>{
-        console.log(categories)
-    },[])
     return(
         <Container>
             <ThemedText style={{alignSelf:'center'}} type="title">Categories</ThemedText>

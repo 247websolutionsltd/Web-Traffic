@@ -1,5 +1,5 @@
 import { Spacing } from "@/constants/theme";
-import { listings } from "@/data/mock";
+import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
 import { Image } from "expo-image";
 import { router } from "expo-router";
@@ -12,9 +12,10 @@ interface CategoryProps extends TouchableOpacityProps{
     category: string;
 }
 export default function Category({image, category}:CategoryProps){
+    const {listings} = useAuth();
     const theme = useTheme();
     const styles = useStyles();
-    const listingNum = listings.filter((obj)=>obj.categoryId===category.toLowerCase()).length
+    const listingNum = listings.filter((obj: { category: string; })=>obj.category===category).length
     return(
         <TouchableOpacity style={styles.categoriesCard} onPress={()=>router.navigate({
             pathname:"/category",

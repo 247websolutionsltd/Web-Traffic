@@ -14,29 +14,29 @@ export interface Category {
   count: number;
 }
 
+export interface Location {
+  city:string;
+  state:string;
+  country:string
+}
+
 export interface Listing {
+  v:number;
   id: string;
   title: string;
   price: number;
   currency: "NGN";
-  location: string;
-  categoryId: string;
+  location: Location;
+  category: string;
   condition: Condition;
-  postedAt: string;
-  views: number;
-  memberImage: string;
-  featured?: boolean;
-  soldOut?: boolean;
   description: string;
-  image:string;
+  createdAt: string;
+  images:string[];
   tag:string;
-  imageColors: [string, string];
-  seller: {
-    id: string;
-    name: string;
-    memberSince: string;
-    verified: boolean;
-  };
+  seller: string;
+  isActive: boolean;
+  quantity: number;
+  updatedAt: string;
 }
 
 export interface InfoProps{

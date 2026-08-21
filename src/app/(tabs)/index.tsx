@@ -31,7 +31,7 @@ export default function Home(){
     const {user, listings} = useAuth();
     const featured = useMemo(() => listings.filter((l: { featured: any; }) => l.featured), []);
     const recent = useMemo(() => listings.slice(0, 6), []);
-    const {changeProfileImage, getCategory} = useAuthentication();
+    const {changeProfileImage} = useAuthentication();
     return(
         <Container>
             <View style={{paddingHorizontal:Spacing.three}}>
@@ -92,7 +92,7 @@ export default function Home(){
                     contentContainerStyle={[styles.horizontalList]}
                     renderItem={({ item }) => (
                         <View style={{padding:Spacing.two, width:width/2-Spacing.two}}>
-                            <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} />
+                            <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} />
                         </View>
                     )}
                 />
@@ -121,7 +121,7 @@ export default function Home(){
                         <View style={styles.listing}>
                             <ListingCardCompact
                              listing={item} 
-                             onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} 
+                             onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} 
                              />
                         </View>
                     )}
@@ -144,7 +144,7 @@ export default function Home(){
                     contentContainerStyle={styles.horizontalList}
                     renderItem={({ item }) => (
                         <View style={styles.listing}>
-                            <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} />
+                            <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} />
                         </View>
                     )}
                 />

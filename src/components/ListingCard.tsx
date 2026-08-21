@@ -19,7 +19,7 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
   const [saved, setSaved] = useState(false);
   return (
     <TouchableOpacity onPress={onPress} style={[styles.compactCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
-      <ImageBackground style={[styles.compactImage, { backgroundColor: listing.imageColors[0] }]} source={{uri:listing.image}}>
+      <ImageBackground style={[styles.compactImage]} source={{uri:listing.images[0]}}>
         {listing.tag === "featured" && (
           <View style={styles.badgeSlot}>
             <Badge label="Featured" tone="gold" />
@@ -35,7 +35,7 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
         >
           <Ionicons name={saved ? "heart" : "heart-outline"} size={13} color={saved ? Colors.coral : theme.ink} />
         </Pressable>
-        {listing.soldOut && (
+        {listing.tag && (
           <View style={styles.soldOverlay}>
             <Text style={styles.soldText}>Sold out</Text>
           </View>
@@ -50,7 +50,7 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
         </View>
         <View style={styles.locRow}>
           <Ionicons name="location-outline" size={10} color={Colors.inkFaint} />
-          <ThemedText type="small">{listing.location}</ThemedText>
+          <ThemedText type="small">{listing.location.city}, {listing.location.state}</ThemedText>
         </View>
       </View>
     </TouchableOpacity>
@@ -62,21 +62,21 @@ export function ListingCardRow({ listing, onPress }: CardProps) {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.rowCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
       <View style={[styles.rowThumb, { backgroundColor: ["#E7E4DE", "#D8D4CB"][0] }]}>
-        {listing.soldOut && (
+        {listing.tag && (
           <View style={styles.soldOverlaySmall}>
             <Text style={styles.soldTextSmall}>Sold</Text>
           </View>
         )}
       </View>
       <View style={styles.rowBody}>
-        {listing.featured && <Badge label="Featured" tone="gold" />}
+        {listing.tag && <Badge label="Featured" tone="gold" />}
         <Text style={[styles.rowTitle, {color: theme.ink,}]} numberOfLines={2}>
           {listing.title}
         </Text>
         <View style={styles.locRow}>
           <Ionicons name="location-outline" size={11} color={Colors.inkFaint} />
           <Text style={styles.rowMeta}>
-            {listing.location} · {listing.postedAt}
+            {listing.location.city}, {listing.location.state} · {listing.createdAt}
           </Text>
         </View>
         <Text style={[styles.rowPrice, {color: theme.coralDark,}]}>{formatNaira(listing.price)}</Text>

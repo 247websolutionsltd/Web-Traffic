@@ -151,7 +151,11 @@ export default function useAuthentication(){
           ],
           quantity: 1,
           condition: "used",
-          location: "Lagos",
+          location: {
+            city:"Ikeja",
+            state:"Lagos",
+            country:"Nigeria"
+          },
         },
         {headers: { Authorization: `Bearer ${token}` }
       });
@@ -164,7 +168,6 @@ export default function useAuthentication(){
   const getListings = async () => {
     try {
       const data = await uploadApi.get('/api/listings');
-      console.log(data.data.slice(0,3))
       setListings(data.data);
 
     }catch (error){

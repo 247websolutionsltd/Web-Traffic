@@ -5,10 +5,10 @@ import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import Top from "@/components/top2";
 import { Colors, Spacing } from "@/constants/theme";
-import { listings } from "@/data/mock";
+import { useAuth } from "@/context/AuthContext";
 import useHook from "@/hooks/general-hook";
 import { useTheme } from "@/hooks/use-theme";
-import { Image, ImageBackground } from "expo-image";
+import { ImageBackground } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,22 +18,21 @@ export default function Detail(){
     const styles = useStyles();
     const theme = useTheme();
     const { id } = useLocalSearchParams<{ id: string; }>();
+    const {listings} = useAuth();
     const {
-         image, 
+         images, 
          title, 
          price, 
-         featured, 
-         postedAt, 
-         views, 
+         tag, 
+         createdAt, 
          location,
          seller,
          description,
-         memberImage
-        } = listings.filter((obj)=>obj.id===id)[0];
-    const { priceFormat } = useHook();
+        } = listings.filter((obj: { _id: string; })=>obj._id===id)[0];
+    const { priceFormat, timeAgo } = useHook();
     return(
         <Container edges={['bottom']}>
-            <ImageBackground style={styles.detailImage} source={{uri:image}}>
+            <ImageBackground style={styles.detailImage} source={{uri:images[0]}}>
                 <SafeAreaView edges={['top']} style={{backgroundColor:'#00000035', flex:1, paddingHorizontal:Spacing.three}}>
                     <Top/>
                 </SafeAreaView>
@@ -41,7 +40,7 @@ export default function Detail(){
             <View style={[styles.detailView]}>
                 <View>
                     {
-                        featured &&
+                        tag &&
                         <View style={[styles.badgeSlot, {position:'relative', marginBottom:Spacing.three}]}>
                             <Badge label="Featured" tone="gold" />
                         </View>
@@ -52,18 +51,18 @@ export default function Detail(){
                     </View>
                     <View style={[styles.topView, {marginVertical:Spacing.two}]}>
                         <View style={{flexShrink:1}}>
-                            <ThemedText type="small" style={{flexWrap:'wrap'}}>📍 {location}</ThemedText>
+                            <ThemedText type="small" style={{flexWrap:'wrap'}}>📍 {location.city}</ThemedText>
                         </View>
-                        <View style={{flexShrink:1}}>
+                        {/* <View style={{flexShrink:1}}>
                             <ThemedText type="small" style={{flexWrap:'wrap'}}>👁 {views} views</ThemedText>
-                        </View>
+                        </View> */}
                         <View style={{flexShrink:1}}>
-                            <ThemedText type="small" style={{flexWrap:'wrap'}}>🕐 {postedAt}</ThemedText>
+                            <ThemedText type="small" style={{flexWrap:'wrap'}}>🕐 {timeAgo(createdAt)}</ThemedText>
                         </View>
                     </View>
                     <View style={styles.detailVerified}>
-                        <View style={styles.row}>
-                            <Image style={styles.avatar} source={{uri:memberImage}}/>
+                        <View style={styles.row}> 
+                            {/* <Image style={styles.avatar} source={{uri:memberImage}}/> */}
                             <View style={{padding:Spacing.two}}>
                                 <ThemedText type="bold">{seller.name}</ThemedText>
                                 <ThemedText type="mid">Member since {seller.memberSince}</ThemedText>
