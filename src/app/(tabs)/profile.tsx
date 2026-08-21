@@ -1,5 +1,4 @@
 import ProfileCard from "@/components/profileCard";
-import Stats from "@/components/stats";
 import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
@@ -25,7 +24,7 @@ export default function Profile(){
                     <ThemedText style={{color:"#F0F0F3"}}>{user?.email}</ThemedText>
                 </View>
             </SafeAreaView>
-            <Stats/>
+            {/* <Stats/> */}
             <View>
                 {
                 PROFILEMENU.map((item, i) => (

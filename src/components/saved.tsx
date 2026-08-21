@@ -1,6 +1,7 @@
 import { Spacing } from "@/constants/theme";
 import useHook from "@/hooks/general-hook";
 import { useTheme } from "@/hooks/use-theme";
+import { Location } from "@/types";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useState } from "react";
@@ -10,11 +11,11 @@ import { ThemedText } from "./themed-text";
 
 interface ListingProps{
     title:string;
-    location:string;
-    postedAt:string;
+    location:Location;
+    createdAt:string;
     price:number;
     id:string;
-    image:string;
+    images:string[];
 }
 interface SavedProp{
     listing:ListingProps;
@@ -22,7 +23,7 @@ interface SavedProp{
     unlike:(index:string)=>void;
 }
 export default function Saved({listing, onPress, unlike}:SavedProp){
-    const {title, location, postedAt, price, id, image} = listing
+    const {title, location, createdAt, price, id, images} = listing
     const styles = useStyles();
     const { priceFormat } = useHook();
     const [ liked, setLiked ] = useState(true);
@@ -34,13 +35,13 @@ export default function Saved({listing, onPress, unlike}:SavedProp){
     return(
         <Pressable style={[styles.ad, {alignItems:'center'}]} onPress={onPress}>
             <View style={[styles.row, {flexShrink:1}]}>
-                <Image style={styles.adImage} source={{uri:image}}/>
+                <Image style={styles.adImage} source={{uri:images[0]}}/>
                 <View style={[styles.categoryRight]}>
                     <ThemedText style={{ fontSize:17, lineHeight:20, }} type="subtitle">{title}</ThemedText>
                     <ThemedText style={{flexShrink:1,color:theme.coralDark, marginVertical:Spacing.two}} type="bold">
                         ₦{priceFormat(price)}
                     </ThemedText>
-                    <ThemedText type="small">📍 {location} · {postedAt}</ThemedText>
+                    <ThemedText type="small">📍 {location.city} · {createdAt}</ThemedText>
                 </View>
             </View>
             <TouchableOpacity onPress={()=>handleUnlike(id)} style={{padding:Spacing.three}}>

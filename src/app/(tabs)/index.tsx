@@ -29,7 +29,7 @@ export default function Home(){
     const theme = useTheme();
     const {width} = Dimensions.get('window');
     const {user, listings} = useAuth();
-    const featured = useMemo(() => listings.filter((l: { featured: any; }) => l.featured), []);
+    const featured = async()=>await listings.filter((l: { tag: any; }) => l.tag==="featured");
     const recent = useMemo(() => listings.slice(0, 6), []);
     const {changeProfileImage} = useAuthentication();
     return(
@@ -77,26 +77,29 @@ export default function Home(){
              deal="50% off"
             />
             {/* <CategoryList/> */}
-            <View style={{marginVertical:Spacing.two}}>
-                <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
-                    <ThemedText type="subtitle">Featured today</ThemedText>
-                    <TouchableOpacity onPress={() => router.push("/featured")}>
-                        <ThemedText style={styles.seeAll}>See all</ThemedText>
-                    </TouchableOpacity>
+            {
+                featured.length > 0 &&
+                <View style={{marginVertical:Spacing.two}}>
+                    <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
+                        <ThemedText type="subtitle">Featured today</ThemedText>
+                        <TouchableOpacity onPress={() => router.push("/featured")}>
+                            <ThemedText style={styles.seeAll}>See all</ThemedText>
+                        </TouchableOpacity>
+                    </View>
+                    <FlatList
+                        data={featured()}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item, index) => index.toString()}
+                        contentContainerStyle={[styles.horizontalList]}
+                        renderItem={({ item }) => (
+                            <View style={{padding:Spacing.two, width:width/2-Spacing.two}}>
+                                <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} />
+                            </View>
+                        )}
+                    />
                 </View>
-                <FlatList
-                    data={featured}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item, index) => index.toString()}
-                    contentContainerStyle={[styles.horizontalList]}
-                    renderItem={({ item }) => (
-                        <View style={{padding:Spacing.two, width:width/2-Spacing.two}}>
-                            <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} />
-                        </View>
-                    )}
-                />
-            </View>
+            }
             <CatTest
                 image="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHNwb3J0c3xlbnwwfHwwfHx8MA%3D%3D"
                 title="A1 Sport Items"

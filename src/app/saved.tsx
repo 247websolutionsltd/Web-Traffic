@@ -2,7 +2,7 @@ import Container from "@/components/custom-container";
 import Saved from "@/components/saved";
 import { ThemedText } from "@/components/themed-text";
 import { Colors, Spacing } from "@/constants/theme";
-import { favorites, listings } from "@/data/mock";
+import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
 import { Listing } from "@/types";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -12,10 +12,11 @@ import { Alert, FlatList, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 
 export default function CategoryScreen(){
-    const displayFavorites = (fav: string[])=>{
+    const { listings, user } = useAuth();
+    const displayFavorites = (fav: string[] | null | undefined)=>{
         const data: Listing[] = []
-        fav.forEach((id:string)=>{
-           listings.filter((obj)=>obj.id===id).map((listing)=>{
+        fav?.forEach((id:string)=>{
+           listings.filter((obj: { _id: string; })=>obj._id===id).map((listing: Listing)=>{
             if (listing.id === id){
                 data.push(listing);
             }
@@ -24,7 +25,7 @@ export default function CategoryScreen(){
         return data
     }
     
-    const [ favoritesList, setFavoriteList ] = useState([...favorites]);
+    const [ favoritesList, setFavoriteList ] = useState(user?.saved);
     const [ favoriteData, setFavorite ] = useState([...displayFavorites(favoritesList)]);
     const handleUnlike = (index:string)=>{
         Alert.alert('Remove from List', 'Are you sure you want to remove this item from your favorite list?', [
@@ -34,8 +35,8 @@ export default function CategoryScreen(){
             style: 'cancel',
         },
         {text: 'OK', onPress: () => {
-            const data = [...favoritesList];
-            data.splice(data.indexOf(index), 1);
+            const data = favoritesList;
+            data?.splice(data.indexOf(index), 1);
             setFavoriteList(data);
             setFavorite(displayFavorites(data));
         }},

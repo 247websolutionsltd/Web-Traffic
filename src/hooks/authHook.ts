@@ -7,7 +7,7 @@ import { Alert } from "react-native";
 import { uploadApi } from "./axios";
 
 export default function useAuthentication(){
-    const { setPageLoad, setUser, setCategory, setListings } = useAuth();
+    const { setPageLoad, setUser, setCategory, setListings, setStoreList } = useAuth();
     const createUser = async (data: any) => {
         try {
             setPageLoad(true)
@@ -101,7 +101,8 @@ export default function useAuthentication(){
     try {
       await AsyncStorage.removeItem("token");
       setUser(null);
-      router.dismissAll()
+      router.dismissAll();
+      router.navigate('/index')
 
     } catch (error) {
       console.error("Logout error:", error);
@@ -175,6 +176,16 @@ export default function useAuthentication(){
     }
   }
 
+  const getStoreList = async () => {
+    try {
+      const data = await uploadApi.get('/api/stores');
+      setStoreList(data.data.stores)
+
+    }catch (error){
+      console.error(error)
+    }
+  }
+
 
     return{
         createUser,
@@ -186,6 +197,7 @@ export default function useAuthentication(){
         addCategory,
         getCategory,
         addListing,
-        getListings
+        getListings,
+        getStoreList
     }
 }

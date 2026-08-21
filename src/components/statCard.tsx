@@ -1,5 +1,5 @@
 import { Colors, Spacing } from "@/constants/theme";
-import { listings } from "@/data/mock";
+import { useAuth } from "@/context/AuthContext";
 import useHook from "@/hooks/general-hook";
 import { Image } from "expo-image";
 import { TouchableOpacity, TouchableOpacityProps, View } from "react-native";
@@ -12,11 +12,12 @@ interface StatCardProps extends TouchableOpacityProps{
 }
 export default function StatCard({id, condition}:StatCardProps){
     const styles = useStyles();
-    const { image, title, price, views } = listings.filter((obj)=>obj.id===id)[0];
+    const {listings} = useAuth();
+    const { images, title, price, views, } = listings.filter((obj: { _id: string; })=>obj._id===id)[0];
     const { priceFormat, linter } = useHook();
     return(
         <TouchableOpacity style={[styles.statCard, {opacity:condition==="Expired"?0.4:1}]}>
-            <Image style={styles.statCardImage} source={image}/>
+            <Image style={styles.statCardImage} source={images[0]}/>
             <View style={styles.startCardRight}>
                 <ThemedText type="bold" style={{marginBottom:Spacing.one}}>{linter(title, 30)}</ThemedText>
                 <View style={styles.row}>

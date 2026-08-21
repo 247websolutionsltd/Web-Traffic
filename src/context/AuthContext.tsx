@@ -17,8 +17,9 @@ type User = {
     phone: string | null | undefined;
     role: string | undefined;
     ads: string | null | undefined;
-    saved: string | null | undefined;
+    saved: string[] | null | undefined;
     store: string | null | undefined;
+    stores: string[] | null | undefined;
 };
 
 type AuthContextType = {
@@ -35,6 +36,8 @@ type AuthContextType = {
   setCategory:any;
   listings:any;
   setListings:any;
+  storeList:any;
+  setStoreList:any;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(
@@ -55,28 +58,30 @@ export function AuthProvider({
   const [pageLoad, setPageLoad] = useState(false);
   const [categories, setCategory] = useState();
   const [listings, setListings] = useState();
+  const [storeList, setStoreList] = useState();
 
   const isAuthenticated = !!token;
 
   const loginGoogle = async()=>{
     setPageLoad(true);
-    const response = signInWithGoogle();
+    const response = await signInWithGoogle();
     setPageLoad(false);
     const user = {
-        id: (await response).user.id,
-        firstName: (await response).user.firstName,
-        lastName:(await response).user.lastName,
-        email: (await response).user.email,
-        profileImage: (await response).user.profileImage,
-        phone: (await response).user.phone,
-        role: (await response).user.role,
-        ads: (await response).user.ads,
-        saved: (await response).user.saved,
-        store: (await response).user.store,
+        id: response.user.id,
+        firstName: response.user.firstName,
+        lastName: response.user.lastName,
+        email: response.user.email,
+        profileImage: response.user.profileImage,
+        phone: response.user.phone,
+        role: response.user.role,
+        ads: response.user.ads,
+        saved: response.user.saved,
+        store: response.user.store,
+        stores: response.user.stores,
     }
     setUser(user);
-    setPageLoad(false);
     router.replace("/(tabs)")
+    setPageLoad(false);
   }
 
   const logout = async () => {
@@ -101,7 +106,9 @@ export function AuthProvider({
         categories,
         setCategory,
         listings,
-        setListings
+        setListings,
+        storeList,
+        setStoreList
       }}
     >
       {children}

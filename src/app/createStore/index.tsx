@@ -1,6 +1,7 @@
 import Button from "@/components/button";
 import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -12,10 +13,10 @@ import { useStyles } from "../../../styles/styles";
 export default function CreateStore(){
     const theme = useTheme();
     const styles = useStyles();
-    const store: string[] = [];
+    const {user} = useAuth();
 
     useEffect(()=>{
-        if(store.length>0){
+        if((user?.stores?.length || 0)>0){
             router.replace('/createStore/store')
         }
     },[])
