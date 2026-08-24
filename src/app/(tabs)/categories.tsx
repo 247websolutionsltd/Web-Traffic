@@ -14,11 +14,12 @@ export default function Categories(){
             <ThemedText style={{alignSelf:'center'}} type="title">Categories</ThemedText>
             <View style={styles.categoriesView}>
                 {
-                    categories.map((item: { image: string; name: string; }, index: Key | null | undefined)=>(
+                    categories.map((item: { image: string; _id: string; name: string; }, index: Key | null | undefined)=>(
                         <View style={styles.categoriesDataView} key={index}>
                             <Category
                                 image={item.image}
                                 category={item.name}
+                                id={item._id}
                             />
                         </View>
                     ))

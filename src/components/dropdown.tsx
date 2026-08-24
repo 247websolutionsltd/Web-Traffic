@@ -1,3 +1,4 @@
+import { useAuth } from '@/context/AuthContext';
 import useData from '@/hooks/dataHook';
 import { useTheme } from '@/hooks/use-theme';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -6,24 +7,25 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
   const data = [
-    { label: 'Electronics', value: '1' },
-    { label: 'Property', value: '2' },
-    { label: 'Vehicles', value: '3' },
-    { label: 'Jobs', value: '4' },
-    { label: 'Fashion', value: '5' },
-    { label: 'Home appliances', value: '6' },
-    { label: 'Others', value: '7' },
+    { label: 'Electronics', value: '6a8704aa520fa4cc02d244df' },
+    { label: 'Property', value: '6a87103a520fa4cc02d244eb' },
+    { label: 'Vehicles', value: '6a870fd7520fa4cc02d244ea' },
+    { label: 'Jobs', value: 'Jobs' },
+    { label: 'Fashion', value: '6a870f5c520fa4cc02d244e8' },
+    { label: 'Home appliances', value: 'Home appliances' },
+    { label: 'Others', value: 'Others' },
   ];
   const DropdownComponent = () => {
     const {setCategory} = useData();
     const theme = useTheme();
     const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
+    const {form, updateField} = useAuth();
 
     const renderLabel = () => {
       if (isFocus && !value) {
         return (
-          <Text style={[styles.label, {backgroundColor: theme.card}, isFocus && { color: 'blue' }]}>
+          <Text style={[styles.label, {backgroundColor: theme.card}, isFocus && { color: theme.text }]}>
             Enter a Category
           </Text>
         );
@@ -35,8 +37,9 @@ import { Dropdown } from 'react-native-element-dropdown';
       <View>
         {renderLabel()}
         <Dropdown
-          style={[styles.dropdown, {backgroundColor: theme.card}, { borderColor: isFocus ?'blue':theme.line }]}
+          style={[styles.dropdown, {backgroundColor: theme.card}, { borderColor: isFocus ?'blue':theme.line, }]}
           placeholderStyle={styles.placeholderStyle}
+          searchPlaceholderTextColor={theme.textSecondary}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
@@ -48,11 +51,11 @@ import { Dropdown } from 'react-native-element-dropdown';
           placeholder={!isFocus ? 'Enter a category' : '...'}
           searchPlaceholder="Search..."
           value={value}
-          onChangeText={(text)=>setCategory(text)}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
             setValue(item.value);
+            updateField("category", item.value)
             setIsFocus(false);
           }}
           renderLeftIcon={() => (

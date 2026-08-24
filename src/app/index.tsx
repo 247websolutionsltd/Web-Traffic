@@ -27,6 +27,7 @@ export default function SplashScreen(){
       });
       const loadTasks = async () => {
           const token = await AsyncStorage.getItem("token");
+          console.log(token)
           const person = await getCurrentUser(token);
           const onboarded = await AsyncStorage.getItem('onboarded');
           if (onboarded === 'true'){

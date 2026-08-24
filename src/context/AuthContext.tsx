@@ -1,4 +1,7 @@
+import { uploadApi } from '@/hooks/axios';
 import { signInWithGoogle } from '@/signIn/googleSignIn';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from "expo-image-picker";
 import { router } from 'expo-router';
 import {
   createContext,
@@ -6,6 +9,7 @@ import {
   useState,
   type ReactNode
 } from 'react';
+import { Alert } from 'react-native';
 
 
 type User = {
@@ -20,6 +24,21 @@ type User = {
     saved: string[] | null | undefined;
     store: string | null | undefined;
     stores: string[] | null | undefined;
+};
+
+
+
+type Form = {
+  title: string;
+  description: string;
+  price: string;
+  category: string;
+  images: any[];
+  quantity: string;
+  condition: string;
+  city: string;
+  state: string;
+  country: string;
 };
 
 type AuthContextType = {
@@ -38,6 +57,14 @@ type AuthContextType = {
   setListings:any;
   storeList:any;
   setStoreList:any;
+  loading: boolean
+  handleSubmit: ()=>void;
+  updateField: (field: "title" | "description" | "price" | "category" | "images" | "quantity" | "condition" | "city" | "state" | "country", value: string) =>void;
+  form:Form;
+  readyImage: ()=>void;
+  removeImage: (index: number)=>void;
+  createListing: ()=>void;
+  tempListing:any;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(
@@ -58,6 +85,7 @@ export function AuthProvider({
   const [pageLoad, setPageLoad] = useState(false);
   const [categories, setCategory] = useState();
   const [listings, setListings] = useState();
+  const [tempListing, setTempListing] = useState();
   const [storeList, setStoreList] = useState();
 
   const isAuthenticated = !!token;
@@ -91,6 +119,158 @@ export function AuthProvider({
     setUser(null);
   };
 
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    price: "",
+    category: "",
+    images: [] as any[],
+    quantity: "",
+    condition: "",
+    city: "",
+    state: "",
+    country: "Nigeria",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const updateField = (
+    field: keyof typeof form,
+    value: string
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+  if (!form.title.trim()) {
+    Alert.alert("Error", "Store name is required");
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    const token = await AsyncStorage.getItem("token");
+
+    if (!token) {
+      throw new Error("You are not logged in");
+    }
+
+   const data = await uploadApi.post('/api/listings"',
+      form,
+      {headers: { Authorization: `Bearer ${token}` }
+    });
+
+
+    // if (!response.ok) {
+    //   throw new Error(
+    //     data.message || "Failed to create store"
+    //   );
+    // }
+
+    console.log("STORE CREATED:", data);
+
+    Alert.alert(
+      "Success",
+      "Your store has been created"
+    );
+
+  } catch (error: any) {
+    console.error("CREATE STORE ERROR:", error);
+
+    Alert.alert(
+      "Error",
+      error.message || "Something went wrong"
+    );
+
+  } finally {
+    setLoading(false);
+  }
+};
+
+const readyImage = async () => {
+  const MAX_IMAGES = 5;
+  const result =
+    await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsMultipleSelection: true,
+      quality: 0.8,
+    });
+
+  if (result.canceled) {
+    return;
+  }
+
+  setForm((prev) => {
+    const selectedImages = result.assets.map(
+      (asset) => asset.uri
+    );
+
+    const combined = [
+      ...prev.images,
+      ...selectedImages,
+    ];
+
+    return {
+      ...prev,
+      images: combined.slice(0, MAX_IMAGES),
+    };
+  });
+};
+
+const removeImage = (index: number) => {
+  setForm((prev) => ({
+    ...prev,
+    images: prev.images.filter(
+      (_, i) => i !== index
+    ),
+  }));
+};
+
+const createListing = async () => {
+  const formData = new FormData();
+  const token = await AsyncStorage.getItem("token");
+  // Regular fields
+  formData.append("title", form.title);
+  formData.append("description", form.description);
+  formData.append("category", form.category);
+  formData.append("condition", form.condition);
+  formData.append("price", form.price);
+  formData.append("quantity", form.quantity);
+  formData.append("city", form.city);
+  formData.append("state", form.state);
+  formData.append("country", form.country);
+
+  // Images
+ form.images.forEach((asset: any, index: number) => {
+  formData.append("images", {
+    uri: asset,
+    name: asset.fileName || `listing-${Date.now()}-${index}.jpg`,
+    type: asset.mimeType || "image/jpeg",
+  } as any);
+  });
+  try{
+    const data = await uploadApi.post("/api/listings",
+      formData,
+      {headers: { Authorization: `Bearer ${token}` }
+    });
+    setTempListing(data.data)
+    router.push('/live')
+  }catch(error){
+    console.error("Error Message:", error)
+  }
+  
+  // if (!response.ok) {
+  //   throw new Error(
+  //     data.message || "Failed to create listing"
+  //   );
+  // }
+
+};
+
   return (
     <AuthContext.Provider
       value={{
@@ -108,7 +288,15 @@ export function AuthProvider({
         listings,
         setListings,
         storeList,
-        setStoreList
+        setStoreList,
+        loading,
+        handleSubmit,
+        updateField,
+        form,
+        readyImage,
+        removeImage,
+        createListing,
+        tempListing,
       }}
     >
       {children}

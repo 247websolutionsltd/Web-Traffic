@@ -8,7 +8,7 @@ import Container from "@/components/custom-container";
 import Label from "@/components/progressLabel";
 import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
-import useData from "@/hooks/dataHook";
+import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -21,23 +21,30 @@ export default function Create(){
     const styles = useStyles();
     const theme = useTheme();
     const [ page, setPage ] = useState(1);
-    const { 
-        adTitle,
-        activeFilter, 
-        description, 
-    } = useData();
+    const {form} = useAuth();
     const handleNext = ()=>{
         if(page === 1){
-            console.log("title:",adTitle)
-            if(adTitle && activeFilter && description){
+            if(form.title && form.condition && form.category && form.description){
+                console.log("title:",form);
                 setPage(page+1)
             }else{
                 Alert.alert("Select all fields")
             }
         }else if(page === 2){
-
+            
+            if(form.images.length >= 3){
+                console.log("title:",form);
+                setPage(page+1)
+            }else{
+                Alert.alert("Upload at least 3 images")
+            }
         }else {
-            router.push("/review")
+            if(form.price && form.city && form.state && form.quantity){
+                console.log("title:",form);
+                router.push("/review")
+            }else{
+                Alert.alert("Select all fields");
+            }
         }
     }
     return(
@@ -51,7 +58,7 @@ export default function Create(){
                     <ThemedText type="subtitle">Post an ad</ThemedText>
                 </View>
 
-                <Label page={page} labelNum={4}/>
+                <Label page={page} labelNum={3}/>
 
                 <View style={{}}>
                         {

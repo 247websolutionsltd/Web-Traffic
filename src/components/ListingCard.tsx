@@ -35,7 +35,7 @@ export function ListingCardCompact({ listing, onPress }: CardProps) {
         >
           <Ionicons name={saved ? "heart" : "heart-outline"} size={13} color={saved ? Colors.coral : theme.ink} />
         </Pressable>
-        {listing.tag && (
+        {listing.tag.toLowerCase() === "sold out" && (
           <View style={styles.soldOverlay}>
             <Text style={styles.soldText}>Sold out</Text>
           </View>
@@ -62,14 +62,14 @@ export function ListingCardRow({ listing, onPress }: CardProps) {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.rowCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
       <View style={[styles.rowThumb, { backgroundColor: ["#E7E4DE", "#D8D4CB"][0] }]}>
-        {listing.tag && (
+        {listing.tag.toLowerCase() === "sold" && (
           <View style={styles.soldOverlaySmall}>
             <Text style={styles.soldTextSmall}>Sold</Text>
           </View>
         )}
       </View>
       <View style={styles.rowBody}>
-        {listing.tag && <Badge label="Featured" tone="gold" />}
+        {listing.tag.toLowerCase() === "featured" && <Badge label="Featured" tone="gold" />}
         <Text style={[styles.rowTitle, {color: theme.ink,}]} numberOfLines={2}>
           {listing.title}
         </Text>

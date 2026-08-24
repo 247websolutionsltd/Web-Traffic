@@ -186,6 +186,27 @@ export default function useAuthentication(){
     }
   }
 
+  const toggleFavorite = async (
+    listingId: string,
+    token: string
+  ) => {
+    try{
+      const data = await uploadApi.post(`api/favorites/${listingId}`,
+        {
+          "name": "Real Estate",
+          "description": "Houses, apartments and land"
+        },
+        {headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log(data.data)
+    }catch(error){
+      console.error("Error:", error)
+    }
+
+    
+  };
+  
+
 
     return{
         createUser,
@@ -198,6 +219,7 @@ export default function useAuthentication(){
         getCategory,
         addListing,
         getListings,
-        getStoreList
+        getStoreList,
+        toggleFavorite
     }
 }

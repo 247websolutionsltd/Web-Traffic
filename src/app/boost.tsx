@@ -2,6 +2,7 @@ import Button from "@/components/button";
 import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -11,6 +12,7 @@ import { useStyles } from "../../styles/styles";
 export default function Boost(){
     const styles = useStyles();
     const theme = useTheme();
+    const { createListing } = useAuth();
     return(
         <Container style={{paddingHorizontal:Spacing.three, justifyContent:'space-between'}} edges={['top', 'bottom']}>
             <View style={{flex:1}}>
@@ -45,7 +47,7 @@ export default function Boost(){
             </View>
             <View>
                 <Button onPress={()=>router.push('/')} title="Boost for ₦2,500 " icon={'arrow-forward'}/>
-                <Button onPress={()=>router.push('/live')} title="Post without boosting" type="secondary" style={{marginVertical:Spacing.two}}/>
+                <Button onPress={createListing} title="Post without boosting" type="secondary" style={{marginVertical:Spacing.two}}/>
             </View>
         </Container>
     )

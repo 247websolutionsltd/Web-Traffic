@@ -1,4 +1,5 @@
 import { Colors, Spacing } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity, View } from "react-native";
@@ -9,6 +10,7 @@ import { ThemedText } from "../themed-text";
 export default function Photos(){
     const theme = useTheme();
     const styles = useStyles();
+    const {form, updateField, readyImage, removeImage} = useAuth();
     const images = [
         {
             image:"https://images.unsplash.com/photo-1779896411955-87ecb3bc091e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxfHx8ZW58MHx8fHx8",
@@ -31,7 +33,7 @@ export default function Photos(){
         //     cover:false
         // }
     ]
-    const labelNumber = Array.from({ length:  6-images.length}, () => ({})); 
+    const labelNumber = Array.from({ length:  6-form.images.length}, () => ({})); 
     return(
         <View style={{flex:1}}>
             <View style={{margin:Spacing.two, paddingHorizontal:Spacing.two}}>
@@ -41,11 +43,12 @@ export default function Photos(){
 
             <View style={styles.uploadImages}>
                 {
-                    images.map((item, index)=>(
+                    form.images.map((item, index)=>(
                         <View key={index} style={{width:'33.33%', padding:Spacing.two}}>
                             <ImageUpload
-                                image={item.image}
-                                cover={item.cover}
+                                image={item}
+                                cover={index===0}
+                                index={index}
                             />
                             
                         </View>
@@ -54,7 +57,7 @@ export default function Photos(){
                 {
                     labelNumber.map((i, index)=>(
                         <View key={index} style={{width:'33.33%', padding:Spacing.two}}>
-                            <TouchableOpacity style={styles.uploadEmpty}>
+                            <TouchableOpacity style={styles.uploadEmpty} onPress={readyImage}>
                                 <MaterialIcons name="add" size={18} color={Colors.coral}/>
                             </TouchableOpacity>
                         </View>

@@ -1,16 +1,16 @@
 import Ad from "@/components/ad";
-import { Chip } from "@/components/Chip";
 import Container from "@/components/custom-container";
 import OptionCard from "@/components/option";
 import { ThemedText } from "@/components/themed-text";
 import { Radius, Spacing } from "@/constants/theme";
-import { ads, OPTIONMENU } from "@/data/mock";
+import { useAuth } from "@/context/AuthContext";
+import { OPTIONMENU } from "@/data/mock";
 import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
 import { useCallback, useRef, useState } from "react";
-import { FlatList, ScrollView, TouchableOpacity, View } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../styles/styles";
 
@@ -21,6 +21,8 @@ export default function CategoryScreen(){
     const theme = useTheme();
     const optionRef = useRef<BottomSheet>(null);
     const [index, setIndex] = useState(-1);
+    const { listings, user } = useAuth();
+    const ads = listings.filter((obj: { seller: any; })=>obj.seller === user?.id)
     const handleOption=()=>{
         setIndex(0)
     }
@@ -46,7 +48,7 @@ export default function CategoryScreen(){
                 </TouchableOpacity>
                 <ThemedText type="subtitle">My ads</ThemedText>
             </View>
-            <ScrollView
+            {/* <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.chipRow}
@@ -55,18 +57,18 @@ export default function CategoryScreen(){
                 {FILTERS.map((f) => (
                     <Chip key={f} label={f} active={f === activeFilter} onPress={() => setActiveFilter(f)} />
                 ))}
-            </ScrollView>
+            </ScrollView> */}
             <View style={{padding:Spacing.three, paddingTop:0}}>
                 <FlatList
                     data={ads}
                     scrollEnabled={false}
                     showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => (
                         <Ad 
-                        id={item.id}
-                        onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} 
-                        condition={item.condition}
+                        id={item._id}
+                        onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} 
+                        condition={"Live"}
                         onOption={handleOption}
                         />
                     )}

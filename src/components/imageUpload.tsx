@@ -1,23 +1,26 @@
 import { Radius } from '@/constants/theme';
+import { useAuth } from '@/context/AuthContext';
 import { useTheme } from '@/hooks/use-theme';
 import { MaterialIcons } from '@expo/vector-icons';
-import { ImageBackground, View, } from 'react-native';
+import { ImageBackground, TouchableOpacity, View, } from 'react-native';
 import { useStyles } from '../../styles/styles';
 import { ThemedText } from './themed-text';
 
 interface ImageUploadProps{
     image:string;
     cover?:boolean;
+    index:number;
 }
-export default function ImageUpload({image, cover}:ImageUploadProps){
+export default function ImageUpload({image, cover, index}:ImageUploadProps){
     const theme = useTheme();
     const styles = useStyles();
+    const {removeImage} = useAuth();
     return(
         <ImageBackground style={styles.imageUpload} source={{uri:image}} imageStyle={{borderRadius:Radius.md}}>
             <View style={styles.imageUploadView}>
-                <View style={[styles.cancelView, {alignSelf:'flex-end'}]}>
+                <TouchableOpacity style={[styles.cancelView, {alignSelf:'flex-end'}]} onPress={()=>removeImage(index)}>
                     <MaterialIcons name='close' size={18} color={"#FFF"}/>
-                </View>
+                </TouchableOpacity>
                 {
                     cover &&
                     <View style={styles.coverView}>
