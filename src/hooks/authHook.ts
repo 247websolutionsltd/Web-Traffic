@@ -7,7 +7,7 @@ import { Alert } from "react-native";
 import { uploadApi } from "./axios";
 
 export default function useAuthentication(){
-    const { setPageLoad, setUser, setCategory, setListings, setStoreList } = useAuth();
+    const { setPageLoad, setUser, setCategory, setListings, setStoreList, setStore } = useAuth();
     const createUser = async (data: any) => {
         try {
             setPageLoad(true)
@@ -188,24 +188,42 @@ export default function useAuthentication(){
 
   const toggleFavorite = async (
     listingId: string,
-    token: string
   ) => {
+    const token = await AsyncStorage.getItem("token");
     try{
       const data = await uploadApi.post(`api/favorites/${listingId}`,
-        {
-          "name": "Real Estate",
-          "description": "Houses, apartments and land"
-        },
+        {listingId},
         {headers: { Authorization: `Bearer ${token}` }
       });
-      console.log(data.data)
-    }catch(error){
-      console.error("Error:", error)
-    }
-
-    
+      getCurrentUser(token);
+      return data
+    }catch(error:any){
+      console.error("Error:", error.response.data)
+    } 
   };
   
+
+  const clearAllFavorites = async () => {
+    const token = await AsyncStorage.getItem("token");
+    try{
+       const data = await uploadApi.delete(`api/favorites`, {headers: { Authorization: `Bearer ${token}` }});
+       getCurrentUser(token);
+       return data;
+    }catch (error:any){
+      console.error("Error:", error)
+    }
+  };
+
+  const getMyStore = async () => {
+    const token = await AsyncStorage.getItem("token");
+    try{
+      const data = await uploadApi.get('/api/stores/my-store', {headers: { Authorization: `Bearer ${token}` }});
+      setStore(data.data)
+      console.log("MY STORE RESPONSE:", data.data);
+    }catch(error){
+      console.error(error)
+    }
+  };
 
 
     return{
@@ -220,6 +238,8 @@ export default function useAuthentication(){
         addListing,
         getListings,
         getStoreList,
-        toggleFavorite
+        toggleFavorite,
+        clearAllFavorites,
+        getMyStore
     }
 }

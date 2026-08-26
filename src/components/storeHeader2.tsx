@@ -1,6 +1,7 @@
 import { Colors, Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 import { Image } from "expo-image";
+import { router } from "expo-router";
 import { View, ViewProps } from "react-native";
 import { useStyles } from "../../styles/styles";
 import Edit from "./storeEdit";
@@ -45,7 +46,7 @@ export default function StoreHeader({image, name, location, date, ad, rating , f
             <View style={{flexDirection:'row', justifyContent:'space-between', padding:Spacing.two}}>
                 <Edit icon="visibility" title="View Store"/>
                 <Edit icon="create" title="Edit Store"/>
-                <Edit icon="add" title="Post ad"/>
+                <Edit icon="add" title="Post ad" onPress={()=>router.navigate('/create')}/>
             </View>
 
         </View>

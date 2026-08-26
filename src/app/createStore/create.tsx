@@ -5,11 +5,12 @@ import Container from "@/components/custom-container";
 import Label from "@/components/progressLabel";
 import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Alert, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 
 export default function Create(){
@@ -17,6 +18,26 @@ export default function Create(){
     const theme = useTheme();
     const [ page, setPage ] = useState(1);
     const [ title, setTitle ] = useState("");
+    const { storeForm, createStore } = useAuth();
+    const handleNext = ()=>{
+        if (page === 1){
+            if (storeForm.name && storeForm.image && storeForm.handle && storeForm.category){
+                console.log(storeForm);
+                setPage(page +1);
+            }else{
+                Alert.alert("Fill all fields")
+            }
+        }else if (page === 2){
+            if (storeForm.city && storeForm.state && storeForm.description){
+                console.log(storeForm);
+                setPage(page +1);
+            }else{
+                Alert.alert("Fill all fields")
+            }
+        }else{
+            createStore()
+        }
+    }
 
     return(
         <Container edges={['top','bottom']}>
@@ -31,12 +52,12 @@ export default function Create(){
 
             {
                 page === 1 ?
-                <Name handleNext={()=>setPage(page + 1)} handleTitle={setTitle}/>
+                <Name handleNext={handleNext} handleBack={()=>router.back()}/>
                 :
                 page === 2 ?
-                <Description handleNext={()=>setPage(page + 1)}/>
+                <Description handleNext={handleNext} handleBack={()=>setPage(page-1)}/>
                 :
-                <Activate handleNext={()=>console.log(page)}/>
+                <Activate handleNext={handleNext} handleBack={()=>setPage(page-1)}/>
             }
         </Container>
     )

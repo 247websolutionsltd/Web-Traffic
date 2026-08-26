@@ -15,8 +15,8 @@ import { useStyles } from "../../styles/styles";
 export default function Produts(){
     const styles = useStyles();
     const {width} = Dimensions.get('window');
-    const {listings} = useAuth();
     const theme = useTheme();
+    const {user, listings} = useAuth();
     return(
         <Container edges={["top","bottom"]}>
             <View style={[styles.row, {paddingHorizontal:Spacing.three}]}>
@@ -29,7 +29,11 @@ export default function Produts(){
                 {
                     listings.map((item: Listing, index: Key | null | undefined)=>(
                         <View style={{padding:Spacing.two, width:width/2-Spacing.two}} key={index}>
-                            <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} />
+                            <ListingCardCompact
+                             listing={item} 
+                             onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })}
+                             saved={user?.saved?.includes(item._id)} 
+                             />
                         </View>
                     ))
                 }

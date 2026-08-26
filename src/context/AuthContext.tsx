@@ -41,6 +41,16 @@ type Form = {
   country: string;
 };
 
+type StoreForm = {
+  name: string;
+  image: any;
+  handle: string;
+  description: string;
+  city: string;
+  state: string;
+  category: string;
+}
+
 type AuthContextType = {
   user: User | null;
   token: string | null;
@@ -62,9 +72,16 @@ type AuthContextType = {
   updateField: (field: "title" | "description" | "price" | "category" | "images" | "quantity" | "condition" | "city" | "state" | "country", value: string) =>void;
   form:Form;
   readyImage: ()=>void;
+  readyStoreImage: ()=>void;
   removeImage: (index: number)=>void;
   createListing: ()=>void;
   tempListing:any;
+  storeForm: StoreForm;
+  updateStoreField: (field: "name" | "image" | "handle" | "description" | "city" | "state" | "category", value: string) =>void;
+  setStoreForm: any;
+  createStore:()=>void;
+  store:any;
+  setStore:any;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(
@@ -87,6 +104,7 @@ export function AuthProvider({
   const [listings, setListings] = useState();
   const [tempListing, setTempListing] = useState();
   const [storeList, setStoreList] = useState();
+  const [store, setStore] = useState();
 
   const isAuthenticated = !!token;
 
@@ -131,6 +149,46 @@ export function AuthProvider({
     state: "",
     country: "Nigeria",
   });
+
+  const [storeForm, setStoreForm] = useState({
+    name: "",
+    image: {} as any,
+    handle: "",
+    description: "",
+    city: "",
+    state: "",
+    category: "",
+  });
+
+  const updateStoreField = (
+    field: keyof typeof storeForm,
+    value: string
+  ) => {
+    setStoreForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const readyStoreImage = async () => {
+    const result =
+      await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ["images"],
+        allowsMultipleSelection: true,
+        quality: 0.8,
+      });
+
+    if (result.canceled) {
+      return;
+    }
+
+    setStoreForm((prev) => {
+    return {
+      ...prev,
+      image: result.assets[0],
+    };
+  });
+  };
 
   const [loading, setLoading] = useState(false);
 
@@ -258,9 +316,51 @@ const createListing = async () => {
       {headers: { Authorization: `Bearer ${token}` }
     });
     setTempListing(data.data)
-    router.push('/live')
   }catch(error){
     console.error("Error Message:", error)
+  }finally{
+    router.push('/live')
+  }
+  
+  // if (!response.ok) {
+  //   throw new Error(
+  //     data.message || "Failed to create listing"
+  //   );
+  // }
+
+};
+
+
+const createStore = async () => {
+  const formData = new FormData();
+  const token = await AsyncStorage.getItem("token");
+  // Regular fields
+  formData.append("name", storeForm.name);
+  formData.append("description", storeForm.description);
+  formData.append("category", storeForm.category);
+  formData.append("handle", storeForm.handle);
+  formData.append("city", storeForm.city);
+  formData.append("state", storeForm.state);
+  formData.append("country", "Nigeria");
+
+  // Images
+  const asset = storeForm.image
+ formData.append("image", {
+    uri: asset.uri,
+    name: asset.fileName || `store-${Date.now()}.jpg`,
+    type: asset.mimeType || "image/jpeg",
+  } as any);
+  console.log(formData)
+  try{
+    const data = await uploadApi.post("/api/stores",
+      formData,
+      {headers: { Authorization: `Bearer ${token}` }
+    });
+    setTempListing(data.data)
+  }catch(error){
+    console.error("Error Message:", error)
+  }finally{
+    router.push('/(tabs)')
   }
   
   // if (!response.ok) {
@@ -297,6 +397,13 @@ const createListing = async () => {
         removeImage,
         createListing,
         tempListing,
+        storeForm,
+        setStoreForm,
+        readyStoreImage,
+        updateStoreField,
+        createStore,
+        store,
+        setStore
       }}
     >
       {children}

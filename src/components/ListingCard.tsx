@@ -1,45 +1,47 @@
 import { Badge } from "@/components/badge";
 import { Colors, Radius, Spacing } from "@/constants/theme";
 import { formatNaira } from "@/data/mock";
+import useAuthentication from "@/hooks/authHook";
 import { useTheme } from "@/hooks/use-theme";
 import { Listing } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { ImageBackground } from "expo-image";
-import { useState } from "react";
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./themed-text";
 
 interface CardProps {
   listing: Listing;
   onPress?: () => void;
+  saved?: boolean;
 }
 
-export function ListingCardCompact({ listing, onPress }: CardProps) {
+export function ListingCardCompact({ listing, onPress, saved=false }: CardProps) {
   const theme = useTheme();
-  const [saved, setSaved] = useState(false);
+  const {toggleFavorite} = useAuthentication();
   return (
     <TouchableOpacity onPress={onPress} style={[styles.compactCard, {backgroundColor: theme.card, borderColor: theme.line,}]}>
       <ImageBackground style={[styles.compactImage]} source={{uri:listing.images[0]}}>
-        {listing.tag === "featured" && (
-          <View style={styles.badgeSlot}>
-            <Badge label="Featured" tone="gold" />
-          </View>
-        )}
-        <Pressable
-          onPress={(e) => {
-            e.stopPropagation?.();
-            setSaved((s) => !s);
-          }}
-          style={[styles.heart, {backgroundColor: theme.backgroundElement,}]}
-          accessibilityLabel={saved ? "Remove from saved" : "Save listing"}
-        >
-          <Ionicons name={saved ? "heart" : "heart-outline"} size={13} color={saved ? Colors.coral : theme.ink} />
-        </Pressable>
-        {listing.tag.toLowerCase() === "sold out" && (
-          <View style={styles.soldOverlay}>
-            <Text style={styles.soldText}>Sold out</Text>
-          </View>
-        )}
+        <View style={{flex:1, backgroundColor:'#00000044'}}>
+          {listing.tag === "featured" && (
+            <View style={styles.badgeSlot}>
+              <Badge label="Featured" tone="gold" />
+            </View>
+          )}
+          <TouchableOpacity
+            onPress={(e) => {
+              toggleFavorite(listing._id);
+            }}
+            style={[styles.heart, {backgroundColor: theme.backgroundElement,}]}
+            accessibilityLabel={saved ? "Remove from saved" : "Save listing"}
+          >
+            <Ionicons name={saved ? "heart" : "heart-outline"} size={22} color={saved ? Colors.coral : theme.ink} />
+          </TouchableOpacity>
+          {listing.tag.toLowerCase() === "sold out" && (
+            <View style={styles.soldOverlay}>
+              <Text style={styles.soldText}>Sold out</Text>
+            </View>
+          )}
+        </View>
       </ImageBackground>
       <View style={[styles.compactInfo]}>
         <View>
@@ -106,9 +108,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 8,
     right: 8,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 30,
+    height: 30,
+    borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
   },

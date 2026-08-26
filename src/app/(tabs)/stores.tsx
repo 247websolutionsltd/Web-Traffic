@@ -5,22 +5,15 @@ import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
 import { stores } from "@/data/mock";
 import { useTheme } from "@/hooks/use-theme";
-import { MaterialIcons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { FlatList, TouchableOpacity, View } from "react-native";
-import { useStyles } from "../../styles/styles";
+import { FlatList, View } from "react-native";
+import { useStyles } from "../../../styles/styles";
 
 export default function Stores(){
     const styles = useStyles();
     const theme = useTheme();
     return(
-        <Container edges={['top','bottom']}>
-            <View style={[styles.row, {paddingHorizontal:Spacing.three}]}>
-                <TouchableOpacity onPress={()=>router.back()} style={[styles.top2Icon, {marginRight:Spacing.two}]}>
-                    <MaterialIcons name="arrow-back" size={23} color={theme.text}/>
-                </TouchableOpacity>
-                <ThemedText type="subtitle">Stores</ThemedText>
-            </View>
+        <Container edges={['top']}>
+            <ThemedText style={{alignSelf:'center'}} type="title">Stores</ThemedText>
             <View style={{marginVertical:Spacing.three, paddingHorizontal:Spacing.three}}>
                 <ThemedText style={{paddingBottom:Spacing.one}}>Check out our stores</ThemedText>
                 <Search placeholder="Find your desired store..."/>

@@ -18,7 +18,7 @@ import { Category } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Dimensions, FlatList, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 
@@ -32,6 +32,9 @@ export default function Home(){
     const featured = async()=>await listings.filter((l: { tag: any; }) => l.tag==="featured");
     const recent = useMemo(() => listings.slice(0, 6), []);
     const {changeProfileImage} = useAuthentication();
+    useEffect(()=>{
+        console.log(user)
+    },[])
     return(
         <Container>
             <View style={{paddingHorizontal:Spacing.three}}>
@@ -51,7 +54,7 @@ export default function Home(){
                             </View>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.bell} accessibilityLabel="Notifications" onPress={()=>router.navigate('/stores')}>
+                    <TouchableOpacity style={styles.bell} accessibilityLabel="Notifications" onPress={()=>router.navigate('/createStore')}>
                         <Ionicons name="storefront-outline" size={24} color={theme.ink} />
                     </TouchableOpacity>
                 </View>
@@ -61,7 +64,7 @@ export default function Home(){
             <View style={{marginBottom:Spacing.two}}>
                 <View style={[styles.row, {justifyContent:'space-between', paddingLeft:Spacing.three}]}>
                     <ThemedText type="subtitle">Categories</ThemedText>
-                    <TouchableOpacity onPress={() => router.push("/(tabs)/categories")} style={{padding:Spacing.three}}>
+                    <TouchableOpacity onPress={() => router.push("/categories")} style={{padding:Spacing.three}}>
                         <ThemedText style={styles.seeAll}>See all</ThemedText>
                     </TouchableOpacity>
                 </View>
@@ -87,14 +90,18 @@ export default function Home(){
                         </TouchableOpacity>
                     </View>
                     <FlatList
-                        data={featured()}
+                        data={featured() || []}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         keyExtractor={(item, index) => index.toString()}
                         contentContainerStyle={[styles.horizontalList]}
                         renderItem={({ item }) => (
                             <View style={{padding:Spacing.two, width:width/2-Spacing.two}}>
-                                <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} />
+                                <ListingCardCompact
+                                 listing={item} 
+                                 onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })}  
+                                 saved={user?.saved?.includes(item._id)}
+                                />
                             </View>
                         )}
                     />
@@ -125,6 +132,7 @@ export default function Home(){
                             <ListingCardCompact
                              listing={item} 
                              onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} 
+                             saved={user?.saved?.includes(item._id)}
                              />
                         </View>
                     )}
@@ -147,7 +155,10 @@ export default function Home(){
                     contentContainerStyle={styles.horizontalList}
                     renderItem={({ item }) => (
                         <View style={styles.listing}>
-                            <ListingCardCompact listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} />
+                            <ListingCardCompact
+                             listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} 
+                             saved={user?.saved?.includes(item._id)}
+                            />
                         </View>
                     )}
                 />

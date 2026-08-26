@@ -5,7 +5,8 @@ import Stat from "@/components/storeStat";
 import { ThemedText } from "@/components/themed-text";
 import Top from "@/components/top2";
 import { Colors, Spacing } from "@/constants/theme";
-import { ads as adStat, stores } from "@/data/mock";
+import { useAuth } from "@/context/AuthContext";
+import { stores } from "@/data/mock";
 import { useTheme } from "@/hooks/use-theme";
 import { ImageBackground } from "expo-image";
 import { router } from "expo-router";
@@ -16,7 +17,9 @@ import { useStyles } from "../../../styles/styles";
 export default function Store(){
     const styles = useStyles();
     const theme = useTheme();
-    const { displayPic, name, location, ads, star, joined, followers, verified, headerPic } = stores[0];
+    const { ads, star, headerPic } = stores[0];
+    const { store, user } = useAuth();
+    const {location, name, createdAt, followers, logo, listings} = store.store
     return(
         <Container edges={['bottom']}>
             <ImageBackground style={styles.storeScreen} source={{uri:headerPic}}>
@@ -25,18 +28,18 @@ export default function Store(){
                 </SafeAreaView>
             </ImageBackground>
             <StoreHeader
-                image={displayPic}
+                image={logo}
                 name={name}
-                location={location}
-                ad={ads}
+                location={location.city}
+                ad={listings}
                 rating={star}
-                date={joined}
-                followers={followers}
-                verified={verified}
+                date={createdAt.split("").slice(0,4).join("")}
+                followers={followers.length}
+                verified={true}
                 style={{marginTop:-50, marginHorizontal:Spacing.three,}}
             />
             <View style={styles.storeStats}>
-                <Stat
+                {/* <Stat
                     topRight="+18%"
                     icon="visibility"
                     title="4,821"
@@ -44,26 +47,26 @@ export default function Store(){
                     iconBackground={Colors.coralTint}
                     topRightColor={Colors.green}
                     iconColor={theme.coralDark}
-                />
+                /> */}
                 <Stat
-                    topRight="+64"
+                    topRight={`+${followers.length}`}
                     icon="person"
-                    title="3,204"
+                    title={followers.length}
                     desc="Followers"
                     iconBackground={Colors.greenTint}
                     topRightColor={Colors.green}
                     iconColor={Colors.green}
                 />
                 <Stat
-                    topRight="21 Live"
+                    topRight={`${listings.length} Live`}
                     icon="sell"
-                    title="248"
+                    title={listings.length}
                     desc="Total ads"
                     iconBackground={Colors.goldTint}
                     topRightColor={Colors.green}
                     iconColor={Colors.gold}
                 />
-                <Stat
+                {/* <Stat
                     topRight="-3%"
                     icon="message"
                     title="57"
@@ -71,30 +74,32 @@ export default function Store(){
                     iconBackground={Colors.purpleTint}
                     topRightColor={"red"}
                     iconColor={"#3E3A33"}
-                />
+                /> */}
             </View>
-
-            <View style={{padding:Spacing.three}}>
-                <View style={[styles.rowStretch, {marginBottom:Spacing.two}]}>
-                    <ThemedText type="bold">Recent listings</ThemedText>
-                    <TouchableOpacity>
-                        <ThemedText type="mid" style={{color:theme.coralDark, fontWeight:600}}>Manage all</ThemedText>
-                    </TouchableOpacity>
+            {
+                listings.length > 0 &&
+                <View style={{padding:Spacing.three}}>
+                    <View style={[styles.rowStretch, {marginBottom:Spacing.two}]}>
+                        <ThemedText type="bold">Recent listings</ThemedText>
+                        <TouchableOpacity>
+                            <ThemedText type="mid" style={{color:theme.coralDark, fontWeight:600}}>Manage all</ThemedText>
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        {
+                            listings.map((item: { id: any; condition: any; }, index: any)=>(
+                                <StatCard
+                                    id={item.id}
+                                    onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} 
+                                    condition={item.condition}
+                                    key={index}
+                                />
+                            ))
+                        }
+                        
+                    </View>
                 </View>
-                <View>
-                    {
-                        adStat.map((item, index)=>(
-                            <StatCard
-                                id={item.id}
-                                onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} 
-                                condition={item.condition}
-                                key={index}
-                            />
-                        ))
-                    }
-                    
-                </View>
-            </View>
+            }
         </Container>
     )
 }

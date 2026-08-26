@@ -3,6 +3,7 @@ import Saved from "@/components/saved";
 import { ThemedText } from "@/components/themed-text";
 import { Colors, Spacing } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
+import useAuthentication from "@/hooks/authHook";
 import { useTheme } from "@/hooks/use-theme";
 import { Listing } from "@/types";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -13,11 +14,12 @@ import { useStyles } from "../../styles/styles";
 
 export default function CategoryScreen(){
     const { listings, user } = useAuth();
+    const {toggleFavorite, clearAllFavorites} = useAuthentication();
     const displayFavorites = (fav: string[] | null | undefined)=>{
         const data: Listing[] = []
         fav?.forEach((id:string)=>{
            listings.filter((obj: { _id: string; })=>obj._id===id).map((listing: Listing)=>{
-            if (listing.id === id){
+            if (listing._id === id){
                 data.push(listing);
             }
            })
@@ -37,14 +39,24 @@ export default function CategoryScreen(){
         {text: 'OK', onPress: () => {
             const data = favoritesList;
             data?.splice(data.indexOf(index), 1);
-            setFavoriteList(data);
+            toggleFavorite(index);
             setFavorite(displayFavorites(data));
         }},
         ]);
     }
     const handleClear = ()=>{
-        setFavoriteList([]);
-        setFavorite([]);
+        Alert.alert('Clear List', 'Are you sure you want to clear your favorite list?', [
+        {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+        },
+        {text: 'OK', onPress: () => {
+            clearAllFavorites();
+            setFavorite([]);
+        }},
+    ]);
+        
     }
     const styles = useStyles();
     const theme = useTheme();
@@ -61,7 +73,7 @@ export default function CategoryScreen(){
                     <ThemedText style={{color:theme.coralDark, fontWeight:500}}>Clear all</ThemedText>
                 </TouchableOpacity>
             </View>
-            <View style={{padding:Spacing.three, flex:1,}}>
+            <View style={{paddingHorizontal:Spacing.three, flex:1,}}>
                 <FlatList
                     data={favoriteData}
                     scrollEnabled={false}

@@ -22,7 +22,7 @@ export interface Location {
 
 export interface Listing {
   v:number;
-  id: string;
+  _id: string;
   title: string;
   price: number;
   currency: "NGN";

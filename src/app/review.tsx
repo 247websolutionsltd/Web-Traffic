@@ -5,6 +5,7 @@ import ReviewTextsCard from "@/components/reviewTextCard";
 import { ThemedText } from "@/components/themed-text";
 import { Colors, Spacing } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
+import { categoryDropdown } from "@/data/mock";
 import useHook from "@/hooks/general-hook";
 import { useTheme } from "@/hooks/use-theme";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -26,16 +27,7 @@ export default function Review(){
             Alert.alert('You must agree to the posting guidelines');
         }
     }
-    const dropdownData = [
-    { label: 'Electronics', value: '6a8704aa520fa4cc02d244df' },
-    { label: 'Property', value: '6a87103a520fa4cc02d244eb' },
-    { label: 'Vehicles', value: '6a870fd7520fa4cc02d244ea' },
-    { label: 'Jobs', value: 'Jobs' },
-    { label: 'Fashion', value: '6a870f5c520fa4cc02d244e8' },
-    { label: 'Home appliances', value: 'Home appliances' },
-    { label: 'Others', value: 'Others' },
-  ];
-  const category = dropdownData.find((dat)=>dat.value===form.category)?.label;
+  const category = categoryDropdown.find((dat)=>dat.value===form.category)?.label;
     return(
         <Container edges={['top', 'bottom']}>
             <View style={[styles.row, {paddingHorizontal:Spacing.three}]}>

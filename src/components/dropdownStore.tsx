@@ -6,14 +6,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-
+ 
   const DropdownComponent = () => {
-    const {setCategory} = useData();
+    const {setCategory} = useData()
     const theme = useTheme();
     const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
-    const {form, updateField} = useAuth();
-
+    const {updateStoreField, storeForm} = useAuth();
+    const category = categoryDropdown.find((dat)=>dat.value===storeForm.category)?.label;
     const renderLabel = () => {
       if (isFocus && !value) {
         return (
@@ -47,7 +47,7 @@ import { Dropdown } from 'react-native-element-dropdown';
           onBlur={() => setIsFocus(false)}
           onChange={item => {
             setValue(item.value);
-            updateField("category", item.value)
+            updateStoreField("category", item.value)
             setIsFocus(false);
           }}
           renderLeftIcon={() => (

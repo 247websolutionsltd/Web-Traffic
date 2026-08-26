@@ -177,6 +177,17 @@ export const ads: Ads[] = [
   },
 ];
 
+export const categoryDropdown = [
+    { label: 'Electronics', value: '6a8704aa520fa4cc02d244df' },
+    { label: 'Real Estate', value: '6a87103a520fa4cc02d244eb' },
+    { label: 'Vehicles', value: '6a870fd7520fa4cc02d244ea' },
+    { label: 'Jobs', value: 'Jobs' },
+    { label: 'Fashion', value: '6a870f5c520fa4cc02d244e8' },
+    { label: 'Home appliances', value: 'Home appliances' },
+    { label: "General", value: 'general'},
+    { label: 'Others', value: 'Others' },
+  ];
+
 export const saved: string[]=[
   "4", "2", "8", "6"
 ]

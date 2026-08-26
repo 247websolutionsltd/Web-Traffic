@@ -1,38 +1,22 @@
 import { Colors, Spacing } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
+import { categoryDropdown } from "@/data/mock";
 import { useTheme } from "@/hooks/use-theme";
 import { View } from "react-native";
 import { useStyles } from "../../../styles/styles";
+import Back from "../back-button";
 import Button from "../button";
 import { ThemedText } from "../themed-text";
 
 interface NameProps{
-    handleNext:()=>void
+    handleNext:()=>void;
+    handleBack: ()=>void;
 }
-export default function Activate({handleNext}: NameProps){
+export default function Activate({handleNext, handleBack}: NameProps){
     const styles = useStyles();
     const theme = useTheme();
-    const data = [
-        {
-            key:"Name",
-            value:"Vix Fashion"
-        },
-        {
-            key:"Handle",
-            value:"@vixfashion"
-        },
-        {
-            key:"Category",
-            value:"Fashion"
-        },
-        {
-            key:"Location",
-            value:"Ikeja, Lagos"
-        },
-        {
-            key:"Plan Required",
-            value:"Business"
-        },
-    ]
+    const { storeForm} = useAuth();
+    const category = categoryDropdown.find((dat)=>dat.value===storeForm.category)?.label;
     return(
         <View style={{flex:1, padding:Spacing.three, justifyContent:'space-between'}}>
             <View style={{flex:1}}>
@@ -42,19 +26,42 @@ export default function Activate({handleNext}: NameProps){
                 </View>
 
                 <View style={styles.storeInfoView}>
-                    {
-                        data.map((item, index)=>(
-                            <View key={index} style={[styles.storeReviewInfo, {borderBottomWidth:index===data.length-1?0:1}]}>
-                                <ThemedText>{item.key}</ThemedText>
-                                <ThemedText style={{fontWeight:700, color:index===data.length-1?Colors.coral:theme.text}}>
-                                    {item.value}
-                                </ThemedText>
-                            </View>
-                        ))
-                    }
+                    <View style={[styles.storeReviewInfo, {borderBottomWidth:1}]}>
+                        <ThemedText>Name</ThemedText>
+                        <ThemedText style={{fontWeight:700, color:theme.text}}>
+                            {storeForm.name}
+                        </ThemedText>
+                    </View>
+                    <View style={[styles.storeReviewInfo, {borderBottomWidth:1}]}>
+                        <ThemedText>Handle</ThemedText>
+                        <ThemedText style={{fontWeight:700, color:theme.text}}>
+                            @{storeForm.handle}
+                        </ThemedText>
+                    </View>
+                    <View style={[styles.storeReviewInfo, {borderBottomWidth:1}]}>
+                        <ThemedText>Category</ThemedText>
+                        <ThemedText style={{fontWeight:700, color:theme.text}}>
+                            {category}
+                        </ThemedText>
+                    </View>
+                    <View style={[styles.storeReviewInfo, {borderBottomWidth:1}]}>
+                        <ThemedText>Location</ThemedText>
+                        <ThemedText style={{fontWeight:700, color:theme.text}}>
+                            {storeForm.city}, {storeForm.state}
+                        </ThemedText>
+                    </View>
+                    <View style={[styles.storeReviewInfo, {borderBottomWidth:0}]}>
+                        <ThemedText>Plan Required</ThemedText>
+                        <ThemedText style={{fontWeight:700, color:Colors.coral}}>
+                            Business
+                        </ThemedText>
+                    </View>
                 </View>
             </View>
-            <Button title="Activate Store " onPress={handleNext} icon={"arrow-forward"}/>
+            <View style={styles.row}>
+                <Back onPress={handleBack}/> 
+                <Button title="Activate Store " onPress={handleNext} icon={"arrow-forward"} style={{flex:1}}/>
+            </View>
         </View>
     )
 }

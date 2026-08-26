@@ -16,7 +16,7 @@ export default function CreateStore(){
     const {user} = useAuth();
 
     useEffect(()=>{
-        if((user?.stores?.length || 0)>0){
+        if(user?.store){
             router.replace('/createStore/store')
         }
     },[])

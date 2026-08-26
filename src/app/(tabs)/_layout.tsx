@@ -9,7 +9,7 @@ type IconName = keyof typeof Ionicons.glyphMap;
 
 const TAB_META: Record<string, { label: string; icon: IconName; iconActive: IconName }> = {
   index: { label: "Home", icon: "home-outline", iconActive: "home" },
-  categories: { label: "Categories", icon: "grid-outline", iconActive: "grid" },
+  stores: { label: "Stores", icon: "storefront-outline", iconActive: "storefront" },
   chats: { label: "Chats", icon: "chatbubble-outline", iconActive: "chatbubble" },
   profile: { label: "Profile", icon: "person-outline", iconActive: "person" },
 };
@@ -71,7 +71,7 @@ export default function TabsLayout() {
   return (
     <Tabs tabBar={(props) => <CustomTabBar {...props} />} screenOptions={{ headerShown: false }}>
       <Tabs.Screen name="index" options={{ title: "Home" }} />
-      <Tabs.Screen name="categories" options={{ title: "Categories" }} />
+      <Tabs.Screen name="stores" options={{ title: "Stores" }} />
       <Tabs.Screen name="chats" options={{ title: "Chats" }} />
       <Tabs.Screen name="profile" options={{ title: "Profile" }} />
     </Tabs>

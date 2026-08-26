@@ -14,7 +14,7 @@ interface ListingProps{
     location:Location;
     createdAt:string;
     price:number;
-    id:string;
+    _id:string;
     images:string[];
 }
 interface SavedProp{
@@ -23,15 +23,12 @@ interface SavedProp{
     unlike:(index:string)=>void;
 }
 export default function Saved({listing, onPress, unlike}:SavedProp){
-    const {title, location, createdAt, price, id, images} = listing
+    const {title, location, createdAt, price, _id, images} = listing;
+    const {timeAgo} = useHook();
     const styles = useStyles();
     const { priceFormat } = useHook();
     const [ liked, setLiked ] = useState(true);
     const theme = useTheme();
-    const handleUnlike = (index:string)=>{
-        setLiked(!liked);
-        unlike(index)
-    }
     return(
         <Pressable style={[styles.ad, {alignItems:'center'}]} onPress={onPress}>
             <View style={[styles.row, {flexShrink:1}]}>
@@ -41,10 +38,10 @@ export default function Saved({listing, onPress, unlike}:SavedProp){
                     <ThemedText style={{flexShrink:1,color:theme.coralDark, marginVertical:Spacing.two}} type="bold">
                         ₦{priceFormat(price)}
                     </ThemedText>
-                    <ThemedText type="small">📍 {location.city} · {createdAt}</ThemedText>
+                    <ThemedText type="small">📍 {location.city} · {timeAgo(createdAt)}</ThemedText>
                 </View>
             </View>
-            <TouchableOpacity onPress={()=>handleUnlike(id)} style={{padding:Spacing.three}}>
+            <TouchableOpacity onPress={()=>unlike(_id)} style={{padding:Spacing.three}}>
                <MaterialIcons name="favorite" size={22} color={'red'}/>
             </TouchableOpacity>
         </Pressable>

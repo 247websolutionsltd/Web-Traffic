@@ -19,7 +19,7 @@ export default function SplashScreen(){
   const [index, setIndex] = useState(-1);
   const theme = useTheme();
   const snapPoints = useMemo(() => ["55%"],['75%']);
-  const {getCurrentUser, addCategory, getCategory, addListing, getListings, getStoreList} = useAuthentication();
+  const {getCurrentUser, addCategory, getCategory, addListing, getListings, getStoreList, getMyStore} = useAuthentication();
   useEffect(() => {
       GoogleSignin.configure({
         webClientId: '391322710451-hug7a4sg00a7caqh8hlv7ei93ba68mje.apps.googleusercontent.com', 
@@ -27,13 +27,13 @@ export default function SplashScreen(){
       });
       const loadTasks = async () => {
           const token = await AsyncStorage.getItem("token");
-          console.log(token)
           const person = await getCurrentUser(token);
           const onboarded = await AsyncStorage.getItem('onboarded');
           if (onboarded === 'true'){
             if(person){
               // addCategory();
               // addListing();
+              getMyStore();
               await getCategory();
               await getListings();
               router.replace('/(tabs)');

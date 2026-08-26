@@ -21,17 +21,17 @@ export default function Live(){
                 </View>
                 <ThemedText type="subtitle">Your ad is live!</ThemedText>
                 <ThemedText style={{textAlign:'center', color:theme.textSecondary}}>
-                    {tempListing.description}
+                    {tempListing.listing.description}
                 </ThemedText>
 
                 <View style={styles.liveCard}>
                     <Image
-                     source={{uri:tempListing.images[0]}}
+                     source={{uri:tempListing.listing.images[0]}}
                      style={styles.liveImage}
                     />
                     <View style={{padding:Spacing.two}}>
-                        <ThemedText type="bold">{tempListing.title}</ThemedText>
-                        <ThemedText type="mid" style={{color:theme.textSecondary}}>{tempListing.price} · {tempListing.city}, {tempListing.state}</ThemedText>
+                        <ThemedText type="bold">{tempListing.listing.title}</ThemedText>
+                        <ThemedText type="mid" style={{color:theme.textSecondary}}>{tempListing.listing.price} · {tempListing.listing.location.city}, {tempListing.listing.location.state}</ThemedText>
                     </View>
                 </View>
 
