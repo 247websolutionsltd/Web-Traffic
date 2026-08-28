@@ -22,7 +22,7 @@ export default function Chats() {
   const styles = useStyles();
 
   const data = useMemo(
-    () => (filter === "all" ? chatThreads : chatThreads.filter((c) => c.type === filter)),
+    () => (filter === "all" ? chatThreads : chatThreads.filter((c: { type: string; }) => c.type === filter)),
     [filter]
   );
   const {getMyConversations} = useAuthentication();
