@@ -1,4 +1,5 @@
 import { Colors, Radius, Spacing } from "@/constants/theme";
+import useAuthentication from "@/hooks/authHook";
 import { useTheme } from "@/hooks/use-theme";
 import { InfoProps } from "@/types";
 import { Image } from "expo-image";
@@ -14,7 +15,8 @@ interface StoreProps{
 export default function Store({info}: StoreProps){
     const styles = useStyles();
     const theme = useTheme();
-    const { logo, name, listings, location, _id } = info
+    const { logo, name, listings, location, _id } = info;
+    const { followStore } = useAuthentication();
     return(
         <TouchableOpacity
          style={styles.store}
@@ -35,7 +37,7 @@ export default function Store({info}: StoreProps){
             </View>
             <Button
              title="Follow" 
-             onPress={()=>console.log("Hii")} 
+             onPress={()=>followStore(_id)} 
              style={{padding:Spacing.two, borderColor:Colors.coral, height:"auto"}} 
              type="secondary"
              textColor={Colors.coral}

@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const base = process.env.EXPO_PUBLIC_BASE_URL;
@@ -10,7 +11,6 @@ export async function signInWithGoogle() {
     await GoogleSignin.signOut();
     const response = await GoogleSignin.signIn();
     const idToken = response.data?.idToken;
-    console.log(response);
     const backendResponse = await fetch(
       ` https://webtraffic-backend-1.onrender.com/api/auth/google`,
       {
@@ -24,6 +24,7 @@ export async function signInWithGoogle() {
       }
     );
     const data = await backendResponse.json();
+    AsyncStorage.setItem("token", data.token);
     return data;
   } catch (error) {
     console.error('Google login failed:', error);

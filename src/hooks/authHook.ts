@@ -309,6 +309,31 @@ export default function useAuthentication(){
     } 
   };
 
+  const followStore = async (storeId:string)=>{
+    const token = await AsyncStorage.getItem("token");
+    try{
+      const data = await uploadApi.post(`api/stores/${storeId}/follow`,
+        {storeId},
+        {headers: { Authorization: `Bearer ${token}` }
+      });
+      return data.data
+    }catch(error:any){
+      console.error("Error:", error.response.data)
+    } 
+  };
+
+  const unfollowStore = async (storeId:string)=>{
+    const token = await AsyncStorage.getItem("token");
+    try{
+      const data = await uploadApi.delete(`api/stores/${storeId}/unfollow`,
+        {headers: { Authorization: `Bearer ${token}` }
+      });
+      return data.data
+    }catch(error:any){
+      console.error("Error:", error.response.data)
+    } 
+  };
+
     return{
         createUser,
         logInUser,
@@ -328,6 +353,8 @@ export default function useAuthentication(){
         startChat,
         getStoreById,
         getStoreListings,
-        getMyConversations
+        getMyConversations,
+        followStore,
+        unfollowStore
     }
 }

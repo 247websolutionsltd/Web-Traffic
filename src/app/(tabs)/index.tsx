@@ -45,6 +45,7 @@ export default function Home(){
             await getStoreList()
         }
         load();
+        console.log(user)
     },[])
     return(
         <Container>

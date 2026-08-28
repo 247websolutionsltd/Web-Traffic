@@ -20,6 +20,7 @@ export default function Stores(){
             console.log(data)
         }
         load();
+        
     },[]);
     return(
         <Container edges={['top']}>
