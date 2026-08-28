@@ -37,6 +37,7 @@
       "expo-web-browser",
       "expo-image",
       "@react-native-google-signin/google-signin",
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -13,6 +13,7 @@ export default function Boost(){
     const styles = useStyles();
     const theme = useTheme();
     const { createListing } = useAuth();
+    const {loading} = useAuth();
     return(
         <Container style={{paddingHorizontal:Spacing.three, justifyContent:'space-between'}} edges={['top', 'bottom']}>
             <View style={{flex:1}}>
@@ -46,7 +47,7 @@ export default function Boost(){
                 </View>
             </View>
             <View>
-                <Button onPress={()=>router.push('/')} title="Boost for ₦2,500 " icon={'arrow-forward'}/>
+                <Button onPress={()=>router.push('/')} title="Boost for ₦2,500 " icon={'arrow-forward'} isLoading={false}/>
                 <Button onPress={createListing} title="Post without boosting" type="secondary" style={{marginVertical:Spacing.two}}/>
             </View>
         </Container>

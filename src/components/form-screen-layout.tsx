@@ -19,7 +19,7 @@ export function FormScreenLayout({ children, onSubmit, isSubmitting, submitLabel
   const theme = useTheme();
     const {
       loginGoogle,
-      isLoading,
+      loading,
     } = useAuth();
   return (
     <View style={[style, {flex:1, justifyContent:'space-between'}]}>
@@ -30,7 +30,8 @@ export function FormScreenLayout({ children, onSubmit, isSubmitting, submitLabel
         <Button 
           title={submitLabel} 
           onPress={onSubmit} 
-          disabled={isSubmitting} 
+          disabled={isSubmitting || loading} 
+          isLoading={isSubmitting || loading}
           icon={submitLabel === "Continue" ? "arrow-forward" : null}
           style={{marginVertical:Spacing.four}}
         />
@@ -40,10 +41,11 @@ export function FormScreenLayout({ children, onSubmit, isSubmitting, submitLabel
         {
           submitLabel === "Send Code" ?
           <Button 
-          title={submitLabel} 
-          onPress={onSubmit} 
-          disabled={isSubmitting}
-          style={{marginVertical:Spacing.four}}
+            title={submitLabel} 
+            onPress={onSubmit} 
+            disabled={isSubmitting || loading} 
+            isLoading={isSubmitting || loading}
+            style={{marginVertical:Spacing.four}}
           />
           :
           <View style={{marginVertical:Spacing.three}}>

@@ -11,15 +11,16 @@ import { ThemedText } from "@/components/themed-text";
 import { Spacing } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
 import { bannerSliderData } from "@/data/bannerSliderData";
-import { categories, stores } from "@/data/mock";
+import { categories } from "@/data/mock";
 import useAuthentication from "@/hooks/authHook";
 import { useTheme } from "@/hooks/use-theme";
 import { Category } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "expo-image";
 import { router } from "expo-router";
-import { useEffect, useMemo } from "react";
-import { Dimensions, FlatList, TouchableOpacity, View } from "react-native";
+import { Key, useEffect } from "react";
+import { ActivityIndicator, Dimensions, FlatList, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 
 
@@ -28,12 +29,22 @@ export default function Home(){
     const styles = useStyles();
     const theme = useTheme();
     const {width} = Dimensions.get('window');
-    const {user, listings} = useAuth();
-    const featured = async()=>await listings.filter((l: { tag: any; }) => l.tag==="featured");
-    const recent = useMemo(() => listings.slice(0, 6), []);
+    const {user, listings, storeList} = useAuth();
+    const { getCurrentUser, getListings, getStoreList, getMyStore, getStoreById } = useAuthentication();
+    const featured = listings?.filter((l: { tag: string; }) => l.tag==="featured");
+    const trending = listings?.filter((l: { tag: string; }) => l.tag==="trending");
+    const best = listings?.filter((l: { tag: string; }) => l.tag==="best");
+    // const recent = useMemo(() => listings.slice(0, 6), []);
     const {changeProfileImage} = useAuthentication();
     useEffect(()=>{
-        console.log(user)
+        
+        const load = async()=>{
+            const token = await AsyncStorage.getItem("token");
+            await getCurrentUser(token);
+            await getListings();
+            await getStoreList()
+        }
+        load();
     },[])
     return(
         <Container>
@@ -41,10 +52,15 @@ export default function Home(){
                 <View style={styles.topBar}>
                     <View style={styles.topBarLeft}>
                         <TouchableOpacity onPress={changeProfileImage}>
-                            <Image
-                            style={styles.avatar}
-                            source={{uri:user?.profileImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaBCpyQIJSGIUWdn05vYhV4n6Tcf1LzrZSsHHBA8I0XA&s=10"}}
-                            />
+                            {
+                                user?
+                                <Image
+                                style={styles.avatar}
+                                source={{uri:user?.profileImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaBCpyQIJSGIUWdn05vYhV4n6Tcf1LzrZSsHHBA8I0XA&s=10"}}
+                                />
+                                :
+                                <ActivityIndicator size={15}/>
+                            }
                          </TouchableOpacity>
                         <View>
                             <ThemedText>Good day</ThemedText>
@@ -81,16 +97,16 @@ export default function Home(){
             />
             {/* <CategoryList/> */}
             {
-                featured.length > 0 &&
+                featured ?
                 <View style={{marginVertical:Spacing.two}}>
                     <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
                         <ThemedText type="subtitle">Featured today</ThemedText>
-                        <TouchableOpacity onPress={() => router.push("/featured")}>
+                        <TouchableOpacity onPress={() => router.push({ pathname: "/products", params: { type: "featured" } })}>
                             <ThemedText style={styles.seeAll}>See all</ThemedText>
                         </TouchableOpacity>
                     </View>
                     <FlatList
-                        data={featured() || []}
+                        data={featured || []}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         keyExtractor={(item, index) => index.toString()}
@@ -105,7 +121,10 @@ export default function Home(){
                             </View>
                         )}
                     />
+                    
                 </View>
+                :
+                <ActivityIndicator size={30}/>
             }
             <CatTest
                 image="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHNwb3J0c3xlbnwwfHwwfHx8MA%3D%3D"
@@ -113,56 +132,65 @@ export default function Home(){
                 desc="Get your high quality sport clothing, gear and merchandice"
                 onPress={() => router.push("/products")}
             />
-            <View style={{marginVertical:Spacing.three}}>
-                <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
-                    <ThemedText type="subtitle">Trending Products</ThemedText>
-                    <TouchableOpacity onPress={() => router.push("/products")}>
-                        <ThemedText style={styles.seeAll}>See all</ThemedText>
-                    </TouchableOpacity>
+            {
+                trending?.length > 0 &&
+                <View style={{marginVertical:Spacing.three}}>
+                    <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
+                        <ThemedText type="subtitle">Trending Products</ThemedText>
+                        <TouchableOpacity onPress={() => router.push({ pathname: "/products", params: { type: "trending" } })}>
+                            <ThemedText style={styles.seeAll}>See all</ThemedText>
+                        </TouchableOpacity>
+                    </View>
+                    
+                        <FlatList
+                            data={trending}
+                            scrollEnabled={false}
+                            numColumns={2}
+                            showsHorizontalScrollIndicator={false}
+                            keyExtractor={(item, index) => index.toString()}
+                            contentContainerStyle={styles.horizontalList}
+                            renderItem={({ item }) => (
+                                <View style={styles.listing}>
+                                    <ListingCardCompact
+                                    listing={item} 
+                                    onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} 
+                                    saved={user?.saved?.includes(item._id)}
+                                    />
+                                </View>
+                            )}
+                        />
+                        
                 </View>
-                <FlatList
-                    data={listings.slice(0,4)}
-                    scrollEnabled={false}
-                    numColumns={2}
-                    showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item, index) => index.toString()}
-                    contentContainerStyle={styles.horizontalList}
-                    renderItem={({ item }) => (
-                        <View style={styles.listing}>
-                            <ListingCardCompact
-                             listing={item} 
-                             onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} 
-                             saved={user?.saved?.includes(item._id)}
-                             />
-                        </View>
-                    )}
-                />
-            </View>
+            }
             <NewArrivals onPress={() => router.push("/products")}/>
-            <View style={{marginTop:Spacing.three}}>
-                <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
-                    <ThemedText type="subtitle">Best Sellers</ThemedText>
-                    <TouchableOpacity onPress={() => router.push("/products")}>
-                        <ThemedText style={styles.seeAll}>See all</ThemedText>
-                    </TouchableOpacity>
+            {
+                best?.length > 0 &&
+                <View style={{marginTop:Spacing.three}}>
+                    <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
+                        <ThemedText type="subtitle">Best Sellers</ThemedText>
+                        <TouchableOpacity onPress={() => router.push({ pathname: "/products", params: { type: "best" } })}>
+                            <ThemedText style={styles.seeAll}>See all</ThemedText>
+                        </TouchableOpacity>
+                    </View>
+                    <FlatList
+                        data={best}
+                        scrollEnabled={false}
+                        numColumns={2}
+                        showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item, index) => index.toString()}
+                        contentContainerStyle={styles.horizontalList}
+                        renderItem={({ item }) => (
+                            <View style={styles.listing}>
+                                <ListingCardCompact
+                                listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} 
+                                saved={user?.saved?.includes(item._id)}
+                                />
+                            </View>
+                        )}
+                    />
+                        
                 </View>
-                <FlatList
-                    data={listings.slice(0,4)}
-                    scrollEnabled={false}
-                    numColumns={2}
-                    showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item, index) => index.toString()}
-                    contentContainerStyle={styles.horizontalList}
-                    renderItem={({ item }) => (
-                        <View style={styles.listing}>
-                            <ListingCardCompact
-                             listing={item} onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} 
-                             saved={user?.saved?.includes(item._id)}
-                            />
-                        </View>
-                    )}
-                />
-            </View>
+            }
             <Sponsored
              image="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2hvcHxlbnwwfHwwfHx8MA%3D%3D"
              deal="Secure a Store"
@@ -174,20 +202,25 @@ export default function Home(){
                         <ThemedText style={styles.seeAll}>See all</ThemedText>
                     </TouchableOpacity>
                 </View>
-                <View style={{flexDirection:'row', flexWrap:'wrap'}}>
-                    {
-                        stores.slice(0,4).map((item, index)=>(
-                            <View style={styles.categoriesDataView} key={index}>
-                                <TouchableOpacity onPress={()=>router.navigate({ pathname: "/store", params: { store:item.id } })}>
-                                    <StoreCard
-                                        image={item.displayPic}
-                                        title={item.name}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        ))
-                    }
-                </View>
+                {
+                    storeList ?
+                    <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+                        {
+                            storeList.slice(0,4).map((item: { _id: any; logo: string; name: string; }, index: Key | null | undefined)=>(
+                                <View style={styles.categoriesDataView} key={index}>
+                                    <TouchableOpacity onPress={()=>router.navigate({ pathname: "/store", params: { store:item._id } })}>
+                                        <StoreCard
+                                            image={item.logo}
+                                            title={item.name}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                            ))
+                        }
+                    </View>
+                    :
+                    <ActivityIndicator size={30}/>
+                }
             </View>
         </Container>
     )

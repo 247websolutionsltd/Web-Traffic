@@ -49,7 +49,7 @@ export default function Live(){
 
             </View>
             <View>
-                <Button onPress={() => router.push({ pathname: "/detail", params: { id: 1 } })} title="View my ad " icon={'arrow-forward'}/>
+                <Button onPress={() => router.push({ pathname: "/detail", params: { id: tempListing.listing._id } })} title="View my ad " icon={'arrow-forward'}/>
                 <Button onPress={()=>router.push('/(tabs)')} title="Back to home" type="secondary" style={{marginVertical:Spacing.two}}/>
             </View>
         </Container>

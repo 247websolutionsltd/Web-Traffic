@@ -2,6 +2,7 @@ import Button from "@/components/button";
 import { ThemedText } from "@/components/themed-text";
 import { Radius } from "@/constants/theme";
 import useAuthentication from "@/hooks/authHook";
+import useButton from "@/hooks/buttonHook";
 import { useTheme } from "@/hooks/use-theme";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -19,7 +20,8 @@ export default function SplashScreen(){
   const [index, setIndex] = useState(-1);
   const theme = useTheme();
   const snapPoints = useMemo(() => ["55%"],['75%']);
-  const {getCurrentUser, addCategory, getCategory, addListing, getListings, getStoreList, getMyStore} = useAuthentication();
+  const { login1, register1 } = useButton();
+  const {getCurrentUser, addCategory, getCategory, getListings, getStoreList, getMyStore} = useAuthentication();
   useEffect(() => {
       GoogleSignin.configure({
         webClientId: '391322710451-hug7a4sg00a7caqh8hlv7ei93ba68mje.apps.googleusercontent.com', 
@@ -31,11 +33,6 @@ export default function SplashScreen(){
           const onboarded = await AsyncStorage.getItem('onboarded');
           if (onboarded === 'true'){
             if(person){
-              // addCategory();
-              // addListing();
-              getMyStore();
-              await getCategory();
-              await getListings();
               router.replace('/(tabs)');
             }else{
               setIndex(0);
@@ -70,13 +67,13 @@ export default function SplashScreen(){
             <ThemedText style={{textAlign:'center', marginTop:10}}>Join thousands of buyers and sellers across Nigeria</ThemedText>
             <View style={{marginVertical:30}}>
               <Button
-                onPress={()=>router.navigate('/auth/register')} 
+                onPress={register1} 
                 isLoading={false} 
                 title="Create Account"
                 style={{marginBottom:10}}
               />
               <Button
-                onPress={()=>router.navigate('/auth/logIn')} 
+                onPress={login1} 
                 isLoading={false} 
                 title="Log in"
                 type="secondary"

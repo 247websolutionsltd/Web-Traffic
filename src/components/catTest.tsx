@@ -1,4 +1,5 @@
 import { Spacing } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
 import { Image, ImageBackground } from "expo-image";
 import { View } from "react-native";
 import { useStyles } from "../../styles/styles";
@@ -13,6 +14,7 @@ interface CatTestProps{
 }
 export default function CatTest({image, title, desc, onPress}:CatTestProps){
     const styles = useStyles();
+    const {loading} = useAuth();
     return(
         <ImageBackground
             source={{uri:image}}
@@ -35,6 +37,7 @@ export default function CatTest({image, title, desc, onPress}:CatTestProps){
                     onPress={onPress} 
                     style={{height:40, alignSelf:'flex-start', marginTop:Spacing.two, paddingHorizontal:Spacing.two}}
                     textSize={13}
+                    isLoading={loading}
                 />
             </View>
             </View>

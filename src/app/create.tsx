@@ -21,11 +21,12 @@ export default function Create(){
     const styles = useStyles();
     const theme = useTheme();
     const [ page, setPage ] = useState(1);
-    const {form} = useAuth();
+    const {form, loading, setLoading} = useAuth();
     const handleNext = ()=>{
         if(page === 1){
+            setLoading(true)
             if(form.title && form.condition && form.category && form.description){
-                console.log("title:",form);
+                console.log(loading)
                 setPage(page+1)
             }else{
                 Alert.alert("Select all fields")
@@ -33,19 +34,18 @@ export default function Create(){
         }else if(page === 2){
             
             if(form.images.length >= 3){
-                console.log("title:",form);
                 setPage(page+1)
             }else{
                 Alert.alert("Upload at least 3 images")
             }
         }else {
             if(form.price && form.city && form.state && form.quantity){
-                console.log("title:",form);
                 router.push("/review")
             }else{
                 Alert.alert("Select all fields");
             }
         }
+        setLoading(false)
     }
     return(
         <Container edges={["top","bottom"]} style={{justifyContent:'space-between'}}>
@@ -85,6 +85,8 @@ export default function Create(){
                         onPress={handleNext} 
                         title={page===4?"Finish ":"Next "} 
                         icon={'arrow-forward'} 
+                        isLoading={loading}
+                        disabled={loading}
                         style={{flex:1}}
                     />
                 </View>

@@ -1,4 +1,5 @@
 import { Spacing } from '@/constants/theme';
+import { useAuth } from '@/context/AuthContext';
 import { useTheme } from '@/hooks/use-theme';
 import { MaterialIcons } from "@expo/vector-icons";
 import {
@@ -31,7 +32,7 @@ export default function Button({
   textColor,
   icon,
   type = "primary",
-  isLoading = false,
+  isLoading,
   textSize=18,
   title,
   disabled=false,
@@ -40,9 +41,8 @@ export default function Button({
 }: props) {
  const theme = useTheme();
  const styles = useStyles();
-
-
-
+ const {loading} = useAuth();
+ const btnLoad = isLoading === undefined ? loading : isLoading;
 
   return (
     <TouchableOpacity
@@ -53,8 +53,8 @@ export default function Button({
       ]}
       disabled={disabled}
     >
-      {isLoading ? (
-        <ActivityIndicator size={23} />
+      {btnLoad ? (
+        <ActivityIndicator size={27}/>
       ) : (
         <View style={styles.row}>
           {

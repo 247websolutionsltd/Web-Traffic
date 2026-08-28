@@ -22,7 +22,7 @@ type User = {
     role: string | undefined;
     ads: string | null | undefined;
     saved: string[] | null | undefined;
-    store: string | null | undefined;
+    store: any;
     stores: string[] | null | undefined;
 };
 
@@ -67,7 +67,8 @@ type AuthContextType = {
   setListings:any;
   storeList:any;
   setStoreList:any;
-  loading: boolean
+  loading: boolean;
+  setLoading: any;
   handleSubmit: ()=>void;
   updateField: (field: "title" | "description" | "price" | "category" | "images" | "quantity" | "condition" | "city" | "state" | "country", value: string) =>void;
   form:Form;
@@ -289,6 +290,7 @@ const removeImage = (index: number) => {
 };
 
 const createListing = async () => {
+  setLoading(true);
   const formData = new FormData();
   const token = await AsyncStorage.getItem("token");
   // Regular fields
@@ -301,6 +303,7 @@ const createListing = async () => {
   formData.append("city", form.city);
   formData.append("state", form.state);
   formData.append("country", form.country);
+  formData.append("store", user?.store?._id)
 
   // Images
  form.images.forEach((asset: any, index: number) => {
@@ -310,6 +313,7 @@ const createListing = async () => {
     type: asset.mimeType || "image/jpeg",
   } as any);
   });
+  console.log(formData)
   try{
     const data = await uploadApi.post("/api/listings",
       formData,
@@ -319,7 +323,8 @@ const createListing = async () => {
   }catch(error){
     console.error("Error Message:", error)
   }finally{
-    router.push('/live')
+    setLoading(false)
+    router.push('/live');
   }
   
   // if (!response.ok) {
@@ -403,7 +408,8 @@ const createStore = async () => {
         updateStoreField,
         createStore,
         store,
-        setStore
+        setStore,
+        setLoading
       }}
     >
       {children}

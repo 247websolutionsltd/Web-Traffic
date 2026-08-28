@@ -6,7 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
 import { Listing } from "@/types";
 import { MaterialIcons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Key } from "react";
 import { Dimensions, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../styles/styles";
@@ -17,17 +17,20 @@ export default function Produts(){
     const {width} = Dimensions.get('window');
     const theme = useTheme();
     const {user, listings} = useAuth();
+    const { type } = useLocalSearchParams<{ type: string; }>();
+    const products = type !== undefined ? listings?.filter((l: { tag: string; }) => l.tag===type) : listings;
+    const header = type !== undefined ? type.split("")[0].toUpperCase() + type.split("").slice(1).join("") : "Products";
     return(
         <Container edges={["top","bottom"]}>
             <View style={[styles.row, {paddingHorizontal:Spacing.three}]}>
                 <TouchableOpacity onPress={()=>router.back()} style={[styles.top2Icon, {marginRight:10}]}>
                     <MaterialIcons name="arrow-back" size={23} color={theme.text}/>
                 </TouchableOpacity>
-                <ThemedText type="subtitle">Products</ThemedText>
+                <ThemedText type="subtitle">{header}</ThemedText>
             </View>
             <View style={styles.categoriesView}>
                 {
-                    listings.map((item: Listing, index: Key | null | undefined)=>(
+                    products.map((item: Listing, index: Key | null | undefined)=>(
                         <View style={{padding:Spacing.two, width:width/2-Spacing.two}} key={index}>
                             <ListingCardCompact
                              listing={item} 

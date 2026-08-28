@@ -5,12 +5,13 @@ import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import Top from "@/components/top2";
 import { Colors, Spacing } from "@/constants/theme";
-import { useAuth } from "@/context/AuthContext";
+import useAuthentication from "@/hooks/authHook";
 import useHook from "@/hooks/general-hook";
 import { useTheme } from "@/hooks/use-theme";
-import { ImageBackground } from "expo-image";
+import { Image, ImageBackground } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
-import { View } from "react-native";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../styles/styles";
 
@@ -18,21 +19,25 @@ export default function Detail(){
     const styles = useStyles();
     const theme = useTheme();
     const { id } = useLocalSearchParams<{ id: string; }>();
-    const {listings} = useAuth();
-    const {
-         images, 
-         title, 
-         price, 
-         tag, 
-         createdAt, 
-         location,
-         seller,
-         description,
-        } = listings.filter((obj: { _id: string; })=>obj._id===id)[0];
+    const { getListing, getStoreById } = useAuthentication();
+    const [ listing, setListing ] = useState<any>();
+    const [ store, setStore ] = useState<any>();
     const { priceFormat, timeAgo } = useHook();
+    useEffect(()=>{
+        const load = async()=>{
+            const product = await getListing(id);
+            const storeInfo = await getStoreById(product.store._id);
+            setStore(storeInfo);
+            setListing(product);
+        }
+        load();
+    },[])
     return(
         <Container edges={['bottom']}>
-            <ImageBackground style={styles.detailImage} source={{uri:images[0]}}>
+            {
+                listing?
+                <>
+            <ImageBackground style={styles.detailImage} source={{uri:listing?.images[0]}}>
                 <SafeAreaView edges={['top']} style={{backgroundColor:'#00000035', flex:1, paddingHorizontal:Spacing.three}}>
                     <Top/>
                 </SafeAreaView>
@@ -40,44 +45,44 @@ export default function Detail(){
             <View style={[styles.detailView]}>
                 <View>
                     {
-                        tag &&
+                        listing?.tag === "featured" &&
                         <View style={[styles.badgeSlot, {position:'relative', marginBottom:Spacing.three}]}>
                             <Badge label="Featured" tone="gold" />
                         </View>
                     }
                     <View>
-                        <ThemedText type="title">₦{priceFormat(price)}</ThemedText>
-                        <ThemedText type="bold">{title}</ThemedText>
+                        <ThemedText type="title">₦{priceFormat(listing?.price)}</ThemedText>
+                        <ThemedText type="bold">{listing?.title}</ThemedText>
                     </View>
                     <View style={[styles.topView, {marginVertical:Spacing.two}]}>
                         <View style={{flexShrink:1}}>
-                            <ThemedText type="small" style={{flexWrap:'wrap'}}>📍 {location.city}</ThemedText>
+                            <ThemedText type="small" style={{flexWrap:'wrap'}}>📍 {listing?.location.city}, {listing?.location.state}</ThemedText>
                         </View>
                         {/* <View style={{flexShrink:1}}>
                             <ThemedText type="small" style={{flexWrap:'wrap'}}>👁 {views} views</ThemedText>
                         </View> */}
                         <View style={{flexShrink:1}}>
-                            <ThemedText type="small" style={{flexWrap:'wrap'}}>🕐 {timeAgo(createdAt)}</ThemedText>
+                            <ThemedText type="small" style={{flexWrap:'wrap'}}>🕐 {timeAgo(listing?.createdAt)}</ThemedText>
                         </View>
                     </View>
                     <View style={styles.detailVerified}>
-                        <View style={styles.row}> 
-                            {/* <Image style={styles.avatar} source={{uri:memberImage}}/> */}
+                        <View style={styles.row}>
+                            <Image style={styles.avatar} source={{uri:store.logo}}/>
                             <View style={{padding:Spacing.two}}>
-                                <ThemedText type="bold">{seller.name}</ThemedText>
-                                <ThemedText type="mid">Member since {seller.memberSince}</ThemedText>
+                                <ThemedText type="bold">{store.name}</ThemedText>
+                                <ThemedText type="mid">Joined {timeAgo(store.createdAt)}</ThemedText>
                             </View>
                         </View>
-                        <View style={[styles.verifiedView, {backgroundColor:seller.verified?Colors.greenTint:Colors.redTint}]}>
-                            <ThemedText style={{color:seller.verified?Colors.green:'red'}} type="small">
-                                {seller.verified?"✓":"✕"}
+                        <View style={[styles.verifiedView, {backgroundColor:true?Colors.greenTint:Colors.redTint}]}>
+                            <ThemedText style={{color:true?Colors.green:'red'}} type="small">
+                                {true?"✓":"✕"}
                             </ThemedText>
-                            <ThemedText style={{color:seller.verified?Colors.green:'red'}} type="small">
-                                {seller.verified?"Verified":"Not Verified"}
+                            <ThemedText style={{color:true?Colors.green:'red'}} type="small">
+                                {true?"Verified":"Not Verified"}
                             </ThemedText>
                         </View>
                     </View>
-                    <ThemedText>{description}</ThemedText>
+                    <ThemedText>{listing.description}</ThemedText>
                 </View>
                 <View style={[styles.row, {marginTop:Spacing.three}]}>
                     <Back onPress={()=>console.log("")} title="Call" iconLeft="call"/>
@@ -89,6 +94,12 @@ export default function Detail(){
                     />
                 </View>
             </View>
+            </>
+            :
+            <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                <ActivityIndicator size={50} color={Colors.coral}/>
+            </View>
+            }
         </Container>
     )
 }

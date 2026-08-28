@@ -16,8 +16,9 @@ interface StoreHeaderProps extends ViewProps{
     rating: string;
     followers: string;
     verified: boolean;
+    id: string;
 }
-export default function StoreHeader({image, name, location, date, ad, rating , followers, verified, style}:StoreHeaderProps){
+export default function StoreHeader({image, name, location, date, ad, rating , followers, verified, id, style}:StoreHeaderProps){
     const styles = useStyles();
     const theme = useTheme();
     return(
@@ -44,7 +45,7 @@ export default function StoreHeader({image, name, location, date, ad, rating , f
             </View>
 
             <View style={{flexDirection:'row', justifyContent:'space-between', padding:Spacing.two}}>
-                <Edit icon="visibility" title="View Store"/>
+                <Edit icon="visibility" title="View Store" onPress={()=>router.navigate({ pathname: "/store", params: { store:id } })}/>
                 <Edit icon="create" title="Edit Store"/>
                 <Edit icon="add" title="Post ad" onPress={()=>router.navigate('/create')}/>
             </View>

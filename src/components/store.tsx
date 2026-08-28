@@ -14,23 +14,23 @@ interface StoreProps{
 export default function Store({info}: StoreProps){
     const styles = useStyles();
     const theme = useTheme();
-    const { displayPic, name, ads, star, location, id } = info
+    const { logo, name, listings, location, _id } = info
     return(
         <TouchableOpacity
          style={styles.store}
-         onPress={()=>router.navigate({ pathname: "/store", params: { store:id } })}
-         >
+         onPress={()=>router.navigate({ pathname: "/store", params: { store:_id } })}
+        >
             <View style={{flexDirection:"row", alignItems:'center'}}>
-                <Image source={displayPic} style={{width:80, height:80, borderRadius:Radius.md}}/>
+                <Image source={logo} style={{width:80, height:80, borderRadius:Radius.md}}/>
                 <View style={styles.storeMid}>
                     <View>
                         <ThemedText style={{flexWrap:"wrap"}} type="bold">{name}</ThemedText>
-                        <View style={{flexDirection:'row'}}>
-                            <ThemedText>{ads.length} ads</ThemedText>
+                        {/* <View style={{flexDirection:'row'}}>
+                            <ThemedText>{listings.length} ads</ThemedText>
                             <ThemedText style={{marginLeft:Spacing.two}}>{star}★</ThemedText>
-                        </View>
+                        </View> */}
                     </View>
-                    <ThemedText>{location}</ThemedText>
+                    <ThemedText>{location.city}, {location.state}</ThemedText>
                 </View>
             </View>
             <Button

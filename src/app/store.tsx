@@ -4,13 +4,15 @@ import { ListingCardCompact } from "@/components/ListingCard";
 import StoreHeader from "@/components/storeHeader";
 import { ThemedText } from "@/components/themed-text";
 import Top from "@/components/top2";
-import { Spacing } from "@/constants/theme";
-import { listings, stores } from "@/data/mock";
+import { Colors, Spacing } from "@/constants/theme";
+// import { listings, stores } from "@/data/mock";
+import useAuthentication from "@/hooks/authHook";
+import useHook from "@/hooks/general-hook";
 import { useTheme } from "@/hooks/use-theme";
 import { ImageBackground } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
-import { useRef, useState } from "react";
-import { FlatList, ScrollView, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { ActivityIndicator, FlatList, ScrollView, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../styles/styles";
@@ -24,17 +26,29 @@ export default function Store(){
     const theme = useTheme();
     const [heights, setHeights] = useState<number[]>([]);
     const { store } = useLocalSearchParams<{ store: string }>();
-    const {
-        headerPic,
-        displayPic,
-        name,
-        location,
-        ads,
-        star,
-        joined,
-        followers,
-        verified
-    } = stores.filter((obj)=>obj.id===store)[0];
+    const { timeAgo } = useHook();
+    const { getStoreById, getStoreListings } = useAuthentication();
+    const [ storeInfo, setStore ] = useState<any>();
+    const [ listings, setListing ] = useState<any>();
+    useEffect(()=>{
+        const load = async()=>{
+            const storeData = await getStoreById(store);
+            const listing = await getStoreListings(store);
+            setStore(storeData);
+            setListing(listing);
+        }
+        load();
+        
+    },[]);
+    // const {
+    //     logo,
+    //     owner,
+    //     name,
+    //     location,
+    //     listings,
+    //     createdAt,
+    //     followers,
+    // } = storeList.filter((obj: { _id: string; })=>obj._id===store)[0];
     const pagerRef = useRef<PagerView>(null);
 
     const goToPage = (page: number) => {
@@ -47,10 +61,9 @@ export default function Store(){
         setTabWidth(width);
     };
 const AllAdsRoute = () => {
-    const adsData = listings.filter((obj)=>ads.includes(obj.id));
     return(
             <FlatList
-                data={adsData}
+                data={listings.listings}
                 numColumns={2}
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(item) => item.id}
@@ -68,7 +81,7 @@ const AllAdsRoute = () => {
                     <View style={styles.listing}>
                         <ListingCardCompact
                             listing={item} 
-                            onPress={() => router.push({ pathname: "/detail", params: { id: item.id } })} 
+                            onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} 
                             />
                     </View>
                 )}
@@ -78,13 +91,13 @@ const AllAdsRoute = () => {
 
 const AboutRoute = () => (
   <View style={styles.scene}>
-    <ThemedText>About content here</ThemedText>
+    <ThemedText>{storeInfo.description}</ThemedText>
   </View>
 );
 
 const ReviewsRoute = () => (
   <View style={styles.scene}>
-    <ThemedText>Reviews content here</ThemedText>
+    <ThemedText>No Reviews yet</ThemedText>
   </View>
 );
 
@@ -111,20 +124,23 @@ const renderScene = ({ route }:{route:any}) => {
   const [height, setHeight] = useState(0);
     return(
         <Container edges={['bottom']}>
-            <ImageBackground style={styles.storeScreen} source={{uri:headerPic}}>
+            {
+                storeInfo && listings?
+            <>
+            <ImageBackground style={styles.storeScreen} source={{uri:storeInfo.owner.profileImage}}>
                 <SafeAreaView edges={['top']} style={{backgroundColor:'#00000035', flex:1, paddingHorizontal:Spacing.three}}>
                     <Top/>
                 </SafeAreaView>
             </ImageBackground>
             <StoreHeader
-                image={displayPic}
-                name={name}
-                location={location}
-                ad={ads}
-                rating={star}
-                date={joined}
-                followers={followers}
-                verified={verified}
+                image={storeInfo.logo}
+                name={storeInfo.name}
+                location={storeInfo.location.city}
+                ad={listings.listings}
+                rating={"5"}
+                date={timeAgo(storeInfo.createdAt)}
+                followers={storeInfo.followers.length}
+                verified={true}
                 style={{marginTop:-50, marginHorizontal:Spacing.three,}}
             />
             <View style={{marginVertical:Spacing.three, flex:1, justifyContent:'space-between'}}>
@@ -191,7 +207,12 @@ const renderScene = ({ route }:{route:any}) => {
                  style={{margin:Spacing.three, marginBottom:0}}
                 />
             </View>
-            
+            </>
+            :
+            <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                <ActivityIndicator size={50} color={Colors.coral}/>
+            </View>
+            }
         </Container>
     )
 }

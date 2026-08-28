@@ -1,9 +1,8 @@
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
-
+const base = process.env.EXPO_PUBLIC_BASE_URL;
 
 export async function signInWithGoogle() {
-  const server = process.env.SERVER
   try {
     await GoogleSignin.hasPlayServices({
       showPlayServicesUpdateDialog: true,
@@ -13,7 +12,7 @@ export async function signInWithGoogle() {
     const idToken = response.data?.idToken;
     console.log(response);
     const backendResponse = await fetch(
-      "http://192.168.1.6:500/api/auth/google",
+      ` https://webtraffic-backend-1.onrender.com/api/auth/google`,
       {
         method: "POST",
         headers: {

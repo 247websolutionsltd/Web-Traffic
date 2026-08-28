@@ -82,7 +82,7 @@ export default function CategoryScreen(){
                     renderItem={({ item, index }) => (
                         <Saved 
                             listing={item} 
-                            onPress={() => router.push({ pathname: "/detail", params: { id: index } })} 
+                            onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} 
                             unlike = {handleUnlike}
                         />
                     )}

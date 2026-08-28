@@ -7,14 +7,13 @@ import { Alert } from "react-native";
 import { uploadApi } from "./axios";
 
 export default function useAuthentication(){
-    const { setPageLoad, setUser, setCategory, setListings, setStoreList, setStore } = useAuth();
+    const { setPageLoad, setUser, setCategory, setListings, setStoreList, setStore, setLoading, loading } = useAuth();
     const createUser = async (data: any) => {
+        setLoading(true);
         try {
             setPageLoad(true)
             const response = await uploadApi.post('/api/auth/register', data);
             const newUser = await response.data;
-            console.log("registration sucessful");
-            console.log(newUser)
             setUser(newUser.user);
             AsyncStorage.setItem("token", newUser.token);
             setPageLoad(false)
@@ -22,26 +21,28 @@ export default function useAuthentication(){
         } catch (error) {
             Alert.alert("User already exists");
             setPageLoad(false);
+        }finally{
+          setLoading(false);
         }
     };
 
     const logInUser = async (data: any) => {
+        setLoading(true);
         try {
-            setPageLoad(true)
             const response = await uploadApi.post('/api/auth/login', data);
             const newUser = await response.data;
             if(response.status === 200){
                 setUser(newUser.user);
-                AsyncStorage.setItem("token", newUser.token);
+                await AsyncStorage.setItem("token", newUser.token);
                 router.replace('/(tabs)');
             }else {
                 Alert.alert(newUser.message)
             };
-            setPageLoad(false);
         } catch (error) {
             console.error(error);
             Alert.alert("Invalid credentials");
-            setPageLoad(false);
+        }finally{
+          setLoading(false);
         }
     };
 
@@ -90,7 +91,7 @@ export default function useAuthentication(){
     try{
       const data = await uploadApi.get('/api/auth/user',{headers: { Authorization: `Bearer ${token}` }});
       setUser(data.data.user);
-      return true
+      return true;
     }catch(e){
       console.log(e);
       return false
@@ -100,9 +101,10 @@ export default function useAuthentication(){
   const logout = async () => {
     try {
       await AsyncStorage.removeItem("token");
-      setUser(null);
+      setUser(null); 
+      router.navigate('/index');
       router.dismissAll();
-      router.navigate('/index')
+      
 
     } catch (error) {
       console.error("Logout error:", error);
@@ -119,7 +121,6 @@ export default function useAuthentication(){
         },
         {headers: { Authorization: `Bearer ${token}` }
       });
-      console.log(data.data)
 
     }catch (error){
       console.error(error)
@@ -130,46 +131,48 @@ export default function useAuthentication(){
     try {
       const data = await uploadApi.get('/api/categories');
       setCategory(data.data);
+      return data
 
     }catch (error){
       console.error(error)
     }
   }
 
-  const addListing = async () => {
-    const token = await AsyncStorage.getItem("token");
-    try {
-      const data = await uploadApi.post('/api/listings',
-        {
-          title: "Iphone 16",
-          description: "Very good phone",
-          price: 8000,
-          category: "Electronics",
-          images:[
-            "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aXBob25lfGVufDB8fDB8fHww",
-            "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aXBob25lfGVufDB8fDB8fHww",
-            "https://images.unsplash.com/photo-1616410011236-7a42121dd981?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aXBob25lfGVufDB8fDB8fHww"
-          ],
-          quantity: 1,
-          condition: "used",
-          location: {
-            city:"Ikeja",
-            state:"Lagos",
-            country:"Nigeria"
-          },
-        },
-        {headers: { Authorization: `Bearer ${token}` }
-      });
+  // const addListing = async () => {
+  //   const token = await AsyncStorage.getItem("token");
+  //   try {
+  //     const data = await uploadApi.post('/api/listings',
+  //       {
+  //         title: "Iphone 16",
+  //         description: "Very good phone",
+  //         price: 8000,
+  //         category: "Electronics",
+  //         images:[
+  //           "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aXBob25lfGVufDB8fDB8fHww",
+  //           "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aXBob25lfGVufDB8fDB8fHww",
+  //           "https://images.unsplash.com/photo-1616410011236-7a42121dd981?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aXBob25lfGVufDB8fDB8fHww"
+  //         ],
+  //         quantity: 1,
+  //         condition: "used",
+  //         location: {
+  //           city:"Ikeja",
+  //           state:"Lagos",
+  //           country:"Nigeria"
+  //         },
+  //       },
+  //       {headers: { Authorization: `Bearer ${token}` }
+  //     });
 
-    }catch (error){
-      console.error(error)
-    }
-  }
+  //   }catch (error){
+  //     console.error(error)
+  //   }
+  // }
 
   const getListings = async () => {
     try {
       const data = await uploadApi.get('/api/listings');
       setListings(data.data);
+      return data.data
 
     }catch (error){
       console.error(error)
@@ -180,6 +183,7 @@ export default function useAuthentication(){
     try {
       const data = await uploadApi.get('/api/stores');
       setStoreList(data.data.stores)
+      return data.data.stores;
 
     }catch (error){
       console.error(error)
@@ -214,17 +218,96 @@ export default function useAuthentication(){
     }
   };
 
-  const getMyStore = async () => {
-    const token = await AsyncStorage.getItem("token");
+  const getMyStore = async (token:string|null) => {
+    console.log(token)
     try{
       const data = await uploadApi.get('/api/stores/my-store', {headers: { Authorization: `Bearer ${token}` }});
-      setStore(data.data)
-      console.log("MY STORE RESPONSE:", data.data);
-    }catch(error){
-      console.error(error)
+      setStore(data.data);
+      console.log(data.data)
+      return data.data
+    }catch(error:any){
+      console.error(error.response.data.message)
     }
   };
 
+  const getListing = async (
+    listingId: string,
+  ) => {
+    try{
+      const data = await uploadApi.get(`/api/listings/${listingId}`);
+      return data.data.listing
+    }catch(error:any){
+      console.error("Error:", error.response.data)
+    } 
+  };
+
+  const getSellerListings = async (
+    sellerId: string,
+  ) => {
+    try{
+      const data = await uploadApi.get(`/api/listings/seller/${sellerId}`);
+      return data.data
+    }catch(error:any){
+      console.error("Error:", error.response.data)
+    } 
+  };
+
+  const getStoreListings = async (
+    storeId: string,
+  ) => {
+    try{
+      const data = await uploadApi.get(`/api/listings/store/${storeId}`);
+      return data.data
+    }catch(error:any){
+      console.error("Error:", error.response.data)
+    } 
+  };
+
+  const startChat = async (listingId: string, sellerId: string) => {
+    const token = await AsyncStorage.getItem("token");
+    try {
+      const data = await uploadApi.post(`api/messages/conversations`,
+        {listingId, sellerId},
+        {headers: { Authorization: `Bearer ${token}` }
+      });
+
+      console.log(
+        "CONVERSATION:",
+        data.data.conversation
+      );
+
+      // Navigate to chat screen
+      router.push(
+        `/chat/${data.data.conversation._id}`
+      );
+
+    } catch (error) {
+      console.error(
+        "START CHAT ERROR:",
+        error
+      );
+    }
+  };
+  
+  const getStoreById = async (
+    storeId: string,
+  ) => {
+    try{
+      const data = await uploadApi.get(`/api/stores/${storeId}`);
+      return data.data.store
+    }catch(error:any){
+      console.error("Error:", error.response.data)
+    } 
+  };
+
+  const getMyConversations = async (token:string|null)=>{
+    try{
+      const data = await uploadApi.get(`/api/messages/conversations`, {headers: { Authorization: `Bearer ${token}` }});
+      return data.data
+    }catch(error:any){
+      console.error("Error:", error.response.data)
+    } 
+  };
 
     return{
         createUser,
@@ -235,11 +318,16 @@ export default function useAuthentication(){
         logout,
         addCategory,
         getCategory,
-        addListing,
         getListings,
         getStoreList,
         toggleFavorite,
         clearAllFavorites,
-        getMyStore
+        getMyStore,
+        getListing,
+        getSellerListings,
+        startChat,
+        getStoreById,
+        getStoreListings,
+        getMyConversations
     }
 }

@@ -16,7 +16,7 @@ export default function Category({image, category, id}:CategoryProps){
     const {listings} = useAuth();
     const theme = useTheme();
     const styles = useStyles();
-    const listingNum = listings.filter((obj: { category: string; })=>obj.category===id).length
+    const listingNum = listings.filter((obj: { category: {_id:string;} })=>obj.category?._id===id).length
     return(
         <TouchableOpacity style={styles.categoriesCard} onPress={()=>router.navigate({
             pathname:"/category",

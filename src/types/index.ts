@@ -40,12 +40,15 @@ export interface Listing {
 }
 
 export interface InfoProps{
-  id: string;
-  displayPic: string;
+  _id: string;
+  logo: string;
   name: string;
-  ads: string[];
-  star: string;
-  location: string;
+  listings: string[];
+  location: {
+    city:string;
+    state: string;
+    country: string;
+  };
 }
 
 export interface ChatMessage {

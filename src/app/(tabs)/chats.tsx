@@ -2,11 +2,12 @@ import Chat from "@/components/chat";
 import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import { Colors, Spacing } from "@/constants/theme";
-import { chatThreads } from "@/data/mock";
+import useAuthentication from "@/hooks/authHook";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
-import { useMemo, useState } from "react";
-import { FlatList, View } from "react-native";
+import { useEffect, useMemo, useState } from "react";
+import { ActivityIndicator, FlatList, View } from "react-native";
 import { useStyles } from "../../../styles/styles";
 
 
@@ -24,7 +25,17 @@ export default function Chats() {
     () => (filter === "all" ? chatThreads : chatThreads.filter((c) => c.type === filter)),
     [filter]
   );
-
+  const {getMyConversations} = useAuthentication();
+  const [ chatThreads, setChatThreads ] = useState<any>();
+  useEffect(()=>{
+    
+    const load = async()=>{
+        const token = await AsyncStorage.getItem("token");
+        const data = await getMyConversations(token);
+        setChatThreads(data.conversations)
+    }
+    load();
+  },[]);
     return(
         <Container>
             <ThemedText style={{paddingHorizontal:Spacing.three}} type="subtitle">Chats</ThemedText>
@@ -38,6 +49,8 @@ export default function Chats() {
                 <Chip key={f.key} label={f.label} active={filter === f.key} onPress={() => setFilter(f.key)} />
                 ))}
             </ScrollView> */}
+            {
+                chatThreads ?
             <FlatList
                 data={chatThreads}
                 scrollEnabled={false}
@@ -54,6 +67,11 @@ export default function Chats() {
                 </View>
                 }
             />
+            :
+            <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                <ActivityIndicator size={50} color={Colors.coral}/>
+            </View>
+            }
         </Container>
     )
 }

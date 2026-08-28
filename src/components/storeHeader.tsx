@@ -31,12 +31,12 @@ export default function StoreHeader({image, name, location, date, ad, rating , f
                             <ThemedText style={{color:verified?Colors.green:Colors.coral}} type="small">{verified?"✓":"✕"}</ThemedText>
                         </View>
                     </View>
-                    <ThemedText style={{fontSize:15}}>{location} · Joined {date}</ThemedText>
+                    <ThemedText style={{fontSize:15}}>{location} · <ThemedText type="small">Joined {date}</ThemedText></ThemedText>
                 </View>
             </View>
-            <View style={[styles.rowStretch, {padding:Spacing.three}]}>
-                <ThemedText type="mid">{ad.length} ads</ThemedText>
-                <ThemedText type="mid">{rating}★ rating</ThemedText>
+            <View style={[styles.row, {padding:Spacing.three, justifyContent:'center'}]}>
+                <ThemedText type="mid" style={{marginRight:Spacing.three}}>{ad.length} ads</ThemedText>
+                {/* <ThemedText type="mid">{rating}★ rating</ThemedText> */}
                 <ThemedText type="mid">{followers} followers</ThemedText>
             </View>
         </View>

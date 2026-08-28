@@ -18,7 +18,7 @@ export default function CategoryScreen(){
     const styles = useStyles();
     const theme = useTheme();
     const { category, id } = useLocalSearchParams<{ category: string; id: string;}>();
-    const listingData = listings.filter((obj: { category: string; })=>obj.category===id);
+    const listingData = listings.filter((obj: { category: {_id:string;} })=>obj.category?._id===id);
     return(
         <Container edges={['top', 'bottom']}>
             <Top title={category} filter style={{marginHorizontal:Spacing.three}}/>
