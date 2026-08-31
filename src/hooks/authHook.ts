@@ -38,8 +38,8 @@ export default function useAuthentication(){
             }else {
                 Alert.alert(newUser.message)
             };
-        } catch (error) {
-            console.error(error);
+        } catch (error:any) {
+            console.error(error.response.message);
             Alert.alert("Invalid credentials");
         }finally{
           setLoading(false);
@@ -334,6 +334,55 @@ export default function useAuthentication(){
     } 
   };
 
+  const deleteAccount = async () => {
+    const token = await AsyncStorage.getItem("token");
+    try{
+       const data = await uploadApi.delete(`api/auth/account`, {headers: { Authorization: `Bearer ${token}` }});
+       console.log(data.data);
+       return data;
+    }catch (error:any){
+      console.error("Error:", error)
+    }
+  };
+
+ const requestAccountDeletion = async () => {
+  const token = await AsyncStorage.getItem("token");
+  try {
+    const response = await fetch(
+      `https://webtraffic-backend-1.onrender.com/api/auth/delete-account/request`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const text = await response.text();
+
+    console.log("RESPONSE:", text);
+    console.log("STATUS:", response.status);
+
+    if (response.status !== 200) {
+      throw new Error("There is an error");
+    }
+    
+
+    Alert.alert(
+      "Check your email",
+      "We've sent a confirmation link to your email. Click the link to permanently delete your account."
+    );
+
+  } catch (error:any) {
+    console.error(error);
+
+    Alert.alert(
+      "Error",
+      error.message || "Unable to send confirmation email"
+    );
+  }
+};
+
     return{
         createUser,
         logInUser,
@@ -355,6 +404,8 @@ export default function useAuthentication(){
         getStoreListings,
         getMyConversations,
         followStore,
-        unfollowStore
+        unfollowStore,
+        deleteAccount,
+        requestAccountDeletion
     }
 }

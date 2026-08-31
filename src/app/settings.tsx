@@ -7,16 +7,31 @@ import Top from "@/components/top3";
 import { Spacing } from "@/constants/theme";
 import { SETTINGSMENU1, SETTINGSMENU2 } from "@/data/mock";
 import useAuthentication from "@/hooks/authHook";
-import { Appearance, useColorScheme, View } from "react-native";
+import { Alert, Appearance, useColorScheme, View } from "react-native";
 import { useStyles } from "../../styles/styles";
 
 export default function Settings(){
     const styles = useStyles();
     const scheme = useColorScheme();
+    const {deleteAccount, requestAccountDeletion} = useAuthentication();
     const handleDarkMode = ()=>{
         Appearance.setColorScheme(scheme==='dark' ? 'light' : 'dark');
     }
     const {logout} = useAuthentication();
+    const handleDelete = ()=>{
+        Alert.alert('Delete Account', 'Are you sure you want to delete your account?', [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {text: 'OK', onPress: () => {
+                // logout();
+                requestAccountDeletion();
+            }},
+        ]);
+    }
+    
     return(
         <Container edges={['bottom', 'top']}>
             <Top title="Settings"/>
@@ -115,6 +130,7 @@ export default function Settings(){
                     <SettingsTextsCard
                         title="Delete Account" 
                         icon={"trash"} 
+                        onPress={handleDelete}
                         end
                     />
                 </View>
