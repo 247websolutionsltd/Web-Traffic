@@ -260,7 +260,6 @@ export function AuthProvider({
     //   );
     // }
 
-    console.log("STORE CREATED:", data);
 
     Alert.alert(
       "Success",
@@ -343,7 +342,6 @@ const createListing = async () => {
     type: asset.mimeType || "image/jpeg",
   } as any);
   });
-  console.log(formData)
   try{
     const data = await uploadApi.post("/api/listings",
       formData,
@@ -386,7 +384,6 @@ const createStore = async () => {
     name: asset.fileName || `store-${Date.now()}.jpg`,
     type: asset.mimeType || "image/jpeg",
   } as any);
-  console.log(formData)
   try{
     const data = await uploadApi.post("/api/stores",
       formData,
