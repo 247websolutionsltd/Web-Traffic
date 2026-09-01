@@ -17,7 +17,6 @@ export default function Stores(){
         const load = async()=>{
             const data = await getStoreList();
             setStores(data);
-            console.log(data)
         }
         load();
         

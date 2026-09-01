@@ -8,7 +8,7 @@ import { Chip } from "../Chip";
 import Dropdown from "../dropdown";
 import { ThemedText } from "../themed-text";
 
-const FILTERS = ["New", "Used", "Refurbished"];
+const FILTERS = ["New", "Used", "Refurblished"];
 export default function Description(){
     const theme = useTheme();
     const styles = useStyles();
@@ -56,7 +56,7 @@ export default function Description(){
                         >
                         {FILTERS.map((f) => (
                             <Chip key={f} label={f} active={f === activeFilter} onPress={() =>{
-                                updateField("condition", f.toLowerCase());
+                                updateField("condition", f);
                                 setActiveFilter(f);
                             }}/>
                         ))}

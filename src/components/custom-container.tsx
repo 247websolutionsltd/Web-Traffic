@@ -2,13 +2,15 @@ import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/hooks/use-theme";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { SafeAreaView, SafeAreaViewProps } from "react-native-safe-area-context";
+import AddView from "./addView";
 import Load from "./load";
 
 interface ContainerProps extends SafeAreaViewProps{
     backgroundColor?:string;
     scroll?: boolean;
+    add?: boolean;
 }
-export default function Container({children, backgroundColor, style, edges=['top'], scroll=true}:ContainerProps){
+export default function Container({children, backgroundColor, style, edges=['top'], scroll=true, add=false}:ContainerProps){
     const theme = useTheme();
     const {
         pageLoad
@@ -36,6 +38,10 @@ export default function Container({children, backgroundColor, style, edges=['top
                     <Load/>
                 }
             </KeyboardAvoidingView>
+            {
+                add &&
+                <AddView/>
+            }
         </SafeAreaView>
     )
 }

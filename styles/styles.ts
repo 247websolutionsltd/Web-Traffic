@@ -1051,5 +1051,20 @@ const createStyles = (theme:any, width:any, height:any)=>StyleSheet.create({
     width:'100%',
     height,
     backgroundColor:'#00000055'
+  },
+  addView:{
+    flex:1,
+    alignItems:'flex-end',
+    justifyContent:'flex-end',
+    position:'absolute',
+    height,
+    width,
+    paddingVertical: Spacing.three + 105,
+    paddingHorizontal: Spacing.three
+  },
+  add:{
+    padding:12,
+    borderRadius:200,
+    backgroundColor:Colors.coral
   }
 });

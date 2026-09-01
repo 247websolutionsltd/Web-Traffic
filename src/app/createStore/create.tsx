@@ -18,24 +18,35 @@ export default function Create(){
     const theme = useTheme();
     const [ page, setPage ] = useState(1);
     const [ title, setTitle ] = useState("");
-    const { storeForm, createStore } = useAuth();
+    const { storeForm, createStore, clearStoreForm } = useAuth();
     const handleNext = ()=>{
         if (page === 1){
-            if (storeForm.name && storeForm.image && storeForm.handle && storeForm.category){
+            if(!storeForm.image.uri){
+                Alert.alert("Upload an Image")
+            }else if(!storeForm.name){
+                Alert.alert("Enter your store Name")
+            }else if(!storeForm.handle){
+                Alert.alert("Enter your store Handle")
+            }else if (!storeForm.category){
+                Alert.alert("Enter your store Category")
+            }else{
                 console.log(storeForm);
                 setPage(page +1);
-            }else{
-                Alert.alert("Fill all fields")
             }
         }else if (page === 2){
-            if (storeForm.city && storeForm.state && storeForm.description){
+            if(!storeForm.city){
+                Alert.alert("Enter your store's City")
+            }else if(!storeForm.state){
+                Alert.alert("Enter your store's State'")
+            }else if(!storeForm.description){
+                Alert.alert("Enter your store's Description'")
+            }else {
                 console.log(storeForm);
                 setPage(page +1);
-            }else{
-                Alert.alert("Fill all fields")
             }
         }else{
-            createStore()
+            createStore();
+            clearStoreForm();
         }
     }
 

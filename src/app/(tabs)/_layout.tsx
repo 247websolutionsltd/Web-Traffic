@@ -1,14 +1,15 @@
 import { Colors } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 import { Ionicons } from "@expo/vector-icons";
-import { router, Tabs } from "expo-router";
-import { Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Tabs } from "expo-router";
+import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type IconName = keyof typeof Ionicons.glyphMap;
 
 const TAB_META: Record<string, { label: string; icon: IconName; iconActive: IconName }> = {
   index: { label: "Home", icon: "home-outline", iconActive: "home" },
+  categories: { label: "Categories", icon: "storefront-outline", iconActive: "storefront" },
   stores: { label: "Stores", icon: "storefront-outline", iconActive: "storefront" },
   chats: { label: "Chats", icon: "chatbubble-outline", iconActive: "chatbubble" },
   profile: { label: "Profile", icon: "person-outline", iconActive: "person" },
@@ -28,8 +29,6 @@ function CustomTabBar({ state, navigation }: TabBarProps) {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const routes = state.routes;
-  const leftRoutes = routes.slice(0, 2);
-  const rightRoutes = routes.slice(2);
 
   function renderTab(route: TabBarRoute) {
     const meta = TAB_META[route.name];
@@ -45,7 +44,7 @@ function CustomTabBar({ state, navigation }: TabBarProps) {
         accessibilityLabel={meta.label}
         accessibilityState={{ selected: isFocused }}
       >
-        <Ionicons name={isFocused ? meta.iconActive : meta.icon} size={21} color={isFocused ? Colors.coral : Colors.inkFaint} />
+        <Ionicons name={isFocused ? meta.iconActive : meta.icon} size={24} color={isFocused ? Colors.coral : Colors.inkFaint} />
         <Text style={[styles.tabLabel, isFocused && styles.tabLabelActive]}>{meta.label}</Text>
       </Pressable>
     );
@@ -53,16 +52,7 @@ function CustomTabBar({ state, navigation }: TabBarProps) {
 
   return (
     <View style={[{backgroundColor: theme.card, borderTopColor: theme.line,}, styles.bar, { paddingBottom: Math.max(insets.bottom, 10) }]}>
-      {leftRoutes.map(renderTab)}
-      <TouchableOpacity
-        onPress={() => router.push("/create")}
-        style={styles.fab}
-        accessibilityRole="button"
-        accessibilityLabel="Post a new ad"
-      >
-        <Ionicons name="add" size={26} color={Colors.white} />
-      </TouchableOpacity>
-      {rightRoutes.map(renderTab)}
+      {routes.map(renderTab)}
     </View>
   );
 }
@@ -71,6 +61,7 @@ export default function TabsLayout() {
   return (
     <Tabs tabBar={(props) => <CustomTabBar {...props} />} screenOptions={{ headerShown: false }}>
       <Tabs.Screen name="index" options={{ title: "Home" }} />
+      <Tabs.Screen name="categories" options={{ title: "Categories" }} />
       <Tabs.Screen name="stores" options={{ title: "Stores" }} />
       <Tabs.Screen name="chats" options={{ title: "Chats" }} />
       <Tabs.Screen name="profile" options={{ title: "Profile" }} />
@@ -94,7 +85,7 @@ const styles = StyleSheet.create({
   },
   tabLabel: {
     // fontFamily: fonts.bodyMedium,
-    fontSize: 10,
+    fontSize: 11,
     color: Colors.inkFaint,
   },
   tabLabelActive: {

@@ -24,12 +24,18 @@ export default function Create(){
     const {form, loading, setLoading} = useAuth();
     const handleNext = ()=>{
         if(page === 1){
-            setLoading(true)
-            if(form.title && form.condition && form.category && form.description){
+            setLoading(true);
+            if(!form.title){
+                Alert.alert("Enter a title")
+            }else if(!form.condition){
+                Alert.alert("Set the condition")
+            }else if(!form.category){
+                Alert.alert("Enter the Category")
+            }else if (!form.description){
+                Alert.alert("Enter a description")
+            }else{
                 console.log(loading)
                 setPage(page+1)
-            }else{
-                Alert.alert("Select all fields")
             }
         }else if(page === 2){
             
@@ -39,10 +45,16 @@ export default function Create(){
                 Alert.alert("Upload at least 3 images")
             }
         }else {
-            if(form.price && form.city && form.state && form.quantity){
-                router.push("/review")
+            if(!form.price){
+                Alert.alert("Set your price")
+            }else if(!form.city){
+                Alert.alert("Enter your city")
+            }else if(!form.state){
+                Alert.alert("Enter your State")
+            }else if (!form.quantity){
+                Alert.alert("Set the Quantity")
             }else{
-                Alert.alert("Select all fields");
+                router.push("/review")
             }
         }
         setLoading(false)

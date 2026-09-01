@@ -40,15 +40,6 @@ export default function Store(){
         load();
         
     },[]);
-    // const {
-    //     logo,
-    //     owner,
-    //     name,
-    //     location,
-    //     listings,
-    //     createdAt,
-    //     followers,
-    // } = storeList.filter((obj: { _id: string; })=>obj._id===store)[0];
     const pagerRef = useRef<PagerView>(null);
 
     const goToPage = (page: number) => {

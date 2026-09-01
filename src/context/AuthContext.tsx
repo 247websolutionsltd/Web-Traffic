@@ -83,6 +83,9 @@ type AuthContextType = {
   createStore:()=>void;
   store:any;
   setStore:any;
+  handleAdd:()=>void;
+  clearForm:()=>void;
+  clearStoreForm:()=>void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(
@@ -151,6 +154,21 @@ export function AuthProvider({
     country: "Nigeria",
   });
 
+  const clearForm = ()=>{
+    setForm({
+      title: "",
+      description: "",
+      price: "",
+      category: "",
+      images: [] as any[],
+      quantity: "",
+      condition: "",
+      city: "",
+      state: "",
+      country: "Nigeria",
+    })
+  }
+
   const [storeForm, setStoreForm] = useState({
     name: "",
     image: {} as any,
@@ -160,6 +178,18 @@ export function AuthProvider({
     state: "",
     category: "",
   });
+
+  const clearStoreForm = ()=>{
+    setStoreForm({
+      name: "",
+      image: {} as any,
+      handle: "",
+      description: "",
+      city: "",
+      state: "",
+      category: "",
+    })
+  }
 
   const updateStoreField = (
     field: keyof typeof storeForm,
@@ -297,7 +327,7 @@ const createListing = async () => {
   formData.append("title", form.title);
   formData.append("description", form.description);
   formData.append("category", form.category);
-  formData.append("condition", form.condition);
+  formData.append("condition", form.condition.toLowerCase());
   formData.append("price", form.price);
   formData.append("quantity", form.quantity);
   formData.append("city", form.city);
@@ -319,12 +349,13 @@ const createListing = async () => {
       formData,
       {headers: { Authorization: `Bearer ${token}` }
     });
-    setTempListing(data.data)
+    setTempListing(data.data);
+    router.push('/live');
   }catch(error){
     console.error("Error Message:", error)
+    router.back()
   }finally{
     setLoading(false)
-    router.push('/live');
   }
   
   // if (!response.ok) {
@@ -362,8 +393,8 @@ const createStore = async () => {
       {headers: { Authorization: `Bearer ${token}` }
     });
     setTempListing(data.data)
-  }catch(error){
-    console.error("Error Message:", error)
+  }catch(error:any){
+    console.error("Error Message:", error.message)
   }finally{
     router.push('/(tabs)')
   }
@@ -375,6 +406,14 @@ const createStore = async () => {
   // }
 
 };
+
+const handleAdd = ()=>{
+  if(user?.store){
+    router.push("/create")
+  }else{
+    router.push("/createStore")
+  }
+}
 
   return (
     <AuthContext.Provider
@@ -409,7 +448,10 @@ const createStore = async () => {
         createStore,
         store,
         setStore,
-        setLoading
+        setLoading,
+        handleAdd,
+        clearForm,
+        clearStoreForm
       }}
     >
       {children}

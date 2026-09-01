@@ -36,7 +36,7 @@ export default function Store(){
     },[]);
     return(
         <Container edges={['bottom']}>
-            <ImageBackground style={styles.storeScreen} source={{uri:headerPic}}>
+            <ImageBackground style={styles.storeScreen} source={{uri:store.owner.profileImage}}>
                 <SafeAreaView edges={['top']} style={{backgroundColor:'#00000035', flex:1, paddingHorizontal:Spacing.three}}>
                     <Top/>
                 </SafeAreaView>

@@ -45,10 +45,10 @@ export default function Home(){
             await getStoreList()
         }
         load();
-        console.log(user)
+        // console.log(user)
     },[])
     return(
-        <Container>
+        <Container add>
             <View style={{paddingHorizontal:Spacing.three}}>
                 <View style={styles.topBar}>
                     <View style={styles.topBarLeft}>
@@ -98,7 +98,7 @@ export default function Home(){
             />
             {/* <CategoryList/> */}
             {
-                featured ?
+                featured?.length > 0 ?
                 <View style={{marginVertical:Spacing.two}}>
                     <View style={[styles.row, {justifyContent:'space-between', paddingHorizontal:Spacing.three}]}>
                         <ThemedText type="subtitle">Featured today</ThemedText>
