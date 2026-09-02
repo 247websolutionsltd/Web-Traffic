@@ -57,7 +57,7 @@ const AllAdsRoute = () => {
                 data={listings.listings}
                 numColumns={2}
                 showsHorizontalScrollIndicator={false}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item, index) => index.toString()}
                 scrollEnabled={false}
                 contentContainerStyle={[styles.horizontalList]}
                 style={{width, flex:1}}

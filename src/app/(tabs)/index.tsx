@@ -42,7 +42,7 @@ export default function Home(){
             const token = await AsyncStorage.getItem("token");
             await getCurrentUser(token);
             await getListings();
-            await getStoreList()
+            await getStoreList();
         }
         load();
         // console.log(user)

@@ -30,7 +30,9 @@ export default function CreateToggleCard({title, icon, desc}:ProfileCardProps){
                     </ThemedText>
                 </View>
             </View>
-            <Radio activeColor={Colors.coral} inactiveColor={theme.line}/>
+            <Radio activeColor={Colors.coral} inactiveColor={theme.line} onToggle={function (): void {
+                throw new Error("Function not implemented.");
+            } }/>
         </View>
     )
 }

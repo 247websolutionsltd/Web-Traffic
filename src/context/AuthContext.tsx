@@ -86,6 +86,8 @@ type AuthContextType = {
   handleAdd:()=>void;
   clearForm:()=>void;
   clearStoreForm:()=>void;
+  conversation: any;
+  setConversation:any;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(
@@ -109,6 +111,7 @@ export function AuthProvider({
   const [tempListing, setTempListing] = useState();
   const [storeList, setStoreList] = useState();
   const [store, setStore] = useState();
+  const [conversation, setConversation] = useState<any>();
 
   const isAuthenticated = !!token;
 
@@ -448,7 +451,9 @@ const handleAdd = ()=>{
         setLoading,
         handleAdd,
         clearForm,
-        clearStoreForm
+        clearStoreForm,
+        conversation,
+        setConversation
       }}
     >
       {children}

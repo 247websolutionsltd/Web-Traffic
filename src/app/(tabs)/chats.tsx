@@ -1,7 +1,8 @@
 import Chat from "@/components/chat";
 import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
-import { Colors, Spacing } from "@/constants/theme";
+import { Colors } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
 import useAuthentication from "@/hooks/authHook";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -26,19 +27,20 @@ export default function Chats() {
     [filter]
   );
   const {getMyConversations} = useAuthentication();
+  const {setConversation} = useAuth()
   const [ chatThreads, setChatThreads ] = useState<any>();
   useEffect(()=>{
     
     const load = async()=>{
         const token = await AsyncStorage.getItem("token");
         const data = await getMyConversations(token);
-        setChatThreads(data.conversations)
+        setChatThreads(data.conversations);
     }
     load();
   },[]);
     return(
         <Container>
-            <ThemedText style={{paddingHorizontal:Spacing.three}} type="subtitle">Chats</ThemedText>
+            <ThemedText style={{alignSelf:'center'}} type="title">Chats</ThemedText>
             {/* <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -56,7 +58,25 @@ export default function Chats() {
                 scrollEnabled={false}
                 keyExtractor={(i, index) => index.toString()}
                 renderItem={({item})=>(
-                    <Chat item={item} onPress={() => router.navigate({ pathname: "/chat", params: { id: item.id } })}/>
+                    <Chat
+                     listingTitle={item.listing.title} 
+                     logo={item.listing.images[0]} 
+                     lastMessage={item.lastMessage}
+                     lastMessageAt={item.updatedAt}
+                     storeName={item.store.name}
+                     onPress={() => {
+                        setConversation({
+                            logo:item.store.logo,
+                            name:item.store.name,
+                            title:item.listing.title
+                        })
+                        router.navigate({ pathname: "/chat", params: {
+                            conversationId: item._id, 
+                            storeId: item.store._id,
+                            listingId:item.listing._id,
+                        } });
+                    }}
+                    />
                 )}
                 ItemSeparatorComponent={() => <View style={styles.separator} />}
                 contentContainerStyle={{ paddingBottom: 100 }}

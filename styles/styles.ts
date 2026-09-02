@@ -325,10 +325,9 @@ const createStyles = (theme:any, width:any, height:any)=>StyleSheet.create({
     justifyContent: "center",
   },
   headerAvatar: {
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 45,
     borderRadius: 60,
-    backgroundColor: Colors.navy,
   },
   headerName: {
     // fontFamily: fonts.displaySemibold,
@@ -1066,5 +1065,11 @@ const createStyles = (theme:any, width:any, height:any)=>StyleSheet.create({
     padding:12,
     borderRadius:200,
     backgroundColor:Colors.coral
+  },
+  detailImages:{
+    width:100,
+    height:100,
+    margin:Spacing.two,
+    borderRadius:Radius.md
   }
 });

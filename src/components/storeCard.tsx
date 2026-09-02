@@ -1,4 +1,5 @@
 import { Radius } from "@/constants/theme";
+import useHook from "@/hooks/general-hook";
 import { ImageBackground } from "expo-image";
 import { View } from "react-native";
 import { useStyles } from "../../styles/styles";
@@ -10,10 +11,11 @@ interface StoreCardProps{
 }
 export default function StoreCard({image, title}: StoreCardProps){
     const styles = useStyles();
+    const {linter} = useHook();
     return(
         <ImageBackground source={{uri:image}} style={styles.storeCard} imageStyle={{borderRadius:Radius.sm}}>
             <View style={styles.storeCardView}>
-                <ThemedText style={{color:"#FFF"}} type="subtitle">{title}</ThemedText>
+                <ThemedText style={{color:"#FFF"}} type="bold">{linter(title, 16)}</ThemedText>
             </View>
         </ImageBackground>
     )

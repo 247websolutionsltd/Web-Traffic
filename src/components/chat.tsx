@@ -1,39 +1,40 @@
 import { Spacing } from "@/constants/theme";
 import useHook from "@/hooks/general-hook";
 import { Image } from "expo-image";
-import { TouchableOpacity, TouchableOpacityProps, View } from "react-native";
+import { TouchableOpacity, TouchableOpacityProps, View, } from "react-native";
 import { useStyles } from "../../styles/styles";
 import { ThemedText } from "./themed-text";
 
-interface ChatProps{
-    listingTitle:string;
-    lastMessage:string;
-    unread:number;
-    time:string;
-    image:string;
-}
+
 interface ItemProp extends TouchableOpacityProps{
-    item: ChatProps;
+    listingTitle:string;
+    logo:string;
+    lastMessage:{text:string};
+    lastMessageAt:string;
+    storeName:string;
 }
-export default function Chat({item, onPress}:ItemProp){
+export default function Chat({listingTitle, logo, lastMessage, lastMessageAt, storeName, onPress}:ItemProp){
     const styles = useStyles();
-    const {listingTitle, lastMessage, unread, time, image} = item;
-    const {linter} = useHook();
+    // const {listing, store, lastMessage, lastMessageAt} = item;
+    const {linter, timeAgoShort} = useHook();
+    // useEffect(()=>{
+    //     console.log(item)
+    // },[])
     return(
         <TouchableOpacity style={styles.chat} onPress={onPress}>
-            <Image style={styles.avatar} source={image}/>
+            <Image style={styles.avatar} source={{uri:logo}}/>
             <View style={styles.chatCenter}>
                 <ThemedText type="bold" style={{marginBottom:Spacing.one}}>{linter(listingTitle)}</ThemedText>
-                <ThemedText type="mid">{linter(lastMessage, 65)}</ThemedText>
+                <ThemedText type="mid">{linter(storeName, 25)}</ThemedText>
             </View>
             <View style={{alignItems:'center'}}>
-                <ThemedText type="small">{time}</ThemedText>
-                {
-                    unread > 0 &&
+                <ThemedText type="small">{timeAgoShort(lastMessageAt)}</ThemedText>
+                {/* {
+                    lastMessage &&
                     <View style={styles.messageNumber}>
-                        <ThemedText style={{fontSize:10, lineHeight:11, color:'#FFF'}}>{unread}</ThemedText>
+                        <ThemedText style={{fontSize:10, lineHeight:11, color:'#FFF'}}>{lastMessage?.text||""}</ThemedText>
                     </View>
-                }
+                } */}
             </View>
         </TouchableOpacity>
     )

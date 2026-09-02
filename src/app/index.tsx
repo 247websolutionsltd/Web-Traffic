@@ -1,6 +1,7 @@
 import Button from "@/components/button";
 import { ThemedText } from "@/components/themed-text";
 import { Radius } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
 import useAuthentication from "@/hooks/authHook";
 import useButton from "@/hooks/buttonHook";
 import { useTheme } from "@/hooks/use-theme";
@@ -21,6 +22,7 @@ export default function SplashScreen(){
   const theme = useTheme();
   const snapPoints = useMemo(() => ["55%"],['75%']);
   const { login1, register1 } = useButton();
+  const {setPageLoad} = useAuth();
   const {getCurrentUser, addCategory, getCategory, getListings, getStoreList, getMyStore} = useAuthentication();
   useEffect(() => {
       GoogleSignin.configure({
@@ -28,6 +30,7 @@ export default function SplashScreen(){
         offlineAccess: true, 
       });
       const loadTasks = async () => {
+          setPageLoad(false);
           const token = await AsyncStorage.getItem("token");
           const person = await getCurrentUser(token);
           const onboarded = await AsyncStorage.getItem('onboarded');

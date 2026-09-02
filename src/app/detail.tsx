@@ -11,7 +11,7 @@ import { useTheme } from "@/hooks/use-theme";
 import { Image, ImageBackground } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../styles/styles";
 
@@ -19,7 +19,7 @@ export default function Detail(){
     const styles = useStyles();
     const theme = useTheme();
     const { id } = useLocalSearchParams<{ id: string; }>();
-    const { getListing, getStoreById } = useAuthentication();
+    const { getListing, getStoreById, createConversation } = useAuthentication();
     const [ listing, setListing ] = useState<any>();
     const [ store, setStore ] = useState<any>();
     const { priceFormat, timeAgo } = useHook();
@@ -84,10 +84,17 @@ export default function Detail(){
                     </View>
                     <ThemedText>{listing.description}</ThemedText>
                 </View>
+                <ScrollView horizontal style={{marginVertical:Spacing.two}} showsHorizontalScrollIndicator={false}>
+                    {
+                        listing?.images?.map((item: string, index: number)=>(
+                            <Image source={{uri:item}} style={styles.detailImages} key={index}/>
+                        ))
+                    }
+                </ScrollView>
                 <View style={[styles.row, {marginTop:Spacing.three}]}>
                     <Back onPress={()=>console.log("")} title="Call" iconLeft="call"/>
                     <Button
-                        onPress={()=>console.log("")} 
+                        onPress={()=>createConversation(listing._id, store._id)} 
                         title={"Message Seller"}
                         style={{flex:1}}
                         iconLeft={"message"}

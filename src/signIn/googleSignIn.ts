@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { router } from 'expo-router';
 
 const base = process.env.EXPO_PUBLIC_BASE_URL;
 
@@ -28,6 +29,7 @@ export async function signInWithGoogle() {
     return data;
   } catch (error) {
     console.error('Google login failed:', error);
+    router.back();
     throw error;
   }
 }

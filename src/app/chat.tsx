@@ -1,13 +1,15 @@
 import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
-import { chatThreads } from "@/data/mock";
+import { useAuth } from "@/context/AuthContext";
+import useAuthentication from "@/hooks/authHook";
+import useHook from "@/hooks/general-hook";
 import { useTheme } from "@/hooks/use-theme";
-import { ChatMessage } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
+import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
-import { FlatList, KeyboardAvoidingView, Platform, Pressable, TextInput, View } from "react-native";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, KeyboardAvoidingView, Platform, Pressable, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../styles/styles";
 
@@ -15,68 +17,100 @@ import { useStyles } from "../../styles/styles";
 export default function Chats(){
     const theme = useTheme();
     const styles = useStyles();
-    const [activeFilter, setActiveFilter] = useState("All");
-    const { id } = useLocalSearchParams<{ id: string }>();
-    const thread = chatThreads.find((c) => c.id === id) ?? chatThreads[0];
-    const [messages, setMessages] = useState<ChatMessage[]>(thread.messages);
+    // const [activeFilter, setActiveFilter] = useState("All");
+    const {getMessages, sendMessage, getStoreById, getListing} = useAuthentication();
+    const { conversationId, storeId, listingId } = useLocalSearchParams<{ conversationId: string; storeId: string; listingId:string; }>();
+    // const thread = chatThreads.find((c) => c.id === id) ?? chatThreads[0];
+    const [messages, setMessages] = useState<any>();
+    const [ store, setStore ] = useState<any>();
+    const [ listing, setListing ] = useState<any>();
+    const {user} = useAuth();
+    const {linter} = useHook();
+    const load = async()=>{
+        const messageThread = await getMessages(conversationId);
+        const store = await getStoreById(storeId);
+        const listing = await getListing(listingId);
+        setStore(store)
+        setMessages(messageThread.messages);
+        setListing(listing);
+    }
+    useEffect(()=>{
+        load();
+
+    },[])
     const [draft, setDraft] = useState("");
     function handleSend() {
         const text = draft.trim();
         if (!text) return;
-        setMessages((prev) => [...prev, { id: `local-${Date.now()}`, fromMe: true, text, time: "now" }]);
+        console.log(draft)
+        sendMessage(conversationId, draft);
+        load();
+        // setMessages((prev) => [...prev, { id: `local-${Date.now()}`, fromMe: true, text, time: "now" }]);
         setDraft("");
     }
     return(
-        <Container edges={["bottom"]}>            
-            <SafeAreaView style={styles.header} edges={["top"]}>
-                <Pressable onPress={() => router.back()} style={styles.circleBtn} accessibilityLabel="Go back">
-                    <Ionicons name="arrow-back" size={23} color={theme.ink} />
-                </Pressable>
-                <View style={styles.headerAvatar} />
-                <View style={{ flex: 1 }}>
-                    <ThemedText type="subtitle">{thread.personName}</ThemedText>
-                    <ThemedText type="mid" numberOfLines={1}>
-                        {thread.listingTitle}
-                    </ThemedText>
-                </View>
-                <Pressable style={styles.circleBtn} accessibilityLabel="Call">
-                    <Ionicons name="call-outline" size={23} color={theme.ink} />
-                </Pressable>
-            </SafeAreaView>
-            <KeyboardAvoidingView 
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={styles.container}
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
-            >
-                <FlatList
-                    data={messages}
-                    keyExtractor={(m) => m.id}
-                    scrollEnabled={false}
-                    contentContainerStyle={styles.messagesList}
-                    renderItem={({ item }) => (
-                        <View style={[styles.bubbleRow, item.fromMe ? styles.bubbleRowMe : styles.bubbleRowThem]}>
-                            <View style={[styles.bubble, item.fromMe ? styles.bubbleMe : styles.bubbleThem]}>
-                                <ThemedText style={[item.fromMe && {color:"#FFF"}]} type="mid">{item.text}</ThemedText>
-                            </View>
-                            <ThemedText style={styles.bubbleTime}>{item.time}</ThemedText>
-                        </View>
-                    )}
-                />
-
-                <View style={styles.composer}>
-                    <TextInput
-                        value={draft}
-                        onChangeText={setDraft}
-                        placeholder="Type a message…"
-                        placeholderTextColor={Colors.inkFaint}
-                        style={styles.chatInput}
-                        multiline
-                    />
-                    <Pressable onPress={handleSend} style={styles.sendBtn} accessibilityLabel="Send message">
-                        <Ionicons name="send" size={20} color={Colors.white} />
+        <Container edges={["bottom"]}>
+            {
+                (store && messages && listing) ?
+            <>          
+                <SafeAreaView style={styles.header} edges={["top"]}>
+                    <Pressable onPress={() => router.back()} style={styles.circleBtn} accessibilityLabel="Go back">
+                        <Ionicons name="arrow-back" size={23} color={theme.ink} />
                     </Pressable>
-                </View>
-            </KeyboardAvoidingView>
+                    <Image style={styles.headerAvatar} source={{uri:store.logo}}/>
+                    <View style={{ flex: 1 }}>
+                        <ThemedText type="subtitle">{linter(store.name, 10)}</ThemedText>
+                        <ThemedText type="mid" numberOfLines={1}>
+                            {linter(listing.title)}
+                        </ThemedText>
+                    </View>
+                    <Pressable style={styles.circleBtn} accessibilityLabel="Call">
+                        <Ionicons name="call-outline" size={23} color={theme.ink} />
+                    </Pressable>
+                </SafeAreaView>
+                <KeyboardAvoidingView 
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    style={styles.container}
+                    keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+                >
+                    <FlatList
+                        data={messages}
+                        keyExtractor={(m) => m._id}
+                        scrollEnabled={false}
+                        contentContainerStyle={styles.messagesList}
+                        renderItem={({ item }) => {
+                            const fromMe = item.sender._id === user?.id
+                            return(
+                                <View style={[styles.bubbleRow, fromMe ? styles.bubbleRowMe : styles.bubbleRowThem]}>
+                                    <View style={[styles.bubble, fromMe ? styles.bubbleMe : styles.bubbleThem]}>
+                                        <ThemedText style={[fromMe && {color:"#FFF"}]} type="mid">{item.text}</ThemedText>
+                                    </View>
+                                    <ThemedText style={styles.bubbleTime}>{item.time}</ThemedText>
+                                </View>
+                            )
+                        }}
+                    />
+
+                    <View style={styles.composer}>
+                        <TextInput
+                            value={draft}
+                            onChangeText={setDraft}
+                            placeholder="Type a message…"
+                            placeholderTextColor={Colors.inkFaint}
+                            style={styles.chatInput}
+                            multiline
+                        />
+                        <Pressable onPress={handleSend} style={styles.sendBtn} accessibilityLabel="Send message">
+                            <Ionicons name="send" size={20} color={Colors.white} />
+                        </Pressable>
+                    </View>
+                </KeyboardAvoidingView>
+            </>
+            :
+             <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                <ActivityIndicator size={50} color={Colors.coral}/>
+            </View>
+            }
         </Container>
     )
 }

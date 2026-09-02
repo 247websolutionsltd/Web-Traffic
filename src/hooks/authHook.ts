@@ -7,7 +7,7 @@ import { Alert } from "react-native";
 import { uploadApi } from "./axios";
 
 export default function useAuthentication(){
-    const { setPageLoad, setUser, setCategory, setListings, setStoreList, setStore, setLoading, loading } = useAuth();
+    const { setPageLoad, setUser, setCategory, setListings, setStoreList, setStore, setLoading, setConversation, loading } = useAuth();
     const createUser = async (data: any) => {
         setLoading(true);
         try {
@@ -101,8 +101,8 @@ export default function useAuthentication(){
   const logout = async () => {
     try {
       await AsyncStorage.removeItem("token");
-      setUser(null); 
       router.navigate('/index');
+      setUser(null); 
       router.dismissAll();
       
 
@@ -346,42 +346,85 @@ export default function useAuthentication(){
   };
 
  const requestAccountDeletion = async () => {
-  const token = await AsyncStorage.getItem("token");
-  try {
-    const response = await fetch(
-      `https://webtraffic-backend-1.onrender.com/api/auth/delete-account/request`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    const token = await AsyncStorage.getItem("token");
+    try {
+      const response = await fetch(
+        `https://webtraffic-backend-1.onrender.com/api/auth/delete-account/request`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const text = await response.text();
+
+      console.log("RESPONSE:", text);
+      console.log("STATUS:", response.status);
+
+      if (response.status !== 200) {
+        throw new Error("There is an error");
       }
-    );
+      
 
-    const text = await response.text();
+      Alert.alert(
+        "Check your email",
+        "We've sent a confirmation link to your email. Click the link to permanently delete your account."
+      );
 
-    console.log("RESPONSE:", text);
-    console.log("STATUS:", response.status);
+    } catch (error:any) {
+      console.error(error);
 
-    if (response.status !== 200) {
-      throw new Error("There is an error");
+      Alert.alert(
+        "Error",
+        error.message || "Unable to send confirmation email"
+      );
     }
-    
+  };
 
-    Alert.alert(
-      "Check your email",
-      "We've sent a confirmation link to your email. Click the link to permanently delete your account."
-    );
+  const createConversation = async (listingId:string,storeId:string)=>{
+    const token = await AsyncStorage.getItem("token");
+    try{
+      const data = await uploadApi.post(`api/messages/conversations`,
+        {listingId, storeId},
+        {headers: { Authorization: `Bearer ${token}` }
+      });
+      router.navigate({ pathname: "/chat", params: {
+         conversationId: data.data.conversation._id, 
+         storeId: data.data.conversation.store,
+         listingId:listingId
+        } });
+      console.log(data.data.conversation)
+      return data.data.conversation
+    }catch(error:any){
+      console.error("Error:", error.response.data)
+    } 
+  };
 
-  } catch (error:any) {
-    console.error(error);
+  const getMessages = async (conversationId:string)=>{
+    const token = await AsyncStorage.getItem("token");
+    try{
+      const data = await uploadApi.get(`api/messages/conversations/${conversationId}`, {headers: { Authorization: `Bearer ${token}` }});
+      return data.data
+    }catch(error:any){
+      console.error("Error:", error.response.data)
+    } 
+  };
 
-    Alert.alert(
-      "Error",
-      error.message || "Unable to send confirmation email"
-    );
-  }
-};
+  const sendMessage = async (conversationId:string, text:string)=>{
+    const token = await AsyncStorage.getItem("token");
+    try{
+      const data = await uploadApi.post(`api/messages`,
+        {conversationId, text},
+        {headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log(data.data)
+      return data.data
+    }catch(error:any){
+      console.error("Error:", error.response.data)
+    } 
+  };
 
 
 
@@ -408,6 +451,9 @@ export default function useAuthentication(){
         followStore,
         unfollowStore,
         deleteAccount,
-        requestAccountDeletion
+        requestAccountDeletion,
+        createConversation,
+        getMessages,
+        sendMessage
     }
 }
