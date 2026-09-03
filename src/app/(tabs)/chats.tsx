@@ -47,16 +47,16 @@ export default function Chats() {
         const token = await AsyncStorage.getItem("token");
         const buyers = await getBuyerConversations(token);
         const stores = await getStoreConversations(token);
-        setStores(stores.conversations)
+        setStores(stores?.conversations || [])
         setBuyers(buyers.conversations);
-        setData([...buyers.conversations, ...stores.conversations]);
-        // console.log("buyer:",buyers)
+        setData([...buyers.conversations, ...stores?.conversations || []]);
+        // console.log("stores:",buyers.conversations[0])
         // console.log("seller:",stores.conversations[0]._id)
     }
     load();
   },[]);
     return(
-        <SafeAreaView>
+        <SafeAreaView style={{flex:1}} edges={["top"]}>
             <ThemedText style={{alignSelf:'center'}} type="title">Chats</ThemedText>
             <ScrollView
                 horizontal
@@ -78,7 +78,7 @@ export default function Chats() {
                     <Chat
                      listingTitle={item.listing.title} 
                      logo={item.listing.images[0]} 
-                     lastMessage={item.lastMessage}
+                     lastMessage={item.lastMessage?.text}
                      lastMessageAt={item.updatedAt}
                      storeName={item.store.name}
                      onPress={() => {

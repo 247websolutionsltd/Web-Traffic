@@ -34,7 +34,6 @@ export default function Create(){
             }else if (!form.description){
                 Alert.alert("Enter a description")
             }else{
-                console.log(loading)
                 setPage(page+1)
             }
         }else if(page === 2){

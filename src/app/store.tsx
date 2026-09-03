@@ -5,7 +5,6 @@ import StoreHeader from "@/components/storeHeader";
 import { ThemedText } from "@/components/themed-text";
 import Top from "@/components/top2";
 import { Colors, Spacing } from "@/constants/theme";
-// import { listings, stores } from "@/data/mock";
 import useAuthentication from "@/hooks/authHook";
 import useHook from "@/hooks/general-hook";
 import { useTheme } from "@/hooks/use-theme";
@@ -35,7 +34,7 @@ export default function Store(){
             const storeData = await getStoreById(store);
             const listing = await getStoreListings(store);
             setStore(storeData);
-            setListing(listing);
+            setListing(listing.listings);
         }
         load();
         
@@ -51,34 +50,49 @@ export default function Store(){
         const { width } = event.nativeEvent.layout;
         setTabWidth(width);
     };
-const AllAdsRoute = () => {
-    return(
-            <FlatList
-                data={listings.listings}
-                numColumns={2}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(item, index) => index.toString()}
-                scrollEnabled={false}
-                contentContainerStyle={[styles.horizontalList]}
-                style={{width, flex:1}}
-                onContentSizeChange={(w, h) => {
-                    setHeights(prev => {
-                        const copy = [...prev];
-                        copy[0] = h;
-                        return copy;
-                    });
-                }}
-                renderItem={({ item }) => (
-                    <View style={styles.listing}>
-                        <ListingCardCompact
-                            listing={item} 
-                            onPress={() => router.push({ pathname: "/detail", params: { id: item._id } })} 
-                            />
-                    </View>
-                )}
+    const AllAdsRoute = ({
+    listings,
+    styles,
+    width,
+    onHeightChange,
+    }: {
+    listings: any[];
+    styles: any;
+    width: number;
+    onHeightChange: (height: number) => void;
+    }) => {
+    return (
+        <FlatList
+        data={listings}
+        numColumns={2}
+        scrollEnabled={false}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item) => item._id}
+        contentContainerStyle={styles.horizontalList}
+        style={{
+            width,
+        }}
+        onContentSizeChange={(w, h) => {
+            onHeightChange(h);
+        }}
+        renderItem={({ item }) => (
+            <View style={styles.listing}>
+            <ListingCardCompact
+                listing={item}
+                onPress={() =>
+                router.push({
+                    pathname: "/detail",
+                    params: {
+                    id: item._id,
+                    },
+                })
+                }
             />
-    )
-}
+            </View>
+        )}
+        />
+    );
+    };
 
 const AboutRoute = () => (
   <View style={styles.scene}>
@@ -95,7 +109,20 @@ const ReviewsRoute = () => (
 const renderScene = ({ route }:{route:any}) => {
   switch (route.key) {
     case 'allAds':
-      return <AllAdsRoute />;
+      return <AllAdsRoute
+            listings={listings}
+            styles={styles}
+            width={width}
+            onHeightChange={(h) => {
+                setHeights((prev) => {
+                if (prev[0] === h) return prev;
+
+                const copy = [...prev];
+                copy[0] = h;
+                return copy;
+                });
+            }}
+            />;
     case 'about':
       return <AboutRoute />;
     case 'reviews':
@@ -127,7 +154,7 @@ const renderScene = ({ route }:{route:any}) => {
                 image={storeInfo.logo}
                 name={storeInfo.name}
                 location={storeInfo.location.city}
-                ad={listings.listings}
+                ad={listings}
                 rating={"5"}
                 date={timeAgo(storeInfo.createdAt)}
                 followers={storeInfo.followers.length}
@@ -150,18 +177,34 @@ const renderScene = ({ route }:{route:any}) => {
                 <View style={[styles.indicator, {left:pageOffset*80}]}/>
                 <PagerView
                     style={{
-                        height: heights[page] > 300 ? heights[page] : 300,
-                        // backgroundColor:'#FFFFFF22',
+                        height: Math.max(heights[page] || 0, 300),
                     }}
                     initialPage={0}
-                    onPageSelected={(e)=>{
+                    onPageSelected={(e) => {
                         setPage(e.nativeEvent.position);
                     }}
                     ref={pagerRef}
-                    onPageScroll={(e)=>setPageOffset(e.nativeEvent.position + e.nativeEvent.offset)}
-                >
+                    onPageScroll={(e) => {
+                        setPageOffset(
+                        e.nativeEvent.position + e.nativeEvent.offset
+                        );
+                    }}
+                    >
                     <View key="0">
-                        <AllAdsRoute />
+                        <AllAdsRoute
+                        listings={listings}
+                        styles={styles}
+                        width={width}
+                        onHeightChange={(h) => {
+                            setHeights((prev) => {
+                            if (prev[0] === h) return prev;
+
+                            const copy = [...prev];
+                            copy[0] = h;
+                            return copy;
+                            });
+                        }}
+                        />
                     </View>
                     
                     <ScrollView key="1"

@@ -10,13 +10,14 @@ interface TopProps{
     search?: boolean;
     filter?: boolean;
     style?: StyleProp<ViewStyle>;
+    onBack?: ()=>void;
 }
-export default function Top({title="", search, filter, style}:TopProps){
+export default function Top({title="", search, filter, onBack=()=>router.back(), style}:TopProps){
     const styles = useStyles();
     const theme = useTheme();
     return(
         <View style={[styles.topView, style]}>
-            <TouchableOpacity onPress={()=>router.back()} style={styles.topIcon}>
+            <TouchableOpacity onPress={onBack} style={styles.topIcon}>
                 <MaterialIcons name="arrow-back" size={25} color={theme.text}/>
             </TouchableOpacity>
             <View/>

@@ -19,7 +19,7 @@ export default function Create(){
     const [ page, setPage ] = useState(1);
     const [ title, setTitle ] = useState("");
     const { storeForm, createStore, clearStoreForm } = useAuth();
-    const handleNext = ()=>{
+    const handleNext = async()=>{
         if (page === 1){
             if(!storeForm.image.uri){
                 Alert.alert("Upload an Image")
@@ -30,7 +30,6 @@ export default function Create(){
             }else if (!storeForm.category){
                 Alert.alert("Enter your store Category")
             }else{
-                console.log(storeForm);
                 setPage(page +1);
             }
         }else if (page === 2){
@@ -41,11 +40,10 @@ export default function Create(){
             }else if(!storeForm.description){
                 Alert.alert("Enter your store's Description'")
             }else {
-                console.log(storeForm);
                 setPage(page +1);
             }
         }else{
-            createStore();
+            await createStore();
             clearStoreForm();
         }
     }

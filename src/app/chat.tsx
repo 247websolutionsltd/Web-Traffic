@@ -24,7 +24,7 @@ export default function Chats(){
     const [messages, setMessages] = useState<any>();
     const [ store, setStore ] = useState<any>();
     const [ listing, setListing ] = useState<any>();
-    const {user} = useAuth();
+    const {user, sendLoad, setSendLoad} = useAuth();
     const {linter, formatMessageTime} = useHook();
     const load = async()=>{
         const messageThread = await getMessages(conversationId);
@@ -33,7 +33,6 @@ export default function Chats(){
         setStore(store)
         setMessages(messageThread?.messages);
         setListing(listing);
-        console.log(messageThread?.messages[0])
     }
     useEffect(()=>{
         load();
@@ -43,8 +42,10 @@ export default function Chats(){
     const handleSend =  async(draft: string)=> {
         const text = draft.trim();
         if (!text) return;
+        setSendLoad(true);
         await sendMessage(conversationId, draft);
-        load();
+        await load();
+        setSendLoad(false);
         // setMessages((prev) => [...prev, { id: `local-${Date.now()}`, fromMe: true, text, time: "now" }]);
         setDraft("");
     }
@@ -101,8 +102,13 @@ export default function Chats(){
                             style={styles.chatInput}
                             multiline
                         />
-                        <Pressable onPress={()=>handleSend(draft)} style={styles.sendBtn} accessibilityLabel="Send message">
-                            <Ionicons name="send" size={20} color={Colors.white} />
+                        <Pressable onPress={()=>handleSend(draft)} style={styles.sendBtn} accessibilityLabel="Send message" disabled={sendLoad}>
+                            {
+                                sendLoad ?
+                                <ActivityIndicator size={20} color={"#FFF"}/>
+                                :
+                                <Ionicons name="send" size={20} color={Colors.white} />
+                            }
                         </Pressable>
                     </View>
                 </KeyboardAvoidingView>

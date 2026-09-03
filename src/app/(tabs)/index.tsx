@@ -60,7 +60,7 @@ export default function Home(){
                                 source={{uri:user?.profileImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaBCpyQIJSGIUWdn05vYhV4n6Tcf1LzrZSsHHBA8I0XA&s=10"}}
                                 />
                                 :
-                                <ActivityIndicator size={15}/>
+                                <ActivityIndicator size={15} color={"#FFF"}/>
                             }
                          </TouchableOpacity>
                         <View>
@@ -125,7 +125,7 @@ export default function Home(){
                     
                 </View>
                 :
-                <ActivityIndicator size={30}/>
+                <ActivityIndicator size={30} color={"#FFF"}/>
             }
             <CatTest
                 image="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHNwb3J0c3xlbnwwfHwwfHx8MA%3D%3D"
@@ -220,7 +220,7 @@ export default function Home(){
                         }
                     </View>
                     :
-                    <ActivityIndicator size={30}/>
+                    <ActivityIndicator size={30} color={"#FFF"}/>
                 }
             </View>
         </Container>

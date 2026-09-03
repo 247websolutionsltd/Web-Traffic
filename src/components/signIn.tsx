@@ -33,7 +33,7 @@ export default function SignIn({style}:ViewProps) {
   const { logInUser } = useAuthentication();
 
   const onSubmit = async (data: SignInFormValues) => {
-    console.log(logInUser(data));
+    console.log(await logInUser(data));
   };
 
   const phoneRef = useRef<TextInput>(null);

@@ -54,7 +54,7 @@ export default function Button({
       disabled={disabled}
     >
       {btnLoad ? (
-        <ActivityIndicator size={27}/>
+        <ActivityIndicator size={27} color={"#FFF"}/>
       ) : (
         <View style={styles.row}>
           {

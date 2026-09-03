@@ -101,11 +101,9 @@ export default function useAuthentication(){
   const logout = async () => {
     try {
       await AsyncStorage.removeItem("token");
-      router.navigate('/index');
-      setUser(null); 
       router.dismissAll();
-      
-
+      router.replace('/index');
+      setUser(null); 
     } catch (error) {
       console.error("Logout error:", error);
     }
@@ -219,11 +217,9 @@ export default function useAuthentication(){
   };
 
   const getMyStore = async (token:string|null) => {
-    console.log(token)
     try{
       const data = await uploadApi.get('/api/stores/my-store', {headers: { Authorization: `Bearer ${token}` }});
       setStore(data.data);
-      console.log(data.data)
       return data.data
     }catch(error:any){
       console.error(error.response.data.message)
@@ -270,11 +266,6 @@ export default function useAuthentication(){
         {listingId, sellerId},
         {headers: { Authorization: `Bearer ${token}` }
       });
-
-      console.log(
-        "CONVERSATION:",
-        data.data.conversation
-      );
 
       // Navigate to chat screen
       router.push(
@@ -422,19 +413,14 @@ export default function useAuthentication(){
 
   const sendMessage = async (conversationId:string, text:string)=>{
     const token = await AsyncStorage.getItem("token");
-    console.log(text)
     try{
-      setSendLoad(true);
       const data = await uploadApi.post(`/api/messages/${conversationId}/messages`,
         {conversationId, text},
         {headers: { Authorization: `Bearer ${token}` }
       });
-      console.log(data.data)
       return data.data
     }catch(error:any){
       console.error("Error:", error.response.data)
-    }finally{
-      setSendLoad(false);
     }
   };
 

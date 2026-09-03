@@ -9,7 +9,7 @@ import { ThemedText } from "./themed-text";
 interface ItemProp extends TouchableOpacityProps{
     listingTitle:string;
     logo:string;
-    lastMessage:{text:string};
+    lastMessage:string | null;
     lastMessageAt:string;
     storeName:string;
 }
@@ -25,7 +25,10 @@ export default function Chat({listingTitle, logo, lastMessage, lastMessageAt, st
             <Image style={styles.avatar} source={{uri:logo}}/>
             <View style={styles.chatCenter}>
                 <ThemedText type="bold" style={{marginBottom:Spacing.one}}>{linter(listingTitle)}</ThemedText>
-                <ThemedText type="mid">{linter(storeName, 25)}</ThemedText>
+                {
+                    lastMessage &&
+                    <ThemedText type="mid">{linter(lastMessage || "", 25)}</ThemedText>
+                }
             </View>
             <View style={{alignItems:'center'}}>
                 <ThemedText type="small">{timeAgoShort(lastMessageAt)}</ThemedText>
