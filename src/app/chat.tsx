@@ -1,4 +1,3 @@
-import Container from "@/components/custom-container";
 import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
@@ -8,7 +7,7 @@ import { useTheme } from "@/hooks/use-theme";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, FlatList, KeyboardAvoidingView, Platform, Pressable, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useStyles } from "../../styles/styles";
@@ -17,6 +16,7 @@ import { useStyles } from "../../styles/styles";
 export default function Chats(){
     const theme = useTheme();
     const styles = useStyles();
+    const flatListRef = useRef(null);
     // const [activeFilter, setActiveFilter] = useState("All");
     const {getMessages, sendMessage, getStoreById, getListing} = useAuthentication();
     const { conversationId, storeId, listingId } = useLocalSearchParams<{ conversationId: string; storeId: string; listingId:string; }>();
@@ -25,31 +25,31 @@ export default function Chats(){
     const [ store, setStore ] = useState<any>();
     const [ listing, setListing ] = useState<any>();
     const {user} = useAuth();
-    const {linter} = useHook();
+    const {linter, formatMessageTime} = useHook();
     const load = async()=>{
         const messageThread = await getMessages(conversationId);
         const store = await getStoreById(storeId);
         const listing = await getListing(listingId);
         setStore(store)
-        setMessages(messageThread.messages);
+        setMessages(messageThread?.messages);
         setListing(listing);
+        console.log(messageThread?.messages[0])
     }
     useEffect(()=>{
         load();
 
     },[])
     const [draft, setDraft] = useState("");
-    function handleSend() {
+    const handleSend =  async(draft: string)=> {
         const text = draft.trim();
         if (!text) return;
-        console.log(draft)
-        sendMessage(conversationId, draft);
+        await sendMessage(conversationId, draft);
         load();
         // setMessages((prev) => [...prev, { id: `local-${Date.now()}`, fromMe: true, text, time: "now" }]);
         setDraft("");
     }
     return(
-        <Container edges={["bottom"]}>
+        <View style={{flex:1}}>
             {
                 (store && messages && listing) ?
             <>          
@@ -70,13 +70,15 @@ export default function Chats(){
                 </SafeAreaView>
                 <KeyboardAvoidingView 
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                    style={styles.container}
+                    style={styles.chatContainer}
                     keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
                 >
                     <FlatList
-                        data={messages}
+                        data={[...messages].reverse()}
+                        showsVerticalScrollIndicator={false}
+                        ref={flatListRef}
                         keyExtractor={(m) => m._id}
-                        scrollEnabled={false}
+                        inverted
                         contentContainerStyle={styles.messagesList}
                         renderItem={({ item }) => {
                             const fromMe = item.sender._id === user?.id
@@ -85,12 +87,11 @@ export default function Chats(){
                                     <View style={[styles.bubble, fromMe ? styles.bubbleMe : styles.bubbleThem]}>
                                         <ThemedText style={[fromMe && {color:"#FFF"}]} type="mid">{item.text}</ThemedText>
                                     </View>
-                                    <ThemedText style={styles.bubbleTime}>{item.time}</ThemedText>
+                                    <ThemedText style={styles.bubbleTime}>{formatMessageTime(item.createdAt)}</ThemedText>
                                 </View>
                             )
                         }}
                     />
-
                     <View style={styles.composer}>
                         <TextInput
                             value={draft}
@@ -100,7 +101,7 @@ export default function Chats(){
                             style={styles.chatInput}
                             multiline
                         />
-                        <Pressable onPress={handleSend} style={styles.sendBtn} accessibilityLabel="Send message">
+                        <Pressable onPress={()=>handleSend(draft)} style={styles.sendBtn} accessibilityLabel="Send message">
                             <Ionicons name="send" size={20} color={Colors.white} />
                         </Pressable>
                     </View>
@@ -111,7 +112,7 @@ export default function Chats(){
                 <ActivityIndicator size={50} color={Colors.coral}/>
             </View>
             }
-        </Container>
+        </View>
     )
 }
 

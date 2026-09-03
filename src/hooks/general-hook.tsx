@@ -155,6 +155,69 @@ export default function useHook() {
     } ago`;
   };
 
+  const formatMessageTime = (timestamp: string) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+
+    const diffInMs = +now - +date;
+    const diffInSeconds = Math.floor(diffInMs / 1000);
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+    const diffInWeeks = Math.floor(diffInDays / 7);
+    const diffInMonths = Math.floor(diffInDays / 30);
+    const diffInYears = Math.floor(diffInDays / 365);
+
+    // Less than 1 minute
+    if (diffInSeconds < 60) {
+      return "just now";
+    }
+
+    // Less than 24 hours
+    if (diffInHours < 24) {
+      return date.toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+    }
+
+    // Yesterday
+    if (diffInDays === 1) {
+      return "yesterday";
+    }
+
+    // Days
+    if (diffInDays < 7) {
+      return `${diffInDays} days ago`;
+    }
+
+    // Weeks
+    if (diffInWeeks < 4) {
+      if (diffInWeeks === 1) {
+        return "last week";
+      }
+
+      return `${diffInWeeks} weeks ago`;
+    }
+
+    // Months
+    if (diffInMonths < 12) {
+      if (diffInMonths === 1) {
+        return "last month";
+      }
+
+      return `${diffInMonths} months ago`;
+    }
+
+    // Years
+    if (diffInYears === 1) {
+      return "last year";
+    }
+
+    return `${diffInYears} years ago`;
+  };
+
   
   
   return {
@@ -166,6 +229,7 @@ export default function useHook() {
     linter,
     getInitials,
     timeAgo,
-    timeAgoShort
+    timeAgoShort,
+    formatMessageTime
   };
 }

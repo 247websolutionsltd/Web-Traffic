@@ -1,17 +1,19 @@
 import { Colors, Radius, Spacing } from "@/constants/theme";
 import { Dimensions, StyleSheet, useColorScheme } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 // export type ThemeType = typeof Colors.light;
 export function useStyles() {
   const colorScheme = useColorScheme() ?? 'light';
   const theme = colorScheme === "light" ? Colors.light : Colors.dark;
   const {width, height} = Dimensions.get('window');
+  const insets = useSafeAreaInsets();
   // Pass the active theme colors into the factory function below
-  return createStyles(theme, width, height);
+  return createStyles(theme, width, height, insets);
 }
 
 
-const createStyles = (theme:any, width:any, height:any)=>StyleSheet.create({
+const createStyles = (theme:any, width:any, height:any, insets:any)=>StyleSheet.create({
     button: {
     height:60,
     borderRadius: 16,
@@ -309,7 +311,7 @@ const createStyles = (theme:any, width:any, height:any)=>StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.three,
-    padding:Spacing.three,
+    paddingHorizontal:Spacing.three,
     paddingBottom: Spacing.three,
     backgroundColor: theme.card,
     borderBottomWidth: 1,
@@ -1071,5 +1073,10 @@ const createStyles = (theme:any, width:any, height:any)=>StyleSheet.create({
     height:100,
     margin:Spacing.two,
     borderRadius:Radius.md
+  },
+  chatContainer:{
+    flex:1,
+    backgroundColor: theme.paper,
+    paddingBottom: insets.bottom
   }
 });

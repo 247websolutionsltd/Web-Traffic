@@ -7,7 +7,7 @@ import { Alert } from "react-native";
 import { uploadApi } from "./axios";
 
 export default function useAuthentication(){
-    const { setPageLoad, setUser, setCategory, setListings, setStoreList, setStore, setLoading, setConversation, loading } = useAuth();
+    const { setPageLoad, setUser, setCategory, setListings, setStoreList, setStore, setLoading, setConversation, loading, setSendLoad } = useAuth();
     const createUser = async (data: any) => {
         setLoading(true);
         try {
@@ -300,9 +300,18 @@ export default function useAuthentication(){
     } 
   };
 
-  const getMyConversations = async (token:string|null)=>{
+  const getBuyerConversations = async (token:string|null)=>{
     try{
-      const data = await uploadApi.get(`/api/messages/conversations`, {headers: { Authorization: `Bearer ${token}` }});
+      const data = await uploadApi.get(`/api/messages/buyer`, {headers: { Authorization: `Bearer ${token}` }});
+      return data.data
+    }catch(error:any){
+      console.error("Error:", error.response.data)
+    } 
+  };
+
+  const getStoreConversations = async (token:string|null)=>{
+    try{
+      const data = await uploadApi.get(`/api/messages/store`, {headers: { Authorization: `Bearer ${token}` }});
       return data.data
     }catch(error:any){
       console.error("Error:", error.response.data)
@@ -395,7 +404,6 @@ export default function useAuthentication(){
          storeId: data.data.conversation.store,
          listingId:listingId
         } });
-      console.log(data.data.conversation)
       return data.data.conversation
     }catch(error:any){
       console.error("Error:", error.response.data)
@@ -414,8 +422,10 @@ export default function useAuthentication(){
 
   const sendMessage = async (conversationId:string, text:string)=>{
     const token = await AsyncStorage.getItem("token");
+    console.log(text)
     try{
-      const data = await uploadApi.post(`api/messages`,
+      setSendLoad(true);
+      const data = await uploadApi.post(`/api/messages/${conversationId}/messages`,
         {conversationId, text},
         {headers: { Authorization: `Bearer ${token}` }
       });
@@ -423,7 +433,9 @@ export default function useAuthentication(){
       return data.data
     }catch(error:any){
       console.error("Error:", error.response.data)
-    } 
+    }finally{
+      setSendLoad(false);
+    }
   };
 
 
@@ -447,7 +459,8 @@ export default function useAuthentication(){
         startChat,
         getStoreById,
         getStoreListings,
-        getMyConversations,
+        getBuyerConversations,
+        getStoreConversations,
         followStore,
         unfollowStore,
         deleteAccount,
