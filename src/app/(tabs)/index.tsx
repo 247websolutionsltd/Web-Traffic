@@ -8,7 +8,7 @@ import Search from "@/components/searchInput";
 import Sponsored from "@/components/sponsored";
 import StoreCard from "@/components/storeCard";
 import { ThemedText } from "@/components/themed-text";
-import { Spacing } from "@/constants/theme";
+import { Colors, Spacing } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
 import { bannerSliderData } from "@/data/bannerSliderData";
 import { categories } from "@/data/mock";
@@ -60,7 +60,7 @@ export default function Home(){
                                 source={{uri:user?.profileImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaBCpyQIJSGIUWdn05vYhV4n6Tcf1LzrZSsHHBA8I0XA&s=10"}}
                                 />
                                 :
-                                <ActivityIndicator size={15} color={"#FFF"}/>
+                                <ActivityIndicator size={15} color={Colors.coral}/>
                             }
                          </TouchableOpacity>
                         <View>
@@ -87,7 +87,7 @@ export default function Home(){
                 </View>
                 <View style={styles.categoryGrid}>
                     {categories.slice(0, 4).map((c: Category) => (
-                        <CategoryTile key={c.id} category={c} onPress={() => router.push({ pathname: "/category", params: { category: c.name } })} />
+                        <CategoryTile key={c.id} category={c} onPress={() => router.push({ pathname: "/category", params: { category: c.name, id: c.id } })} />
                     ))}
                 </View>
             </View>
@@ -125,13 +125,13 @@ export default function Home(){
                     
                 </View>
                 :
-                <ActivityIndicator size={30} color={"#FFF"}/>
+                <ActivityIndicator size={30} color={Colors.coral}/>
             }
             <CatTest
                 image="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHNwb3J0c3xlbnwwfHwwfHx8MA%3D%3D"
                 title="A1 Sport Items"
                 desc="Get your high quality sport clothing, gear and merchandice"
-                onPress={() => router.push("/products")}
+                onPress={() => router.push({ pathname: "/category", params: { category: "Fashion", id: "6a870f5c520fa4cc02d244e8" } })}
             />
             {
                 trending?.length > 0 &&
@@ -220,7 +220,7 @@ export default function Home(){
                         }
                     </View>
                     :
-                    <ActivityIndicator size={30} color={"#FFF"}/>
+                    <ActivityIndicator size={30} color={Colors.coral}/>
                 }
             </View>
         </Container>

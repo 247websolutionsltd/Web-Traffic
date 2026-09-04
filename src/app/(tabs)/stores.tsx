@@ -28,24 +28,24 @@ export default function Stores(){
                 <ThemedText style={{paddingBottom:Spacing.one}}>Check out our stores</ThemedText>
                 {/* <Search placeholder="Find your desired store..."/> */}
             </View>
-            <View style={{paddingHorizontal:Spacing.three}}>
             {
                 stores?
-              <FlatList
-                  scrollEnabled={false}
-                  data={stores}
-                  showsHorizontalScrollIndicator={false}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={({ item }) => (
-                      <Store info={item} />
-                  )}
-              />
-              :
+                <View style={{paddingHorizontal:Spacing.three}}>
+                <FlatList
+                    scrollEnabled={false}
+                    data={stores}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => (
+                        <Store info={item} />
+                    )}
+                />
+                </View>
+            :
               <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-                <ActivityIndicator size={30} color={Colors.primary}/>
+                <ActivityIndicator size={30} color={Colors.coral}/>
               </View>
             }
-            </View>
         </Container>
     )
 }

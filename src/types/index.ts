@@ -11,7 +11,6 @@ export interface Category {
   name: string;
   icon: keyof typeof Ionicons.glyphMap;
   tint: string;
-  count: number;
 }
 
 export interface Location {

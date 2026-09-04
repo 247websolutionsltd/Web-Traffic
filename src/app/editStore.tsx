@@ -16,25 +16,30 @@ import { useStyles } from "../../styles/styles";
 export default function Edit(){
     const styles = useStyles();
     const theme = useTheme();
-    const {user} = useAuth();
+    const {store} = useAuth();
     const { getInitials } = useHook();
-    const {changeProfileImage, updateProfile} = useAuthentication();
-    const [firstName, setFirstName] = useState(user?.firstName || "");
-    const [lastName, setLastName] = useState(user?.lastName || "");
-    const [phone, setPhone] = useState(user?.phone || "");
-    const [email, setEmail] = useState(user?.email || "");
+    const {changeProfileImage, updateStore} = useAuthentication();
+    const [name, setName] = useState(store?.name || "");
+    const [description, setDescription] = useState(store?.description || "");
+    const [city, setCity] = useState(store?.location.city || "");
+    const [state, setState] = useState(store?.location.state || "");
+    const [phone, setPhone] = useState(store?.phone || "");
+    // useEffect(()=>{
+    //     console.log(store);
+    // },[])
     const data = {
-        firstName:firstName || "",
-        lastName:lastName || "",
-        phone:phone || "",
-        email:email || "",
+        name:name || "",
+        description:description || "",
+        city:city || "",
+        state:state || "",
+        phone:phone || ""
     }
     return(
         <Container edges={["top", "bottom"]}>
-            <Top title="Edit account" store/>
+            <Top title="Edit account"/>
             <TouchableOpacity style={{alignItems:'center', marginTop:Spacing.three}} onPress={changeProfileImage}>
                 <ImageBackground
-                 source={{uri:user?.profileImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaBCpyQIJSGIUWdn05vYhV4n6Tcf1LzrZSsHHBA8I0XA&s=10"}}
+                 source={{uri:store?.logo || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaBCpyQIJSGIUWdn05vYhV4n6Tcf1LzrZSsHHBA8I0XA&s=10"}}
                  imageStyle={{borderRadius:900}}
                  style={{width:140, height:140 }}
                 >
@@ -45,23 +50,44 @@ export default function Edit(){
             </TouchableOpacity>
             <View style={{padding:Spacing.three}}>
                 <View style={{marginVertical:Spacing.two}}>
-                    <ThemedText>First name</ThemedText>
+                    <ThemedText>Name</ThemedText>
                     <View style={[styles.inputView, ]}>
                         <TextInput
                             style={styles.input}
-                            value={firstName}
-                            onChangeText={setFirstName}
+                            value={name}
+                            onChangeText={setName}
                         />
                     </View>
                 </View>
 
                 <View style={{marginVertical:Spacing.two}}>
-                    <ThemedText>Last name</ThemedText>
+                    <ThemedText>Description</ThemedText>
+                    <TextInput
+                        style={styles.input2}
+                        multiline
+                        value={description}
+                        onChangeText={setDescription}
+                    />
+                </View>
+
+                <View style={{marginVertical:Spacing.two}}>
+                    <ThemedText>City</ThemedText>
                     <View style={[styles.inputView, ]}>
                         <TextInput
                             style={styles.input}
-                            value={lastName}
-                            onChangeText={setLastName}
+                            value={city}
+                            onChangeText={setCity}
+                        />
+                    </View>
+                </View>
+
+                <View style={{marginVertical:Spacing.two}}>
+                    <ThemedText>State</ThemedText>
+                    <View style={[styles.inputView, ]}>
+                        <TextInput
+                            style={styles.input}
+                            value={state}
+                            onChangeText={setState}
                         />
                     </View>
                 </View>
@@ -91,7 +117,7 @@ export default function Edit(){
                     </View>
                 </View> */}
             </View>
-            <Button onPress={()=>updateProfile(data)} title="SAVE" style={{marginHorizontal:Spacing.three}}/>
+            <Button onPress={()=>updateStore(data)} title="SAVE" style={{marginHorizontal:Spacing.three}}/>
         </Container>
     )
 }

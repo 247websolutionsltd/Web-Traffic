@@ -6,14 +6,10 @@ import { router } from "expo-router";
 
 
 export const categories: Category[] = [
-  { id: "electronics", name: "Electronics", icon: "phone-portrait-outline", tint: "#FDEBEE", count: 248 },
-  { id: "property", name: "Property", icon: "home-outline", tint: "#FCF2E1", count: 132 },
-  { id: "vehicles", name: "Vehicles", icon: "car-outline", tint: "#E7F6EE", count: 96 },
-  { id: "jobs", name: "Jobs", icon: "briefcase-outline", tint: "#EDEBFB", count: 54 },
-  { id: "fashion", name: "Fashion", icon: "shirt-outline", tint: "#FDEBEE", count: 71 },
-  { id: "home", name: "Home appliances", icon: "cube-outline", tint: "#FCF2E1", count: 63 },
-  { id: "hobby", name: "Hobby & sport", icon: "football-outline", tint: "#E7F6EE", count: 40 },
-  { id: "other", name: "Others", icon: "grid-outline", tint: "#EDEBFB", count: 18 },
+  { name: "Electronics", icon: "phone-portrait-outline", tint: "#FDEBEE", id:"6a8704aa520fa4cc02d244df" },
+  {  name: "Property", icon: "home-outline", tint: "#FCF2E1", id:"6a87103a520fa4cc02d244eb" },
+  {  name: "Vehicles", icon: "car-outline", tint: "#E7F6EE", id:"6a870fd7520fa4cc02d244ea" },
+  {  name: "Fashion", icon: "shirt-outline", tint: "#FDEBEE", id:"6a870f5c520fa4cc02d244e8" },
 ];
 
 export const favorites = [

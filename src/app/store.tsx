@@ -35,6 +35,7 @@ export default function Store(){
             const listing = await getStoreListings(store);
             setStore(storeData);
             setListing(listing.listings);
+            console.log(storeData)
         }
         load();
         
@@ -189,7 +190,7 @@ const renderScene = ({ route }:{route:any}) => {
                         e.nativeEvent.position + e.nativeEvent.offset
                         );
                     }}
-                    >
+                >
                     <View key="0">
                         <AllAdsRoute
                         listings={listings}

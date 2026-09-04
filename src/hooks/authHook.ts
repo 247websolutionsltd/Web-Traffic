@@ -316,6 +316,7 @@ export default function useAuthentication(){
         {storeId},
         {headers: { Authorization: `Bearer ${token}` }
       });
+      console.log(data.data)
       return data.data
     }catch(error:any){
       console.error("Error:", error.response.data)
@@ -424,6 +425,54 @@ export default function useAuthentication(){
     }
   };
 
+  const updateProfile = async (profileData:any) => {
+    const token = await AsyncStorage.getItem("token");
+    try {
+      const data = await uploadApi.patch(`api/stores/me`,
+        {
+          firstName:profileData.firstName || "",
+          lastName:profileData.lastName || "",
+          phone:profileData.phone || "",
+          email:profileData.email || "",
+          image:profileData.logo || ""
+        },
+        {headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log(data.data)
+      return data.data;
+
+    } catch (error) {
+      console.error(
+        "START CHAT ERROR:",
+        error
+      );
+    }
+  };
+
+  const updateStore = async (profileData:any) => {
+    const token = await AsyncStorage.getItem("token");
+    try {
+      const data = await uploadApi.patch(`api/stores/store`,
+        {
+          name:profileData.name || "",
+          description:profileData.description || "",
+          phone:profileData.phone || "",
+          city:profileData.city || "",
+          state:profileData.state || "",
+        },
+        {headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log(data.data)
+      return data.data;
+
+    } catch (error) {
+      console.error(
+        "START CHAT ERROR:",
+        error
+      );
+    }
+  };
+
 
 
     return{
@@ -453,6 +502,8 @@ export default function useAuthentication(){
         requestAccountDeletion,
         createConversation,
         getMessages,
-        sendMessage
+        sendMessage,
+        updateProfile,
+        updateStore
     }
 }

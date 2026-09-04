@@ -13,6 +13,7 @@ export default function Categories(){
     const styles = useStyles();
     const {categories} = useAuth();
     const { getCategory } = useAuthentication();
+    
     const theme = useTheme();
     useEffect(()=>{
         const load = async()=>{

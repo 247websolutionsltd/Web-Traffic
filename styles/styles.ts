@@ -1078,5 +1078,12 @@ const createStyles = (theme:any, width:any, height:any, insets:any)=>StyleSheet.
     flex:1,
     backgroundColor: theme.paper,
     paddingBottom: insets.bottom
+  },
+  addCenter:{
+    flex:1, 
+    backgroundColor:"#00000055", 
+    borderRadius:900, 
+    alignItems:'center', 
+    justifyContent:'center'
   }
 });

@@ -22,13 +22,13 @@ export default function RootLayout() {
         <Stack.Screen name="[store]" />
         <Stack.Screen name="myStore" />
         <Stack.Screen name="settings" />
-        {/* <Stack.Screen name="categories" /> */}
         <Stack.Screen name="store" />
         <Stack.Screen name="createStore" />
         <Stack.Screen name="featured" />
         <Stack.Screen name="boost" />
         <Stack.Screen name="live" />
         <Stack.Screen name="edit" />
+        <Stack.Screen name="editStore" />
         <Stack.Screen
          name="chat" 
          options={{ 
